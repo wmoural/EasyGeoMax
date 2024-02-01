@@ -1,6 +1,6 @@
 googlemaps==4.10.0
 pandas==2.0.3
-streamlit==1.28.0
+streamlit==1.30.0
 openpyxl==3.1.2
 requires.io==0.2.6
 xlsxwriter==3.0.9
