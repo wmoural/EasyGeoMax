@@ -14,9 +14,9 @@ with st.sidebar:
     st.info("""
             Use os seguintes valores para indicar o modo de transporte:
             - driving (para carros e motos)
-            - bicycling (bicileta)
-            - walking (a pé)
-            - bus (ônibus)
+            - bicycling (para bicileta)
+            - walking (para a pé)
+            - bus (para ônibus)
             """)
     chave = st.text_input('Insira aqui sua chave API:', type='password')
     
