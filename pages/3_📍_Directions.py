@@ -14,7 +14,7 @@ with st.sidebar:
     st.info("""
             Use os seguintes valores para indicar o modo de transporte:
             - driving (para carros e motos)
-            - bicycling (para bicileta)
+            - bicycling (para bicicleta)
             - walking (para a pé)
             - bus (para ônibus)
             """)
