@@ -13,7 +13,7 @@ st.title("**Easy** :red[Directions] 📍")
 with st.sidebar:
     st.info("""
             Use os seguintes valores para indicar o modo de transporte:
-            - car (para carros e motos)
+            - driving (para carros e motos)
             - bicycling (bicileta)
             - walking (a pé)
             - bus (ônibus)
