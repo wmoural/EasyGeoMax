@@ -11,8 +11,15 @@ st.set_page_config(page_title='Easy Directions', layout='wide')
 st.title("**Easy** :red[Directions] 📍")    
 
 with st.sidebar:
+    st.info("""
+            Use os seguintes valores para indicar o modo de transporte:
+            - car (para carros e motos)
+            - bicycling (bicileta)
+            - walking (a pé)
+            - bus (ônibus)
+            """)
     chave = st.text_input('Insira aqui sua chave API:', type='password')
-
+    
 
 @st.cache_data
 def Matriz_uma_por_uma(chave, dataframe):
