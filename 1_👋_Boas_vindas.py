@@ -30,7 +30,7 @@ with st.expander('**Sobre**', expanded=True):
                 [Directions API](https://developers.google.com/maps/documentation/directions/overview?hl=pt-br), ambas do Google. Para uso, é necessário ter uma 
                 [API KEY](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=pt) ativa.
                 """)
-with st.expander('**Uso**', expanded=False):
+with st.expander('**Uso**', expanded=True):
 
     st.markdown("""
                  - **:green[Easy Geocoding]**: insira sua API KEY -> faça o upload de uma planilha Excel (.xlsx) contendo a lista de endereços que deseja geocodificar -> 
@@ -42,7 +42,7 @@ with st.expander('**Uso**', expanded=False):
 
     st.info('Para Easy Directions, a formatação de LATLONGs deve seguir o exemplo: "-3.71917,-38.51226"')  
   
-with st.expander('**Notas**', expanded=False):
+with st.expander('**Notas**', expanded=True):
 
     st.markdown("""
                 Caso seja identificado algum problema durante o uso da aplicação ou caso deseje contribuir para o 
