@@ -114,7 +114,7 @@ if ArquivoCarregado is not None:
                 tamanho_acumulado = int(tamanho) + int(qtde_geocodificadas)
                 
                 with open('Qtdes/geocodificados.txt','w') as arqv:
-                    arqv.write(str(tamanho_acumulado))
+                    arqv.writelines(str(tamanho_acumulado))
                     arqv.close()
                     
                 st.success('Processo concluído!')
