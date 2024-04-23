@@ -110,7 +110,8 @@ if ArquivoCarregado is not None:
                     st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
                     writer.close()
                     
-                arqv = open(r'Qtdes/geocodificados.txt','w').write(str(tamanho))
+                arqv = open(r'Qtdes/geocodificados.txt','a')
+                arqv.write(str(tamanho))
                 arqv.close()
                     
                 st.success('Processo concluído!')
