@@ -12,7 +12,7 @@ st.set_page_config(page_title='Easy Geocoding', layout='wide')
 st.title("**Easy** :green[Geocoding] :world_map:")    
 
 # Qtde já geocodificadas
-qtde_geocodificadas = open(r'EasyGeoMax/Qtdes/geocodificados.txt','r').read()
+qtde_geocodificadas = open(r'Qtdes/geocodificados.txt','r').read()
 
 with st.sidebar:
     chave = st.text_input('Insira aqui sua chave API:', type='password')
@@ -109,7 +109,7 @@ if ArquivoCarregado is not None:
                     st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
                     writer.close()
                     
-                open(r'EasyGeoMax/Qtdes/geocodificados.txt','w').write(tamanho)
+                open(r'Qtdes/geocodificados.txt','w').write(tamanho)
                     
                 st.success('Processo concluído!')
                 MostrarCol2()
