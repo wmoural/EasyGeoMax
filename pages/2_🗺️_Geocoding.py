@@ -87,6 +87,7 @@ if ArquivoCarregado is not None:
 
     tamanho = len(df)
 
+    
     # Colunas
     col1, col2, col3 = st.columns([2, 5, 4])
 
@@ -110,8 +111,10 @@ if ArquivoCarregado is not None:
                     st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
                     writer.close()
                     
+                tamanho_acumulado = int(tamanho) + int(qtde_geocodificadas)
+                
                 with open('Qtdes/geocodificados.txt','w') as arqv:
-                    arqv.write(str(tamanho))
+                    arqv.write(str(tamanho_acumulado))
                     arqv.close()
                     
                 st.success('Processo concluído!')
