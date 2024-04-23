@@ -12,7 +12,7 @@ st.set_page_config(page_title='Easy Geocoding', layout='wide')
 st.title("**Easy** :green[Geocoding] :world_map:")    
 
 # Qtde já geocodificadas
-qtde_geocodificadas = open('Qtdes/geocodificados.txt','r').read()
+qtde_geocodificadas = open(r'Qtdes/geocodificados.txt','r').read()
 
 
 with st.sidebar:
@@ -113,7 +113,7 @@ if ArquivoCarregado is not None:
                     
                 tamanho_acumulado = int(tamanho) + int(qtde_geocodificadas)
                 
-                with open('Qtdes/geocodificados.txt','w') as arqv:
+                with open(r'Qtdes/geocodificados.txt','w') as arqv:
                     arqv.writelines(str(tamanho_acumulado))
                     arqv.close()
                     
