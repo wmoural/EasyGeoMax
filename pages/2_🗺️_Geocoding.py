@@ -16,7 +16,9 @@ qtde_geocodificadas = open(r'Qtdes/geocodificados.txt','r').read()
 
 with st.sidebar:
     chave = st.text_input('Insira aqui sua chave API:', type='password')
-    st.metric(label='Quantidade de geocodes', value=qtde_geocodificadas)
+    coluna1,coluna2,coluna3 = st.columns([1,1,1])
+    with coluna2:
+        st.metric(label='Quantidade de geocodes já realizados', value=qtde_geocodificadas)
     
 # Funções para colunas
 def GeocodeDemanda(df, Chave):
