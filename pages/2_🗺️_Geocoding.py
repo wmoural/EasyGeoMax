@@ -12,7 +12,7 @@ st.set_page_config(page_title='Easy Geocoding', layout='wide')
 st.title("**Easy** :green[Geocoding] :world_map:")    
 
 # Qtde já geocodificadas
-qtde_geocodificadas = open(r'Qtdes/geocodificados.txt','r').read()
+qtde_geocodificadas = open('Qtdes/geocodificados.txt','r').read()
 
 
 with st.sidebar:
@@ -110,9 +110,9 @@ if ArquivoCarregado is not None:
                     st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
                     writer.close()
                     
-                arqv = open(r'Qtdes/geocodificados.txt','w')
-                arqv.write(str(tamanho+qtde_geocodificadas))
-                arqv.close()
+                with open('Qtdes/geocodificados.txt','w') as arqv:
+                    arqv.write(str(tamanho))
+                    arqv.close()
                     
                 st.success('Processo concluído!')
                 MostrarCol2()
