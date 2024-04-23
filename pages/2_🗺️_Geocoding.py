@@ -111,7 +111,7 @@ if ArquivoCarregado is not None:
                     writer.close()
                     
                 arqv = open(r'Qtdes/geocodificados.txt','w')
-                arqv.write(str(tamanho))
+                arqv.write(str(tamanho+qtde_geocodificadas))
                 arqv.close()
                     
                 st.success('Processo concluído!')
