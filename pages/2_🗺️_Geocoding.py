@@ -109,7 +109,7 @@ if ArquivoCarregado is not None:
                     st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
                     writer.close()
                     
-                open(r'EasyGeoMax/Qtdes/geocodificados.txt','w').write(len(tamanho))
+                open(r'EasyGeoMax/Qtdes/geocodificados.txt','w').write(tamanho)
                     
                 st.success('Processo concluído!')
                 MostrarCol2()
