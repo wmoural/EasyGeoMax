@@ -11,14 +11,9 @@ st.set_page_config(page_title='Easy Geocoding', layout='wide')
 # Título
 st.title("**Easy** :green[Geocoding] :world_map:")    
 
-# Qtde já geocodificadas
-qtde_geocodificadas = open(r'Qtdes/geocodificados.txt','r').read()
-
-
 with st.sidebar:
     chave = st.text_input('Insira aqui sua chave API:', type='password')
-    st.metric(label='Quantidade de geocodes já realizados', value=qtde_geocodificadas)
-    
+   
 # Funções para colunas
 def GeocodeDemanda(df, Chave):
 
@@ -110,12 +105,7 @@ if ArquivoCarregado is not None:
                 with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
                     st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
                     writer.close()
-                    
-                tamanho_acumulado = int(tamanho) + int(qtde_geocodificadas)
-                
-                with open(r'Qtdes/geocodificados.txt','w') as arqv:
-                    arqv.writelines(str(tamanho_acumulado))
-                    arqv.close()
+
                     
                 st.success('Processo concluído!')
                 MostrarCol2()
