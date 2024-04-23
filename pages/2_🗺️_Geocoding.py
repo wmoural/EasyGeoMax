@@ -13,6 +13,7 @@ st.title("**Easy** :green[Geocoding] :world_map:")
 
 # Qtde já geocodificadas
 qtde_geocodificadas = open(r'Qtdes/geocodificados.txt','r').read()
+qtde_geocodificadas.close()
 
 with st.sidebar:
     chave = st.text_input('Insira aqui sua chave API:', type='password')
@@ -109,7 +110,8 @@ if ArquivoCarregado is not None:
                     st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
                     writer.close()
                     
-                open(r'Qtdes/geocodificados.txt','w').write(str(tamanho))
+                arqv = open(r'Qtdes/geocodificados.txt','w').write(str(tamanho))
+                arqv.close()
                     
                 st.success('Processo concluído!')
                 MostrarCol2()
