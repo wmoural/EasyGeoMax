@@ -13,7 +13,7 @@ st.title("**Easy** :green[Geocoding] :world_map:")
 
 # Qtde já geocodificadas
 qtde_geocodificadas = open(r'Qtdes/geocodificados.txt','r').read()
-qtde_geocodificadas.close()
+
 
 with st.sidebar:
     chave = st.text_input('Insira aqui sua chave API:', type='password')
