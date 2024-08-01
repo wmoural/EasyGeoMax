@@ -9,7 +9,7 @@ with st.sidebar:
         with st.container():
             sidebarcol1, sidebarcol2 = st.columns([2, 1])
             with sidebarcol1:
-                imagem = 'https://i.imgur.com/oaiPwpJ.png'
+                imagem = 'https://i.imgur.com/K3zQUIA.jpg'
                 st.image(imagem, use_column_width=True, caption='Wellington Moura')
     
             with sidebarcol2:
