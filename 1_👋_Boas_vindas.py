@@ -6,10 +6,10 @@ st.set_page_config(page_title='Easy GeoMax!')
 with st.sidebar:
     with st.expander('**Dados do autor:** ', expanded=True):
     
-        with st.container(height=100):
+        with st.container():
             sidebarcol1, sidebarcol2 = st.columns([2, 1])
             with sidebarcol1:
-                imagem = 'https://i.imgur.com/TmV4rOH.jpg'
+                imagem = 'https://i.imgur.com/Xe9O2MX.png'
                 st.image(imagem, use_column_width=True, caption='Wellington Moura')
     
             with sidebarcol2:
