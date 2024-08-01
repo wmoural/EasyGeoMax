@@ -32,13 +32,27 @@ def novidade():
 if st.session_state.sabia != True:
     novidade()
 
-
-
 # Título
 st.title("**Easy** :green[Geocoding] :world_map:")    
 
 with st.sidebar:
     chave = st.text_input('Insira aqui sua chave API:', type='password')
+ 
+    with st.expander('**Dados do autor:** ', expanded=True):
+    
+        with st.container():
+            sidebarcol1, sidebarcol2 = st.columns([2, 1])
+            with sidebarcol1:
+                imagem = 'https://i.imgur.com/Xe9O2MX.png'
+                st.image(imagem, use_column_width=True, caption='Wellington Moura')
+    
+            with sidebarcol2:
+                st.header('')
+                st.subheader('[Linkedin](https://www.linkedin.com/in/wellington-moura-27497a1b3/)')
+                st.subheader('[Github](https://github.com/wmoural)')
+    
+    with st.expander('**Mais sobre Streamlit:** ', expanded=False):
+        st.info('[Veja aqui](https://streamlit.io/)')
     
 # Funções para colunas
 def GeocodeDemanda(df, Chave):
