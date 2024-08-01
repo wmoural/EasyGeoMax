@@ -4,16 +4,42 @@ import streamlit as st
 import xlsxwriter
 from io import BytesIO
 import io
-
+import geocoder
+ 
 # Configurando página
-st.set_page_config(page_title='Easy Geocoding', layout='wide')
+st.set_page_config(page_title='Easy Geocoding', layout='wide', page_icon='🗺️')
+
+# Criando variável para caixa de dialogo
+if 'sabia' not in st.session_state:
+    st.session_state.sabia = None
+
+@st.dialog("Tem coisa nova, ein? 😎")
+def novidade():
+    st.success('***Se liga na novidade!*** 🤩\
+             \nCaso algum dos endereços fornecidos não seja encontrado pelo provedor Google,\
+                 o EasyGeoMax tentará automaticamente geocodificá-lo nos provedores OSM e ArcGis,\
+                     respectivamente! A medida ajudará a diminuir o tempo gasto durante os processos\
+                         de geocodificação de endereços.\
+                             \nMais implementações virão futuramente!😙')
+                         
+    st.caption('Por ser uma mudança recente, erros podem ocorrer e, caso um ocorra, não esqueça de reportar ao autor.')
+    
+    #reason = st.text_input("Because...")
+    if st.button("Ok!"):
+        st.session_state.sabia = True
+        st.rerun()
+    
+if st.session_state.sabia != True:
+    novidade()
+
+
 
 # Título
 st.title("**Easy** :green[Geocoding] :world_map:")    
 
 with st.sidebar:
     chave = st.text_input('Insira aqui sua chave API:', type='password')
-   
+    
 # Funções para colunas
 def GeocodeDemanda(df, Chave):
 
@@ -24,27 +50,55 @@ def GeocodeDemanda(df, Chave):
     lat = []
     long = []
     endereço_formatado = []
-
+    provedor = []
+    
     # Geocodificando endereços
     for i in range(len(df)):
+        
         geocode = gmaps.geocode(df[ColunaEndereço].loc[i], region="br", language="PT-BR")
+        
         if len(geocode) == 0:
-            lat.append('0')
-            long.append('0')
-            endereço_formatado.append('0')
+            
+            geocode = geocoder.osm(df[ColunaEndereço].loc[i]).json
+            
+            if geocode is not None:
+                
+                endereço_formatado.append(geocode['address'])
+                lat.append(geocode['lat'])
+                long.append(geocode['lng'])
+                provedor.append('OSM')
+
+            else:
+                
+                geocode = geocoder.arcgis(df[ColunaEndereço].loc[i]).json
+                
+                if geocode is not None:
+                
+                    endereço_formatado.append(geocode['address'])
+                    lat.append(geocode['lat'])
+                    long.append(geocode['lng'])
+                    provedor.append('ArcGIS')
+                    
+                else:
+                    
+                    lat.append('0')
+                    long.append('0')
+                    endereço_formatado.append('0')
+                
         else:
             resultado = geocode[0]
             lat.append(resultado['geometry']['location']['lat'])
             long.append(resultado['geometry']['location']['lng'])
             endereço_formatado.append(resultado['formatted_address'])
+            provedor.append('Google')
 
     # Criando novas colunas e colando resultados
     df['Lat'] = lat
     df['Long'] = long
     df['Endereço'] = endereço_formatado
+    df['Provedor'] = provedor
+    
     return df
-
-
 
 def MostrarCol2():
     with col2:
@@ -61,7 +115,6 @@ def MostrarCol2():
             )
 
             st.cache_resource.clear()
-
 
 def MostrarCol3():
     with col3:
