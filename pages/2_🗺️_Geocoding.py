@@ -98,6 +98,7 @@ def GeocodeDemanda(df, Chave):
                     lat.append('0')
                     long.append('0')
                     endereço_formatado.append('0')
+                    proveador.append('0')
                 
         else:
             resultado = geocode[0]
