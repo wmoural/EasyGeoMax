@@ -90,19 +90,17 @@ with col2:
         limites = arquivo_gpd.total_bounds
         limites = (limites[0],limites[1],limites[2],limites[3])
 
-
         # Definindo filtros para executar
         with st.form('Definições de filtragem'):        
             
             categorias = {'Edificações':'building', 
-             'Pontos de interesse':'place', 
+             'Pontos de interesse (PGVs)':'place', 
              'Segmentos viários (links)':'segment',
              'Nós viários':'connector', 
              'Infraestrutura':'infrastructure', 
              'Solo':'land', 
              'Uso do solo':'land_use', 
              'Massas de água':'water'}
-            
              
             # Organizando botões e rodando filtragem
             c1,c2,c3 = st.columns([2,2,1.5])          
