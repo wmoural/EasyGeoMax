@@ -31,7 +31,7 @@ if 'resultado' not in st.session_state:
     st.session_state.resultado = None
 
 # Configurando página
-st.set_page_config(page_title="Easy OvertureData", page_icon='🛣',layout='wide')
+st.set_page_config(page_title="Easy OvertureData", page_icon=':motorway:',layout='wide')
 
 # Título
 st.title("**Easy** :violet[OvertureData] :motorway:")    
