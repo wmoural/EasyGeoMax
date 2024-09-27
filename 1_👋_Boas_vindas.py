@@ -25,10 +25,9 @@ st.title(':blue[Boas vindas ] 👋')
 
 with st.expander('**Sobre**', expanded=True):
     st.markdown("""
-                Este é o EasyGeoMax! Uma aplicação desenvolvida para otimizar o processo de geocoding e cálculo de matrizes de distância.
-                A aplicação se utiliza das APIs [Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview?hl=pt-br) e 
-                [Directions API](https://developers.google.com/maps/documentation/directions/overview?hl=pt-br), ambas do Google. Para uso, é necessário ter uma 
-                [API KEY](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=pt) ativa.
+                Este é o EasyGeoMax! Uma aplicação desenvolvida para otimizar o processo de geocoding ([Geocoding API](https://developers.google.com/maps/documentation/geocoding/overview?hl=pt-br))
+                , cálculo de matrizes de distância ([Directions API](https://developers.google.com/maps/documentation/directions/overview?hl=pt-br)) e aquisição de dados vetoriais ([Overture Maps](https://docs.overturemaps.org/getting-data/overturemaps-py/)).
+                Para das ferramentas de geocoding e cálculo de matriz é necessário ter uma [API KEY](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=pt) ativa.
                 """)
 with st.expander('**Uso**', expanded=True):
 
@@ -38,6 +37,8 @@ with st.expander('**Uso**', expanded=True):
                 
                  - **:green[Easy Directions]**: insira sua API KEY -> faça o upload de uma planilha Excel (.xlsx) contendo a lista de endereços ou (LATLONGs) de origem e 
                  destino e o modo de transporte correspondente -> indique as colunas alvos -> clique em "Calcular".
+
+                 - **:green[Easy OvertureData]**: faça o upload de um polígono não vazio em formato geopackage -> defina o tipo de dado desejado -> clique em "Filtrar!".
                  """)
 
     st.info('Para Easy Directions, a formatação de LATLONGs deve seguir o exemplo: "-3.71917,-38.51226"')  
