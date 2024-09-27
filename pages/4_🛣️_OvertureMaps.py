@@ -39,7 +39,7 @@ st.title("**Easy** :violet[OvertureData] :motorway:")
 # Configurando sidebar
 with st.sidebar:
     
-    with st.expander('**Informações importantes**', icon='ℹ️', expanded=True):
+    with st.expander('**Informações importantes**', icon='ℹ️', expanded=False):
         st.info("""
                 - A área de interesse deve ser um POLÍGONO;
                 - A área de interesse deve estar no SRC WGS84 (EPSG:4326);
