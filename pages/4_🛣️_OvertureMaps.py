@@ -73,9 +73,12 @@ with col2:
     
     # Iniciado aplicação caso haja caixa delimitadora
     if arquivo is not None:
+
+        # Criando buffer
+        gpkg_buffer = io.BytesIO(arquivo.getvalue())
         
         # Lendo área de interesse
-        arquivo_gpd = gpd.read_file(arquivo)
+        arquivo_gpd = gpd.read_file(gpkg_buffer)
         
         # Corrigindo erro comum de coluna com datetime errado/ausente
         if 'arquivo_gpd' in locals():
