@@ -186,7 +186,7 @@ with col1:
         m.to_streamlit(responsive=True, scrolling=True)
 
 # Mostrando tabela com resultados finais
-if st.session_state.resultado is not None:
+if st.session_state.resultado is not None and arquivo is not None:
     
     with st.expander('**Prévia dos resultados:** :page_with_curl:'):
         
