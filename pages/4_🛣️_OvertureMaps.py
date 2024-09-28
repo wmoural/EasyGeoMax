@@ -123,7 +123,7 @@ with col2:
 
                     st.session_state.resultado = core.geodataframe(categorias[busca], bbox=limites)
                     
-                    status.update(label=':green[Filtragem completa!]', state='complete', expanded=False)
+                    status.update(label='**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False)
                             
         if st.session_state.resultado is not None:
             
@@ -140,7 +140,7 @@ with col2:
             with cl2:
 
                 st.download_button(
-                    label="**Download em excel (WKT) ✅**",
+                    label="**:green[Download em excel (WKT)] ✅**",
                     data=buffer,
                     file_name=f"base-{busca}.xlsx",
                     mime="application/vnd.ms-excel",
@@ -176,3 +176,10 @@ with col1:
         
         # Renderizando o mapa no streamlit
         m.to_streamlit(responsive=True, scrolling=True)
+
+# Mostrando tabela com resultados finais
+if st.session_state.resultado is not None:
+    
+    with st.expander('Resultados:'):
+        
+        st.session_state.resultado
