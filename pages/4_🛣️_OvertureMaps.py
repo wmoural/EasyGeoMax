@@ -126,7 +126,7 @@ with col2:
                     
                     st.write('Filtrando feições...')
                     st.session_state.resultado = core.geodataframe(categorias[busca], bbox=limites)
-                    st.write(':Feições filtradas.]')
+                    st.write('Feições filtradas.')
                     
                     # Caso existam resultados da busca, inserí-los no mapa
                     if st.session_state.resultado is not None and nomapa is True:
@@ -188,6 +188,6 @@ with col1:
 # Mostrando tabela com resultados finais
 if st.session_state.resultado is not None:
     
-    with st.expander('Resultados:'):
+    with st.expander('**Resultados:** :page_with_curl:'):
         
         st.session_state.resultado
