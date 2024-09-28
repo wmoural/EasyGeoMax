@@ -124,7 +124,7 @@ with col2:
                 
                 with st.status('Iniciando...', expanded=True) as status:
                     
-                    filtrando = st.write('Filtrando feições...')
+                    st.write('Filtrando feições...')
                     st.session_state.resultado = core.geodataframe(categorias[busca], bbox=limites)
                     st.write(':Feições filtradas.]')
                     
