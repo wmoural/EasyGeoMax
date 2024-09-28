@@ -123,7 +123,7 @@ with col2:
 
                     st.session_state.resultado = core.geodataframe(categorias[busca], bbox=limites)
                     
-                    status.update(label='**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False)
+                    status.update(label=f'**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False)
                             
         if st.session_state.resultado is not None:
             
