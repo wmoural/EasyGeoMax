@@ -25,6 +25,9 @@ def estiloarea(feature):
         "fillColor": "green",
         "fillOpacity": 0.4,
     }
+    
+# Criando instância de mapa
+m = leafmap.Map()
 
 # Definindo variáveis importantes
 if 'resultado' not in st.session_state:
@@ -118,13 +121,35 @@ with col2:
             rodar = st.form_submit_button('**Filtrar! 🔎**', use_container_width=True)
             
             if rodar:
-                                   
-                with st.status('Buscando...') as status:
-
-                    st.session_state.resultado = core.geodataframe(categorias[busca], bbox=limites)
+                
+                with st.status('Iniciando...', expanded=True) as status:
                     
+                    filtrando = st.write('Filtrando feições...')
+                    st.session_state.resultado = core.geodataframe(categorias[busca], bbox=limites)
+                    st.write(':Feições filtradas.]')
+                    
+                    # Caso existam resultados da busca, inserí-los no mapa
+                    if st.session_state.resultado is not None and nomapa is True:
+                        
+                        st.write('Carregando feições para o mapa...')
+                        
+                        df = st.session_state.resultado
+                        
+                        # Por algum motivo, carregar todo o gdf ou df dá errado
+                        df = st.session_state.resultado[['geometry']].astype(str) 
+
+                        df['geometry'] = df['geometry'].apply(wkt.loads)
+                        
+                        gdf = gpd.GeoDataFrame(df, geometry='geometry')
+                        
+                        gdf.set_crs(epsg=4326, inplace=True)
+                        
+                        m.add_gdf(gdf, layer_name=busca,fill_colors=["red"])
+                        
+                        st.write('Feições carregadas para o mapa.')
+                        
                     status.update(label=f'**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False)
-                            
+                                         
         if st.session_state.resultado is not None:
             
             # Gerando gdf de resultado no cache
@@ -150,29 +175,12 @@ with col1:
     
     if arquivo is not None:  
         
-        # Criando instância de mapa
-        m = leafmap.Map()
+        # Carregando basemap de satélites
         m.add_basemap("SATELLITE")
         
         # Alimentando com a área de interesse + bbox
         m.add_gdf(arquivo_gpd, layer_name='Area de interesse', style_callback=estiloarea)
-        m.add_gdf(gpd.GeoDataFrame(geometry=arquivo_gpd.geometry.envelope,crs=arquivo_gpd.crs), layer_name='BoundingBox', style_callback=estilobbox)
-        
-        # Caso existam resultados da busca, inserí-los no mapa
-        if st.session_state.resultado is not None and nomapa is True:
-            
-            df = st.session_state.resultado
-            
-            # Por algum motivo, carregar todo o gdf ou df dá errado
-            df = st.session_state.resultado[['geometry']].astype(str) 
-
-            df['geometry'] = df['geometry'].apply(wkt.loads)
-            
-            gdf = gpd.GeoDataFrame(df, geometry='geometry')
-            
-            gdf.set_crs(epsg=4326, inplace=True)
-            
-            m.add_gdf(gdf, layer_name=busca,fill_colors=["red"])     
+        m.add_gdf(gpd.GeoDataFrame(geometry=arquivo_gpd.geometry.envelope,crs=arquivo_gpd.crs), layer_name='BoundingBox', style_callback=estilobbox) 
         
         # Renderizando o mapa no streamlit
         m.to_streamlit(responsive=True, scrolling=True)
