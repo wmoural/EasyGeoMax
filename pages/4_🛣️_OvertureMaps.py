@@ -190,4 +190,4 @@ if st.session_state.resultado is not None:
     
     with st.expander('**Prévia dos resultados:** :page_with_curl:'):
         
-        st.session_state.resultado.head(100)
+        st.session_state.resultado[:101]
