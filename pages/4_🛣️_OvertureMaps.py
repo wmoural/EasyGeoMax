@@ -188,6 +188,6 @@ with col1:
 # Mostrando tabela com resultados finais
 if st.session_state.resultado is not None:
     
-    with st.expander('**Resultados:** :page_with_curl:'):
+    with st.expander('**Prévia dos resultados:** :page_with_curl:'):
         
-        st.session_state.resultado
+        st.session_state.resultado.head(100)
