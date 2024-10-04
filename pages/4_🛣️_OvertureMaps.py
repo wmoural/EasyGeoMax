@@ -149,28 +149,29 @@ with col2:
                         st.write('Feições carregadas para o mapa.')
                         
                     status.update(label=f'**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False)
-                                         
+                                       
         if st.session_state.resultado is not None:
+            st.dataframe(st.session_state.resultado)
             
             # Gerando gdf de resultado no cache
-            buffer = io.BytesIO()
+            #buffer = io.BytesIO()
             
-            with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-                st.session_state.resultado.to_excel(writer, sheet_name='Sheet1')
-                writer.close()    
+            #with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+                #st.session_state.resultado.to_excel(writer, sheet_name='Sheet1')
+                #writer.close()    
 
             # Criando botão de download
-            cl1,cl2,cl3 = st.columns([2,2,2])
+            #cl1,cl2,cl3 = st.columns([2,2,2])
             
-            with cl2:
+            #with cl2:
 
-                st.download_button(
-                    label="**:green[Download em excel (WKT)] ✅**",
-                    data=buffer,
-                    file_name=f"base-{busca}.xlsx",
-                    mime="application/vnd.ms-excel",
-                    use_container_width=True)
-
+                #st.download_button(
+                    #label="**:green[Download em excel (WKT)] ✅**",
+                    #data=buffer,
+                    #file_name=f"base-{busca}.xlsx",
+                    #mime="application/vnd.ms-excel",
+                    #use_container_width=True)
+            
 with col1:
     
     if arquivo is not None:  
