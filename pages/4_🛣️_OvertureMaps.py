@@ -7,6 +7,11 @@ from shapely import wkt
 import io
 from io import BytesIO
 
+# Função pra criar CSV
+@st.cache_data
+def gerarcsv(df):
+   return df.to_csv(index=False).encode('utf-8')
+
 # Funções para estilização do mapa
 def estilobbox(feature):
     return {
@@ -167,6 +172,16 @@ with col1:
 
 # Mostrando tabela com resultados finais
 if st.session_state.resultado is not None and arquivo is not None:
+
+    csv = convert_df(df)
+    
+    st.download_button(
+       "Press to Download",
+       csv,
+       "file.csv",
+       "text/csv",
+       key='download-csv'
+    )
     
     with st.expander('**Resultados:** ✔️'):
         
