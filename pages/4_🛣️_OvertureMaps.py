@@ -173,7 +173,7 @@ with col1:
 # Mostrando tabela com resultados finais
 if st.session_state.resultado is not None and arquivo is not None:
 
-    csv = convert_df(df)
+    csv = convert_df(st.session_state.resultado)
     
     st.download_button(
        "Press to Download",
