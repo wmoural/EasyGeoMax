@@ -172,7 +172,7 @@ with col2:
                     key='download-csv'
                     )
 
-                status2.update(label='**CSV gerado!**', state'complete', expanded=False)
+                status2.update(label='**CSV gerado!**', state='complete', expanded=False)
 
 
 with col1:
