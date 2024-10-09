@@ -156,11 +156,11 @@ with col2:
                     status.update(label=f'**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False)
                   
                   st.download_button(
-                     "Baixe em CSV (formato wkt)",
-                     st.session_state.resultado.to_csv(),
-                     f"Overture-{busca}.csv",
-                     "text/csv",
-                     key='download-csv'
+                  "Baixe em CSV (formato wkt)",
+                  st.session_state.resultado.to_csv(),
+                  f"Overture-{busca}.csv",
+                  "text/csv",
+                  key='download-csv'
                   )       
             
 with col1:
