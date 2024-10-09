@@ -154,7 +154,14 @@ with col2:
                         st.write('Feições carregadas para o mapa.')
                         
                     status.update(label=f'**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False)
-                                       
+                  
+                  st.download_button(
+                     "Baixe em CSV (formato wkt)",
+                     st.session_state.resultado.to_csv(),
+                     f"Overture-{busca}.csv",
+                     "text/csv",
+                     key='download-csv'
+                  )       
             
 with col1:
     
@@ -172,16 +179,6 @@ with col1:
 
 # Mostrando tabela com resultados finais
 if st.session_state.resultado is not None and arquivo is not None:
-
-    #csv = convert_df(st.session_state.resultado)
-    
-    st.download_button(
-       "Press to Download",
-       st.session_state.resultado.to_csv(),
-       "file.csv",
-       "text/csv",
-       key='download-csv'
-    )
     
     with st.expander('**Resultados:** ✔️'):
         
