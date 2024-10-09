@@ -104,7 +104,7 @@ with col2:
             categorias = {'Edificações':'building', 
              'Pontos de interesse (PGVs)':'place', 
              'Segmentos viários (links)':'segment',
-             'Nós viários':'connector', 
+             'Nós viários (nodes)':'connector', 
              'Infraestrutura':'infrastructure', 
              'Solo':'land', 
              'Uso do solo':'land_use', 
@@ -155,14 +155,17 @@ with col2:
                         
                     status.update(label=f'**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False) 
     
-                      
-    st.download_button(
-        "Baixe em CSV (formato wkt)",
-        st.session_state.resultado.to_csv(),
-        f"Overture-{busca}.csv",
-        "text/csv",
-        key='download-csv'
-        )     
+    cl1,cl2,cl3 = st.columns([1,3,1])
+
+    with cl2:
+        st.download_button(
+            "Baixe em CSV (formato wkt)",
+            st.session_state.resultado.to_csv(),
+            f"Overture-{busca}.csv",
+            "text/csv",
+            key='download-csv',
+            use_column_width=True
+            )     
 
 with col1:
     
