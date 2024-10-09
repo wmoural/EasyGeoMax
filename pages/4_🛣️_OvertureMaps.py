@@ -156,7 +156,7 @@ with col2:
                     status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:\
                     Aguarde o csv ficar pronto!', state='complete', expanded=False) 
     
-    cl1,cl2,cl3 = st.columns([.5,4,.5])
+    cl1,cl2,cl3 = st.columns([.5,3,.5])
 
     with cl2:
 
@@ -169,7 +169,8 @@ with col2:
                     st.session_state.resultado.to_csv(),
                     f"Overture-{busca}.csv",
                     "text/csv",
-                    key='download-csv'
+                    key='download-csv',
+                    use_column_width=True
                     )
 
                 #status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
