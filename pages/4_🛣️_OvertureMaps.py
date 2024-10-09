@@ -153,7 +153,8 @@ with col2:
                         
                         st.write('Feições carregadas para o mapa.')
                         
-                    status.update(label=f'**:green[Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!]** :partying_face:', state='complete', expanded=False) 
+                    status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:\
+                    Aguarde o csv ficar pronto!', state='complete', expanded=False) 
     
     cl1,cl2,cl3 = st.columns([1,3,1])
 
