@@ -159,16 +159,21 @@ with col2:
     cl1,cl2,cl3 = st.columns([1,3,1])
 
     with cl2:
-        
+
         if st.session_state.resultado is not None and arquivo is not None:
 
-            st.download_button(
-                "Baixe em CSV (formato wkt)",
-                st.session_state.resultado.to_csv(),
-                f"Overture-{busca}.csv",
-                "text/csv",
-                key='download-csv'
-                )     
+            with st.status('Gerando csv...') as status2:
+
+                st.download_button(
+                    "Baixe em CSV (formato wkt)",
+                    st.session_state.resultado.to_csv(),
+                    f"Overture-{busca}.csv",
+                    "text/csv",
+                    key='download-csv'
+                    )
+
+                status2.update(label='**CSV gerado!**', state'complete', expanded=False)
+
 
 with col1:
     
