@@ -159,13 +159,15 @@ with col2:
 
     with cl2:
         
-        st.download_button(
-            "Baixe em CSV (formato wkt)",
-            st.session_state.resultado.to_csv(),
-            f"Overture-{busca}.csv",
-            "text/csv",
-            key='download-csv'
-            )     
+        if st.session_state.resultado is not None and arquivo is not None:
+
+            st.download_button(
+                "Baixe em CSV (formato wkt)",
+                st.session_state.resultado.to_csv(),
+                f"Overture-{busca}.csv",
+                "text/csv",
+                key='download-csv'
+                )     
 
 with col1:
     
