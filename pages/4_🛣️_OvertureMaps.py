@@ -156,24 +156,23 @@ with col2:
                     status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:\
                     Aguarde o csv ficar pronto!', state='complete', expanded=False) 
 
-cl1,cl2,cl3 = st.columns([1,3,1])
+    cl1,cl2,cl3 = st.columns([1,3,1])
 
-with cl2:
+    with cl2:
 
-    if st.session_state.resultado is not None and arquivo is not None:
+        if st.session_state.resultado is not None and arquivo is not None:
 
-        with st.status('Gerando CSV...') as status2:
+            with st.status('Gerando CSV...') as status2:
 
-            st.download_button(
-                "Baixe em CSV (formato wkt)",
-                st.session_state.resultado.to_csv(),
-                f"Overture-{busca}.csv",
-                "text/csv",
-                key='download-csv',
-                use_column_width=True
-                )
+                st.download_button(
+                    "Baixe em CSV (formato wkt)",
+                    st.session_state.resultado.to_csv(),
+                    f"Overture-{busca}.csv",
+                    "text/csv",
+                    key='download-csv'
+                    )
 
-            status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
+                status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
 
 
 with col1:
