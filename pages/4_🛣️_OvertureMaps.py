@@ -152,12 +152,20 @@ with col2:
                         m.add_gdf(gdf, layer_name=busca,fill_colors=["red"])
                         
                         st.write('Feições carregadas para o mapa.')
-                        
-                    status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:\
-                    Aguarde o csv ficar pronto!', state='complete', expanded=False) 
-    
-    cl1,cl2,cl3 = st.columns([.5,3,.5])
+                    
+                    st.write('Gerando CSV...')
 
+                    st.download_button(
+                        "Baixe em CSV (formato wkt)",
+                        st.session_state.resultado.to_csv(),
+                        f"Overture-{busca}.csv",
+                        "text/csv",
+                        key='download-csv',
+                        use_column_width=True
+                        )
+
+                    status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:', state='complete', expanded=True) 
+    
     with cl2:
 
         if st.session_state.resultado is not None and arquivo is not None:
