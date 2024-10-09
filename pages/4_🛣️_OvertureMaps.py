@@ -170,12 +170,13 @@ with col2:
                         m.add_gdf(gdf, layer_name=busca,fill_colors=["red"])
                         
                         st.write('Feições carregadas para o mapa.')
-                    
+                        
+                    gerarcsv()
+
                     status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:\
                     Aguarde o csv ficar pronto!', state='complete', expanded=False) 
 
 cl1,cl2,cl3 = st.columns([1,3,1])
-
 
 
 with col1:
