@@ -173,7 +173,7 @@ with cl2:
                 use_column_width=True
                 )
 
-                status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
+            status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
 
 
 with col1:
