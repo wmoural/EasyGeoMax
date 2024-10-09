@@ -187,6 +187,6 @@ with col1:
 # Mostrando tabela com resultados finais
 if st.session_state.resultado is not None and arquivo is not None:
     
-    with st.expander('**Resultados:** ✔️'):
+    with st.expander('**Prévia dos resultados:** ✔️'):
         
-        st.dataframe(st.session_state.resultado)
+        st.dataframe(st.session_state.resultado[:101])
