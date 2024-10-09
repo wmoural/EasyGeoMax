@@ -162,7 +162,7 @@ with col2:
 
         if st.session_state.resultado is not None and arquivo is not None:
 
-            with st.status('Gerando CSV, aguarde...') as status2:
+            with st.spinner('Gerando CSV, aguarde...') as status2:
 
                 st.download_button(
                     "Baixe em CSV (formato wkt)",
@@ -172,7 +172,7 @@ with col2:
                     key='download-csv'
                     )
 
-                status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
+                #status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
 
 
 with col1:
