@@ -30,25 +30,7 @@ def estiloarea(feature):
         "fillColor": "green",
         "fillOpacity": 0.4,
     }
-
-# Função pra criar o csv
-@st.cache_data
-
-def gerarcsv():
-
-    with cl2:
-
-        if st.session_state.resultado is not None and arquivo is not None:
-
-                st.download_button(
-                    "Baixe em CSV (formato wkt)",
-                    st.session_state.resultado.to_csv(),
-                    f"Overture-{busca}.csv",
-                    "text/csv",
-                    key='download-csv',
-                    use_column_width=True
-                    )
-
+    
 # Criando instância de mapa
 m = leafmap.Map()
 
@@ -170,13 +152,28 @@ with col2:
                         m.add_gdf(gdf, layer_name=busca,fill_colors=["red"])
                         
                         st.write('Feições carregadas para o mapa.')
-                        
-                    gerarcsv()
-
+                    
                     status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:\
                     Aguarde o csv ficar pronto!', state='complete', expanded=False) 
 
 cl1,cl2,cl3 = st.columns([1,3,1])
+
+with cl2:
+
+    if st.session_state.resultado is not None and arquivo is not None:
+
+        with st.status('Gerando CSV...') as status2:
+
+            st.download_button(
+                "Baixe em CSV (formato wkt)",
+                st.session_state.resultado.to_csv(),
+                f"Overture-{busca}.csv",
+                "text/csv",
+                key='download-csv',
+                use_column_width=True
+                )
+
+                status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
 
 
 with col1:
