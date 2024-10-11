@@ -2,7 +2,12 @@ import streamlit as st
 
 # Configurando página
 st.set_page_config(page_title='Easy GeoMax!')
+st.logo(
+    logo,
+    link='https://i.imgur.com/u69mszZ.png',
+    icon_image='https://i.imgur.com/u69mszZ.png')
 
+    
 with st.sidebar:
     with st.expander('**Dados do autor:** ', expanded=True):
     
