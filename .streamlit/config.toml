@@ -3,4 +3,4 @@ base="dark"
 
 [server]
 maxUploadSize = 500
-maxMessageSize = 500
+maxMessageSize = 3000
