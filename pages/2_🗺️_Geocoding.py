@@ -10,6 +10,9 @@ from datetime import datetime
 # Configurando página
 st.set_page_config(page_title='Easy Geocoding', layout='wide', page_icon='🗺️')
 
+# Título
+st.title("**Easy** :green[Geocoding] :world_map:")   
+
 # Declarando session state
 if 'DemandaGerada' not in st.session_state:
     st.session_state.DemandaGerada = None
