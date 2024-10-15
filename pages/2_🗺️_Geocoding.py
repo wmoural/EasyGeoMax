@@ -9,33 +9,12 @@ import geocoder
 # Configurando página
 st.set_page_config(page_title='Easy Geocoding', layout='wide', page_icon='🗺️')
 
-# Criando variável para caixa de dialogo
-if 'sabia' not in st.session_state:
-    st.session_state.sabia = None
-
-@st.dialog("Tem coisa nova, ein? 😎")
-def novidade():
-    st.success('***Se liga na novidade!*** 🤩\
-             \nCaso algum dos endereços fornecidos não seja encontrado pelo provedor Google,\
-                 o EasyGeoMax tentará automaticamente geocodificá-lo nos provedores OSM e ArcGis,\
-                     respectivamente! A medida ajudará a diminuir o tempo gasto durante os processos\
-                         de geocodificação de endereços.\
-                             \nMais implementações virão futuramente!😙')
-                         
-    st.caption('Por ser uma mudança recente, erros podem ocorrer e, caso um ocorra, não esqueça de reportar ao autor.')
-    
-    #reason = st.text_input("Because...")
-    if st.button("Ok!"):
-        st.session_state.sabia = True
-        st.rerun()
-    
-if st.session_state.sabia != True:
-    novidade()
-
-# Título
-st.title("**Easy** :green[Geocoding] :world_map:")    
+# Declarando session state
+if 'DemandaGerada' not in st.session_state:
+    st.session_state.DemandaGerada = None
 
 with st.sidebar:
+    
     chave = st.text_input('Insira aqui sua chave API:', type='password')
  
     with st.expander('**Dados do autor:** ', expanded=True):
@@ -62,7 +41,7 @@ def GeocodeDemanda(df, Chave):
 
     # Gerando listas
     lat = []
-    long = []
+    lon = []
     endereço_formatado = []
     provedor = []
     
@@ -72,73 +51,88 @@ def GeocodeDemanda(df, Chave):
         geocode = gmaps.geocode(df[ColunaEndereço].loc[i], region="br", language="PT-BR")
         
         if len(geocode) == 0:
-            
-            geocode = geocoder.osm(df[ColunaEndereço].loc[i]).json
+        
+            geocode = geocoder.arcgis(df[ColunaEndereço].loc[i]).json
             
             if geocode is not None:
-                
+            
                 endereço_formatado.append(geocode['address'])
                 lat.append(geocode['lat'])
-                long.append(geocode['lng'])
-                provedor.append('OSM')
-
+                lon.append(geocode['lng'])
+                provedor.append('ArcGIS')
+                
             else:
                 
-                geocode = geocoder.arcgis(df[ColunaEndereço].loc[i]).json
-                
-                if geocode is not None:
-                
-                    endereço_formatado.append(geocode['address'])
-                    lat.append(geocode['lat'])
-                    long.append(geocode['lng'])
-                    provedor.append('ArcGIS')
-                    
-                else:
-                    
-                    lat.append('0')
-                    long.append('0')
-                    endereço_formatado.append('0')
-                    provedor.append('0')
+                lat.append('0')
+                lon.append('0')
+                endereço_formatado.append('0')
+                provedor.append('0')
                 
         else:
+            
             resultado = geocode[0]
             lat.append(resultado['geometry']['location']['lat'])
-            long.append(resultado['geometry']['location']['lng'])
+            lon.append(resultado['geometry']['location']['lng'])
             endereço_formatado.append(resultado['formatted_address'])
             provedor.append('Google')
-
+        
+        status.update(label=f'{i+1} de {tamanho}')
+        
     # Criando novas colunas e colando resultados
     df['Lat'] = lat
-    df['Long'] = long
+    df['Long'] = lon
     df['Endereço'] = endereço_formatado
     df['Provedor'] = provedor
     
     return df
 
-def MostrarCol2():
-    with col2:
+def GeocodeDemandaFree(df):
 
-        if st.session_state.DemandaGerada is not None:
-            st.balloons()
-            st.dataframe(st.session_state.DemandaGerada, use_container_width=True)
+    # Gerando listas
+    lat = []
+    lon = []
+    endereço_formatado = []
+    provedor = []
+    
+    # Geocodificando endereços
+    for i in range(len(df)):
 
-            st.download_button(
-                label="**Download em excel**",
-                data=buffer,
-                file_name="Demanda gerada.xlsx",
-                mime="application/vnd.ms-excel"
-            )
+        geocode = geocoder.osm(df[ColunaEndereço].loc[i]).json
+        
+        if geocode is not None:
+            
+            endereço_formatado.append(geocode['address'])
+            lat.append(geocode['lat'])
+            lon.append(geocode['lng'])
+            provedor.append('OSM')
 
-            st.cache_resource.clear()
+        else:
+            
+            geocode = geocoder.arcgis(df[ColunaEndereço].loc[i]).json
+            
+            if geocode is not None:
+            
+                endereço_formatado.append(geocode['address'])
+                lat.append(geocode['lat'])
+                lon.append(geocode['lng'])
+                provedor.append('ArcGIS')
+                
+            else:
+                
+                lat.append('0')
+                lon.append('0')
+                endereço_formatado.append('0')
+                provedor.append('0')
+            
+        status.update(label=f'{i+1} de {tamanho}')
+            
+    # Criando novas colunas e colando resultados
+    df['Lat'] = lat
+    df['Long'] = lon
+    df['Endereço'] = endereço_formatado
+    df['Provedor'] = provedor
 
-def MostrarCol3():
-    with col3:
-        df = pd.DataFrame(st.session_state.DemandaGerada)
-        df['Lat'] = df['Lat'].astype(float)
-        df['Long'] = df['Long'].astype(float)
-        df = df.rename(columns={'Long': 'lon', 'Lat': 'lat'})
-        st.map(df)
-
+    return df
 
 # Botão para subir planilha excel
 ArquivoCarregado = st.file_uploader('**Faça o upload da planilha aqui** :call_me_hand:', type=['xlsx'])
@@ -149,10 +143,9 @@ if ArquivoCarregado is not None:
     df = pd.read_excel(ArquivoCarregado, engine='openpyxl')
 
     tamanho = len(df)
-
-    
+   
     # Colunas
-    col1, col2, col3 = st.columns([2, 5, 4])
+    col1, col2 = st.columns([4, 5])
 
     # Criando botões de input
     with col1:
@@ -162,21 +155,58 @@ if ArquivoCarregado is not None:
             ColunaEndereço = st.selectbox("Selecione a coluna com o endereço", list(df.columns.values))
 
             # Botão pra rodar o geocode
-            rodar = st.form_submit_button("Geocodificar")
-
+            rodar = st.form_submit_button("Geocodificar", use_container_width=True, icon='✌')
+                       
             if rodar:
-
-                if 'DemandaGerada' not in st.session_state:
-                    st.session_state.DemandaGerada = GeocodeDemanda(df, chave)
-
-                buffer = io.BytesIO()
-                with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-                    st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
-                    writer.close()
-
+                
+                with st.status('Geocodificando...', expanded=True) as status:
                     
-                st.success('Processo concluído!')
-                MostrarCol2()
-                MostrarCol3()
-                st.stop()
-                st.cache_resource.clear()
+                    if chave != '':
+                        
+                        st.session_state.DemandaGerada = GeocodeDemanda(df, chave)
+                        
+                        if st.session_state.DemandaGerada is not None:
+                            
+                            buffer = io.BytesIO()
+                            with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
+                                st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
+                                writer.close()
+                    
+                    else:
+                        
+                        st.session_state.DemandaGerada = GeocodeDemandaFree(df)
+                
+                st.balloons()
+                status.update(label='Geocode concluído', state='complete')
+        
+        cl1,cl2,cl3 = st.columns([1,3,1])
+        
+        with cl2:
+            
+            if st.session_state.DemandaGerada is not None and ArquivoCarregado is not None:
+            
+                with st.status('Gerando CSV...') as status2:
+                    
+                    st.download_button(
+                        "Baixe em CSV",
+                        st.session_state.DemandaGerada.to_csv(),
+                        f"Geocoding-{datetime.now()}.csv",
+                        "text/csv",
+                        key='download-csv',
+                        use_container_width=True,
+                        icon='✅')
+                    
+                    status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
+    
+    with col2:
+        
+        if st.session_state.DemandaGerada is not None:
+
+            st.map(st.session_state.DemandaGerada.rename(columns={'Lat':'lat', 'Long':'lon'}),color='#006480')
+            
+    
+with st.expander('Resultado: '):
+    
+    if st.session_state.DemandaGerada is not None:
+        
+        st.dataframe(st.session_state.DemandaGerada, use_container_width=True)
