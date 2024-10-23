@@ -2,6 +2,10 @@ import googlemaps
 import pandas as pd
 import streamlit as st
 from datetime import datetime
+from shapely.geometry import LineString
+import polyline
+import geopandas as gpd
+import leafmap.foliumap as leafmap
 
 st.set_page_config(page_title='Easy Directions', layout='wide')
 
@@ -36,6 +40,7 @@ with st.sidebar:
     with st.expander('**Mais sobre Streamlit:** ', expanded=False):
         st.info('[Veja aqui](https://streamlit.io/)')    
 
+# Função para calculo de matriz
 def Matriz_uma_por_uma(chave, dataframe):
     
     # Inputs
@@ -51,6 +56,7 @@ def Matriz_uma_por_uma(chave, dataframe):
     df['LatLong_Destino'] = ''
     df['Tempo [s]'] = ''
     df['Distância [m]'] = ''
+    rotas = []
     
     # Loops
     for i in range(len(df)):
@@ -74,6 +80,12 @@ def Matriz_uma_por_uma(chave, dataframe):
                 df['Tempo [s]'].loc[i] = geocode['duration']['value']
                 df['Distância [m]'].loc[i] = geocode['distance']['value']
                 
+                for rota in geocode['steps']:
+                    
+                    rota.update({'Origem':df['ori'].loc[i], 'Destino':df['dest'].loc[i], 'Indice':i})
+
+                rotas.append(geocode['steps'])
+                
             else:
                 
                 df['Origem_Formatada'].loc[i] = 'Não encontrado'
@@ -92,14 +104,50 @@ def Matriz_uma_por_uma(chave, dataframe):
                 df['Tempo [s]'].loc[i] = 'Não encontrado'
                 df['Distância [m]'].loc[i] = 'Não encontrado'
     
-    return df
+    return (df, rotas)
+
+# Função para criar as rotas
+def roteamento(rotas):
+
+    rotas_totais = []
+    
+    # Loop through the list of routes
+    for route in rotas:
+        # For each route, loop through its legs
+        for caminho in route:
+            # Decode the polyline for each leg
+            coordinates = polyline.decode(caminho['polyline']['points'])
+            
+            # Create LineString geometry from the decoded coordinates
+            line_geometry = LineString([(lng, lat) for lat, lng in coordinates])
+            
+            # Append the route data with geometry into the list
+            rotas_totais.append({
+                'distancia': caminho['distance']['value'],
+                'duracao': caminho['duration']['value'],
+                'modo': caminho['travel_mode'],
+                'origem': caminho['Origem'],
+                'destino': caminho['Destino'],
+                'índice': caminho['Indice'],
+                'geometry': line_geometry
+            })
+    
+    # Convert the list of geometries into a GeoDataFrame
+    gdf = gpd.GeoDataFrame(rotas_totais, crs="EPSG:4326") 
+    
+    return gdf
 
 arquivo_matriz = st.file_uploader('**Faça o upload da planilha aqui!:call_me_hand:**', type=['xlsx'])
 
 if 'MatrizResultado' not in st.session_state:
     
     st.session_state.MatrizResultado = None
+    
+if 'Rotas' not in st.session_state:
+    
+    st.session_state.Rotas = None
 
+# Iniciando aplicação
 if arquivo_matriz is not None:
     
     df = pd.read_excel(arquivo_matriz)
@@ -120,8 +168,9 @@ if arquivo_matriz is not None:
                 
                 with st.status('Calculando matriz...', expanded=True) as status:
                     
-                    st.session_state.MatrizResultado = Matriz_uma_por_uma(chave, df)
-                    
+                    st.session_state.MatrizResultado, rotas = Matriz_uma_por_uma(chave, df)
+                    st.session_state.Rotas = roteamento(rotas)
+        
                 st.balloons()
                 status.update(label='Cálculo concluído', state='complete')
                 
@@ -134,19 +183,44 @@ if arquivo_matriz is not None:
                 with st.status('Gerando CSV...') as status2:
                     
                     st.download_button(
-                        label="Baixe em CSV",
+                        label="Baixe em CSV - Matriz geral",
                         data=st.session_state.MatrizResultado.to_csv(),
                         file_name=f"Directions-{datetime.now()}.xlsx",
                         mime="text/csv",
                         key='download-csv',
                         use_container_width=True,
                         icon='✅'
+                    )
+                    
+                    st.download_button(
+                        label="Baixe em CSV - Matriz de percursos",
+                        data=st.session_state.Rotas.to_csv(),
+                        file_name=f"Directions-{datetime.now()}.xlsx",
+                        mime="text/csv",
+                        key='download-csv2',
+                        use_container_width=True,
+                        icon='✅'
                     ) 
                     
-                status2.update(label='**CSV Gerado!**', state='complete', expanded=False)
-            
+                status2.update(label='**CSVs Gerados!**', state='complete', expanded=False)
+                
+# Mostrando mapa na coluna 2    
     with col2:
         
         if st.session_state.MatrizResultado is not None and arquivo_matriz is not None:
-            
-            st.dataframe(st.session_state.MatrizResultado)
+
+            # Criando instância de mapa
+            m = leafmap.Map()
+            m.add_gdf(st.session_state.Rotas, layer_name='Roteamento')
+            m.to_streamlit(responsive=True, scrolling=True)
+
+# Carregando resultados finais
+if st.session_state.MatrizResultado is not None and arquivo_matriz is not None:
+     
+    with st.expander('**Matriz geral:**'):
+        
+        st.dataframe(st.session_state.MatrizResultado)
+        
+    with st.expander('**Percursos:**'):
+        
+        st.dataframe(st.session_state.Rotas)
