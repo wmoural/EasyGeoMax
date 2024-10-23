@@ -1,9 +1,7 @@
 import googlemaps
 import pandas as pd
 import streamlit as st
-import xlsxwriter
-from io import BytesIO
-import io
+from datetime import datetime
 
 st.set_page_config(page_title='Easy Directions', layout='wide')
 
@@ -11,6 +9,7 @@ st.set_page_config(page_title='Easy Directions', layout='wide')
 st.title("**Easy** :red[Directions] 📍")    
 
 with st.sidebar:
+    
     st.info("""
             Use os seguintes valores para indicar o modo de transporte:
             - driving (para carros e motos)
@@ -18,6 +17,7 @@ with st.sidebar:
             - walking (para a pé)
             - bus (para ônibus)
             """)
+            
     chave = st.text_input('Insira aqui sua chave API:', type='password')
 
     with st.expander('**Dados do autor:** ', expanded=True):
@@ -102,38 +102,50 @@ if 'MatrizResultado' not in st.session_state:
     st.session_state.MatrizResultado = None
 
 if arquivo_matriz is not None:
-            
-    buffer = io.BytesIO()
     
     df = pd.read_excel(arquivo_matriz)
     
-    with st.form('Form rodar matriz'):
-        Origem = st.selectbox('**Indique a coluna com a origem:**', df.columns)
-        Destino = st.selectbox('**Indique a coluna com o destino:**', df.columns)
-        Modo = st.selectbox('**Indique a coluna com o modo de deslocamento:**', df.columns)
-        
-        rodar = st.form_submit_button('**Calcular**')
-        
-        if rodar:
-
-            st.session_state.MatrizResultado = Matriz_uma_por_uma(chave, df)                
-        
+    col1,col2 = st.columns([5,5])
+    
+    with col1:
+    
+        with st.form('Form rodar matriz'):
             
-            with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-                st.session_state.MatrizResultado.to_excel(writer, sheet_name='Sheet1')
-                writer.close()    
+            Origem = st.selectbox('**Indique a coluna com a origem:**', df.columns)
+            Destino = st.selectbox('**Indique a coluna com o destino:**', df.columns)
+            Modo = st.selectbox('**Indique a coluna com o modo de deslocamento:**', df.columns)
             
-            st.success('Processo concluído!')
-            st.dataframe(st.session_state.MatrizResultado)
+            rodar = st.form_submit_button('**Calcular**')
+            
+            if rodar:
+                
+                with st.status('Calculando matriz...', expanded=True) as status:
+                    
+                    st.session_state.MatrizResultado = Matriz_uma_por_uma(chave, df)
+                    
+                st.balloons()
+                status.update(label='Cálculo concluído', state='complete')
+                
+        cl1,cl2,cl3 = st.columns([1,5,1])
         
-
-    st.download_button(
-        label="**Download em excel**",
-        data=buffer,
-        file_name="Matriz gerada.xlsx",
-        mime="application/vnd.ms-excel"
-    )
-
-else:
-
-    st.session_state.MatrizResultado = None
+        with cl2:
+            
+            if st.session_state.MatrizResultado is not None and arquivo_matriz is not None:
+                
+                with st.status('Gerando CSV...') as status2:
+                    
+                    st.download_button(
+                        label="Baixe em CSV",
+                        data=st.session_state.MatrizResultado.to_csv(),
+                        file_name=f"Directions-{datetime.now()}.xlsx",
+                        mime="text/csv",
+                        key='download-csv',
+                        use_container_width=True,
+                        icon='✅'
+                    ) 
+                    
+                status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
+            
+    with col2:
+        
+        st.dataframe(st.session_state.MatrizResultado)
