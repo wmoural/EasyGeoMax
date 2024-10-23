@@ -202,7 +202,7 @@ if arquivo_matriz is not None:
                         icon='✅'
                     ) 
                     
-                status2.update(label='**CSVs Gerados!**', state='complete', expanded=False)
+                status2.update(label='**CSVs Gerados!**', state='complete', expanded=True)
                 
 # Mostrando mapa na coluna 2    
     with col2:
