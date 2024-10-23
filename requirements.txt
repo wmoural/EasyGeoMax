@@ -9,3 +9,4 @@ geopandas==1.0.1
 overturemaps==0.9.0
 leafmap==0.38.0
 shapely==2.0.6
+polyline==2.0.2
