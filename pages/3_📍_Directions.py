@@ -36,7 +36,6 @@ with st.sidebar:
     with st.expander('**Mais sobre Streamlit:** ', expanded=False):
         st.info('[Veja aqui](https://streamlit.io/)')    
 
-@st.cache_data
 def Matriz_uma_por_uma(chave, dataframe):
     
     # Inputs
@@ -144,8 +143,10 @@ if arquivo_matriz is not None:
                         icon='✅'
                     ) 
                     
-                status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
+                status2.update(label='**CSV Gerado!**', state='complete', expanded=False)
             
     with col2:
         
-        st.dataframe(st.session_state.MatrizResultado)
+        if st.session_state.MatrizResultado is not None and arquivo_matriz is not None:
+            
+            st.dataframe(st.session_state.MatrizResultado)
