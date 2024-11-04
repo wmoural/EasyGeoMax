@@ -82,7 +82,7 @@ def Matriz_uma_por_uma(chave, dataframe):
                 
                 for rota in geocode['steps']:
                     
-                    rota.update({'Origem':df['Origem'].loc[i], 'Destino':df['Destino'].loc[i], 'Indice':i})
+                    rota.update({'Origem':df[Origem].loc[i], 'Destino':df[Destino].loc[i], 'Indice':i})
 
                 rotas.append(geocode['steps'])
                 
@@ -173,7 +173,7 @@ if arquivo_matriz is not None:
         
                 st.balloons()
                 status.update(label='Cálculo concluído', state='complete')
-                st.dataframe(st.session_state.Rotas)
+
 
         cl1,cl2,cl3 = st.columns([1,5,1])
         
