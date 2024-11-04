@@ -82,7 +82,7 @@ def Matriz_uma_por_uma(chave, dataframe):
                 
                 for rota in geocode['steps']:
                     
-                    rota.update({'Origem':df['ori'].loc[i], 'Destino':df['dest'].loc[i], 'Indice':i})
+                    rota.update({'Origem':df['Origem'].loc[i], 'Destino':df['Destino'].loc[i], 'Indice':i})
 
                 rotas.append(geocode['steps'])
                 
