@@ -185,7 +185,7 @@ if arquivo_matriz is not None:
                     st.download_button(
                         label="Baixe em CSV - Matriz geral",
                         data=st.session_state.MatrizResultado.to_csv(),
-                        file_name=f"Directions-{datetime.now()}.xlsx",
+                        file_name=f"Directions-{datetime.now()}.csv",
                         mime="text/csv",
                         key='download-csv',
                         use_container_width=True,
@@ -195,7 +195,7 @@ if arquivo_matriz is not None:
                     st.download_button(
                         label="Baixe em CSV - Matriz de percursos",
                         data=st.session_state.Rotas.to_csv(),
-                        file_name=f"Directions-{datetime.now()}.xlsx",
+                        file_name=f"Directions-{datetime.now()}.csv",
                         mime="text/csv",
                         key='download-csv2',
                         use_container_width=True,
