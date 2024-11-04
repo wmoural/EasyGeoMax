@@ -169,7 +169,7 @@ if arquivo_matriz is not None:
                 with st.status('Calculando matriz...', expanded=True) as status:
                     
                     st.session_state.MatrizResultado, rotas = Matriz_uma_por_uma(chave, df)
-                    #st.session_state.Rotas = roteamento(rotas)
+                    st.session_state.Rotas = roteamento(rotas)
         
                 st.balloons()
                 status.update(label='Cálculo concluído', state='complete')
