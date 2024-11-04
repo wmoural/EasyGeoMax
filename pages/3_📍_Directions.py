@@ -173,7 +173,8 @@ if arquivo_matriz is not None:
         
                 st.balloons()
                 status.update(label='Cálculo concluído', state='complete')
-                
+                st.dataframe(st.session_state.Rotas)
+
         cl1,cl2,cl3 = st.columns([1,5,1])
         
         with cl2:
