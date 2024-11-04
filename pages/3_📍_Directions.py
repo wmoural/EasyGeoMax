@@ -192,18 +192,18 @@ if arquivo_matriz is not None:
                         icon='✅'
                     )
                     
-                    #st.download_button(
-                    #    label="Baixe em CSV - Matriz de percursos",
-                    #    data=st.session_state.Rotas.to_csv(),
-                    #    file_name=f"Directions-{datetime.now()}.xlsx",
-                    #    mime="text/csv",
-                    #    key='download-csv2',
-                    #    use_container_width=True,
-                    #    icon='✅'
-                    #) 
+                    st.download_button(
+                        label="Baixe em CSV - Matriz de percursos",
+                        data=st.session_state.Rotas.to_csv(),
+                        file_name=f"Directions-{datetime.now()}.xlsx",
+                        mime="text/csv",
+                        key='download-csv2',
+                        use_container_width=True,
+                        icon='✅'
+                    ) 
                     
                 status2.update(label='**CSVs Gerados!**', state='complete', expanded=True)
-"""                
+             
 # Mostrando mapa na coluna 2    
     with col2:
         
@@ -224,4 +224,3 @@ if st.session_state.MatrizResultado is not None and arquivo_matriz is not None:
     with st.expander('**Percursos:**'):
         
         st.dataframe(st.session_state.Rotas)
-"""
