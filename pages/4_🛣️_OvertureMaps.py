@@ -123,7 +123,7 @@ with col2:
                        ser perdido caso deseje carregar os resultados no mapa. Pondere.
                        """, icon='⚠️')
             
-            rodar = st.form_submit_button('**Filtrar! 🔎**', use_container_width=True)
+            rodar = st.form_submit_button('**Filtrar!**', use_container_width=True, icon='🔎')
             
             if rodar:
                 
@@ -169,12 +169,13 @@ with col2:
                     st.session_state.resultado.to_csv(),
                     f"Overture-{busca}.csv",
                     "text/csv",
-                    key='download-csv'
+                    key='download-csv',
+                    use_container_width=True,
+                    icon='✅'
                     )
 
                 status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
-
-
+               
 with col1:
     
     if arquivo is not None:  
