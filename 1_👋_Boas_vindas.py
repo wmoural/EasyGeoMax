@@ -18,7 +18,7 @@ with st.sidebar:
                 st.subheader('[Github](https://github.com/wmoural)')
     
     with st.expander('**Pague-me um café:**', icon='☕', expanded=False):
-        pix = 'https://i.imgur.com/8Dgf5dm.jpg'
+        pix = 'https://imgur.com/a/c1nGZgq'
         st.image('pix, use_column_width=True', caption='PIX')
      
 
