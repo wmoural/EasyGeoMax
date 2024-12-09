@@ -17,8 +17,9 @@ with st.sidebar:
                 st.subheader('[Linkedin](https://www.linkedin.com/in/wellington-moura-27497a1b3/)')
                 st.subheader('[Github](https://github.com/wmoural)')
     
-    with st.expander('**Mais sobre Streamlit:** ', expanded=False):
-        st.info('[Veja aqui](https://streamlit.io/)')
+    with st.expander('**Pague-me um café:**☕', expanded=False):
+        pix = 'https://i.imgur.com/8Dgf5dm.jpg'
+        st.image('pix, use_column_width=True', caption='PIX')
      
 
 st.title(':blue[Boas vindas ] 👋')
