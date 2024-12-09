@@ -37,8 +37,9 @@ with st.sidebar:
                 st.subheader('[Linkedin](https://www.linkedin.com/in/wellington-moura-27497a1b3/)')
                 st.subheader('[Github](https://github.com/wmoural)')
     
-    with st.expander('**Mais sobre Streamlit:** ', expanded=False):
-        st.info('[Veja aqui](https://streamlit.io/)')    
+    with st.expander('**Pague-me um café:**', icon='☕', expanded=False):
+        pix = 'https://i.imgur.com/LLr5WY8.jpg'
+        st.image(pix, use_column_width='True', caption='PIX')  
 
 # Função para calculo de matriz
 def Matriz_uma_por_uma(chave, dataframe):
