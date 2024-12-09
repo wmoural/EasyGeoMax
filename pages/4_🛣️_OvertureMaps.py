@@ -155,7 +155,8 @@ with col2:
                         st.write('Feições carregadas para o mapa.')
                     
                     status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:\
-                    Aguarde o csv ficar pronto!', state='complete', expanded=False) 
+                    Aguarde o csv ficar pronto!', state='complete', expanded=False)
+                    
 
     cl1,cl2,cl3 = st.columns([1,3,1])
 
@@ -176,6 +177,7 @@ with col2:
                     )
 
                 status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
+                st.toast('Se o easygeomax foi útil, valorize-me: pague-me um café! 🥳')
                
 with col1:
     
