@@ -177,7 +177,7 @@ with col2:
                     )
 
                 status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
-                st.toast('Se o easygeomax foi útil, valorize-me: pague-me um café! 🥳')
+                st.toast('Se o easygeomax foi útil, valorize-me: pague-me um café!', icon='🥳')
                
 with col1:
     
