@@ -14,13 +14,14 @@ st.title("**Easy** :red[Directions] 📍")
 
 with st.sidebar:
     
-    st.info("""
-            Use os seguintes valores para indicar o modo de transporte:
-            - driving (para carros e motos)
-            - bicycling (para bicicleta)
-            - walking (para a pé)
-            - bus (para ônibus)
-            """)
+    with st.expander('**Informações importantes**', icon='ℹ️', expanded=False):
+        st.info("""
+                Use os seguintes valores para indicar o modo de transporte:
+                - driving (para carros e motos)
+                - bicycling (para bicicleta)
+                - walking (para a pé)
+                - bus (para ônibus)
+                """)
             
     chave = st.text_input('Insira aqui sua chave API:', type='password')
 
