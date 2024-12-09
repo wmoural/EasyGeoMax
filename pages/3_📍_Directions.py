@@ -175,7 +175,7 @@ if arquivo_matriz is not None:
         
                 st.balloons()
                 status.update(label='Cálculo concluído', state='complete')
-                st.toast('Se o easygeomax foi útil, valorize-me: pague-me um café! 🥳')
+                st.toast('Se o easygeomax foi útil, valorize-me: pague-me um café!', icon='🥳')
 
 
         cl1,cl2,cl3 = st.columns([1,5,1])
