@@ -19,7 +19,7 @@ with st.sidebar:
     
     with st.expander('**Pague-me um café:**', icon='☕', expanded=False):
         pix = 'https://i.imgur.com/LLr5WY8.jpg'
-        st.image(pix, use_column_width=True', caption='PIX')
+        st.image(pix, use_column_width='True', caption='PIX')
      
 
 st.title(':blue[Boas vindas ] 👋')
