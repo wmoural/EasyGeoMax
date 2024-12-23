@@ -7,10 +7,8 @@ from shapely import wkt
 import io
 from io import BytesIO
 
-# Função pra criar CSV
-@st.cache_data
-def gerarcsv(df):
-   return df.to_csv(index=False).encode('utf-8')
+# Limpando cache
+st.cache_data.clear()
 
 # Funções para estilização do mapa
 def estilobbox(feature):
