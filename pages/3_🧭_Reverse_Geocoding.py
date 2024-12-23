@@ -28,7 +28,7 @@ with st.sidebar:
                 - estar em uma única coluna
                 - serem separadas por ","
                 - possuírem "." como separador decimal \n
-                ex.: pd.DataFrame({'Coordenadas': ['-3.720263958862653, -38.51144919881748','-3.024417572242803, -39.647238313789394', '-2.798333841704678, -40.52100992380582']})
+                ex.: st.dataframe(pd.DataFrame({'Coordenadas': ['-3.720263958862653, -38.51144919881748','-3.024417572242803, -39.647238313789394', '-2.798333841704678, -40.52100992380582']}))
                 """)
         
     chave = st.text_input('Insira aqui sua chave API:', type='password')
