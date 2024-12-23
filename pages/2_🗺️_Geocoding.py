@@ -9,6 +9,7 @@ from datetime import datetime
 
 # Limpando cache
 st.cache_data.clear()
+st.rerun()
 
 # Configurando página
 st.set_page_config(page_title='Easy Geocoding', layout='wide', page_icon='🗺️')
