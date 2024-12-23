@@ -22,6 +22,15 @@ if 'DemandaReversaGerada' not in st.session_state:
 
 with st.sidebar:
     
+    with st.expander('**Informações importantes**', icon='ℹ️', expanded=False):
+        st.info("""
+                As coordenadas deverão:
+                - estar em uma única coluna
+                - serem separadas por ","
+                - possuírem "." como separador decimal
+                ex.: [-3.72026, -38.51144]
+                """)
+        
     chave = st.text_input('Insira aqui sua chave API:', type='password')
  
     with st.expander('**Dados do autor:** ', expanded=True):
