@@ -17,8 +17,8 @@ st.set_page_config(page_title='Easy Reverse-Geocoding', layout='wide', page_icon
 st.title("**Easy** :orange[Reverse-Geocoding] :world_map:")   
 
 # Declarando session state
-if 'DemandaGerada' not in st.session_state:
-    st.session_state.DemandaGerada = None
+if 'DemandaReversaGerada' not in st.session_state:
+    st.session_state.DemandaReversaGerada = None
 
 with st.sidebar:
     
@@ -112,13 +112,13 @@ if ArquivoCarregado is not None:
                                             
                     else:
                         
-                        st.session_state.DemandaGerada = ReverseGeocodeDemanda(df, chave)
+                        st.session_state.DemandaReversaGerada = ReverseGeocodeDemanda(df, chave)
                         
                         if st.session_state.DemandaGerada is not None:
                             
                             buffer = io.BytesIO()
                             with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-                                st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
+                                st.session_state.DemandaReversaGerada.to_excel(writer, sheet_name='Sheet1')
                                 writer.close()
                                         
                         st.balloons()
@@ -129,13 +129,13 @@ if ArquivoCarregado is not None:
         
         with cl2:
             
-            if st.session_state.DemandaGerada is not None and ArquivoCarregado is not None:
+            if st.session_state.DemandaReversaGerada is not None and ArquivoCarregado is not None:
             
                 with st.status('Gerando CSV...') as status2:
                     
                     st.download_button(
                         "Baixe em CSV",
-                        st.session_state.DemandaGerada.to_csv(),
+                        st.session_state.DemandaReversaGerada.to_csv(),
                         f"Geocoding-Reverso-{datetime.now()}.csv",
                         "text/csv",
                         key='download-csv',
@@ -148,6 +148,6 @@ if ArquivoCarregado is not None:
         
         with st.expander('Resultado: '):
             
-            if st.session_state.DemandaGerada is not None:
+            if st.session_state.DemandaReversaGerada is not None:
                 
-                st.dataframe(st.session_state.DemandaGerada, use_container_width=True)
+                st.dataframe(st.session_state.DemandaReversaGerada, use_container_width=True)
