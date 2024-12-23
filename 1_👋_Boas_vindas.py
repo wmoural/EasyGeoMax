@@ -35,11 +35,14 @@ with st.expander('**Uso**', expanded=True):
     st.markdown("""
                  - **:green[Easy Geocoding]**: insira sua API KEY -> faça o upload de uma planilha Excel (.xlsx) contendo a lista de endereços que deseja geocodificar -> 
                 indique a coluna alvo -> clique em "Geocodificar".
+
+                 - **:orange[Easy Reverse-Geocoding]**: insira sua API KEY -> faça o upload de uma planilha Excel (.xlsx) contendo a lista de coordenadas que deseja geocodificar -> 
+                indique a coluna alvo -> clique em "Geocodificar".
                 
-                 - **:green[Easy Directions]**: insira sua API KEY -> faça o upload de uma planilha Excel (.xlsx) contendo a lista de endereços ou (LATLONGs) de origem e 
+                 - **:red[Easy Directions]**: insira sua API KEY -> faça o upload de uma planilha Excel (.xlsx) contendo a lista de endereços ou (LATLONGs) de origem e 
                  destino e o modo de transporte correspondente -> indique as colunas alvos -> clique em "Calcular".
 
-                 - **:green[Easy OvertureData]**: faça o upload de um polígono não vazio em formato geopackage -> defina o tipo de dado desejado -> clique em "Filtrar!".
+                 - **:violet[Easy OvertureData]**: faça o upload de um polígono não vazio em formato geopackage -> defina o tipo de dado desejado -> clique em "Filtrar!".
                  """)
 
     st.info('Para Easy Directions, a formatação de LATLONGs deve seguir o exemplo: "-3.71917,-38.51226"')  
