@@ -27,7 +27,7 @@ with st.sidebar:
                 As coordenadas deverão:
                 - estar em uma única coluna
                 - serem separadas por ","
-                - possuírem "." como separador decimal
+                - possuírem "." como separador decimal \n
                 ex.: [-3.72026, -38.51144]
                 """)
         
