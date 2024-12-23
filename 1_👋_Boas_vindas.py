@@ -22,7 +22,7 @@ with st.sidebar:
         st.image(pix, use_column_width='True', caption='PIX')
      
 
-st.title(':blue[Boas vindas ] 👋')
+st.title('***Boas vindas*** 👋')
 
 with st.expander('**Sobre**', expanded=True):
     st.markdown("""
