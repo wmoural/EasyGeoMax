@@ -44,8 +44,6 @@ with st.expander('**Uso**', expanded=True):
 
                  - **:violet[Easy OvertureData]**: faça o upload de um polígono não vazio em formato geopackage -> defina o tipo de dado desejado -> clique em "Filtrar!".
                  """)
-
-    st.info('Para Easy Directions, a formatação de LATLONGs deve seguir o exemplo: "-3.71917,-38.51226"')  
   
 with st.expander('**Notas**', expanded=True):
 
