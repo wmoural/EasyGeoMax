@@ -14,7 +14,7 @@ st.cache_data.clear()
 st.set_page_config(page_title='Easy Reverse-Geocoding', layout='wide', page_icon='🧭')
 
 # Título
-st.title("**Easy** :orange[Reverse-Geocoding] :world_map:")   
+st.title("**Easy** :orange[Reverse-Geocoding] :compass:")   
 
 # Declarando session state
 if 'DemandaReversaGerada' not in st.session_state:
