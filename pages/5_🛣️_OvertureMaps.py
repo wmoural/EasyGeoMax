@@ -9,7 +9,6 @@ from io import BytesIO
 
 # Limpando cache
 st.cache_data.clear()
-st.rerun()
 
 # Funções para estilização do mapa
 def estilobbox(feature):
