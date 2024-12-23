@@ -29,7 +29,7 @@ with st.sidebar:
                 - serem separadas por ","
                 - possuírem "." como separador decimal \n
                 """)
-        st.dataframe(pd.DataFrame({'Coordenadas': ['-3.72026, -38.51144','-3.02441, -39.64723', '-2.79833, -40.52100']}), hide_index=True, use_container_width=True)
+        st.dataframe(pd.DataFrame({'Exemplo de coordenadas': ['-3.72026, -38.51144','-3.02441, -39.64723', '-2.79833, -40.52100']}), hide_index=True, use_container_width=True)
         
     chave = st.text_input('Insira aqui sua chave API:', type='password')
  
