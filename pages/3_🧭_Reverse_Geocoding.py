@@ -106,7 +106,7 @@ if ArquivoCarregado is not None:
 
         with st.form("Inputs"):
 
-            LatLong = st.selectbox("Selecione a coluna com o endereço", list(df.columns.values))
+            LatLong = st.selectbox("Selecione a coluna com as coordenadas", list(df.columns.values))
 
             # Botão pra rodar o geocode
             rodar = st.form_submit_button("Geocodificar", use_container_width=True, icon='✌')
