@@ -464,7 +464,7 @@ with tab1:
     # Definindo reload
     st.session_state.reload_tab1 = False
     
-    tab1_col1, tab1_col2, tab1_col3 = st.columns([2,2,.1])
+    tab1_col1, tab1_col2 = st.columns([2,2])
     
     with tab1_col1:
         
@@ -554,7 +554,9 @@ with tab1:
                 # Salvando resultado num buffer
                 if arquivo_gpd is not None:
                     
-                    with tab1_col1_col4:
+                        tab1_col2_col1, tab1_col2_col2, tab1_col2_col3 = st.columns([1,2,1])
+                        
+                        with tab1_col2_col2:
                         
                         if st.button('Processar pontos', icon=':material/grain:'):
                         
