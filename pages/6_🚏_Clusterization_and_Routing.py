@@ -289,7 +289,7 @@ if 'buffer_rotas' not in st.session_state:
     st.session_state.buffer_rotas = None
 
 # Configurando página
-st.set_page_config(page_title="Easy OvertureData", page_icon=':material/tactic:', layout='wide')
+st.set_page_config(page_title="Easy Clusterization and Routing", page_icon=':material/tactic:', layout='wide')
 
 # Ajustando CSSs
 st.markdown("""
@@ -308,7 +308,7 @@ st.markdown("""
             """, unsafe_allow_html=True)
 
 # Título
-st.title("**Easy** :blue[Routing] :busstop:")   
+st.title("**Easy** :orange[Routing] :busstop:")   
 
 # Criando tabs
 tab1, tab2 = st.tabs(['Clusterização', 'Roteirização'])
