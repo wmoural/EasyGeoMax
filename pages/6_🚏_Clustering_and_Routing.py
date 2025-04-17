@@ -223,7 +223,6 @@ def rotear_circular(otimizar):
                     coords[0].append((coords[0][0][0],coords[0][0][1]))
     
             coords = tuple(chain.from_iterable(coords))
-                
             
             if i != len(geocode)-1:
                 
@@ -508,7 +507,8 @@ with tab1:
                                                                         values=valores_pivot),
                                                            qtde_clusters)
                     
-                    st.toast('Clusterização concluída', icon=':material/done_all:')                   
+                    st.toast('Clusterização concluída', icon=':material/done_all:')
+                    st.rerun()
             
     with tab1_col2:
         
@@ -536,7 +536,11 @@ with tab1:
                 
                 # Inserindo o cluster
                 arquivo_gpd = pd.merge(arquivo_gpd, st.session_state.cluster)
-                
+                st.session_state.reload_tab1 = False
+                if st.session_state.reload_tab1 == False:
+                    st.session_state.reload_tab1 = True
+                    st.rerun()
+
                 # Mostrando clusters gerados
                 m = leafmap.Map(center=[arquivo_gpd.geometry.y.mean(), arquivo_gpd.geometry.x.mean()], zoom=11)
                 
@@ -558,11 +562,6 @@ with tab1:
                     
                     # Colocando geopackage no buffer
                     arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
-
-                    # Rerun só pra carregar os resultados
-                    if st.session_state.reload_tab1 == False:
-                        st.session_state.reload_tab1 = True
-                        st.rerun()
                
 # Expander roterização
 with tab2:
