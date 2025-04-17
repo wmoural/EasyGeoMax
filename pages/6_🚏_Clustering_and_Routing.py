@@ -112,14 +112,12 @@ def rotear_indo(otimizar):
     # Gerando lista para guardar resultados finais
     rotas_totais = [] 
 
-    
     for cluster in arquivo_roteirizacao[coluna_cluster].drop_duplicates():
         
         # classificando valores
         df_filtrado = arquivo_roteirizacao[arquivo_roteirizacao[coluna_cluster] == cluster].reset_index().drop(columns=['index'])
         df_filtrado = df_filtrado.sort_values(by=coluna_distancia, ascending=False).reset_index().drop(columns=['index'])
-        
-
+    
         # pegando distancias
         geocode = gmaps.directions(local_fixo,
                                    df_filtrado.loc[0, coluna_coordenadas],
@@ -416,7 +414,9 @@ with st.sidebar:
                 st.info("""
                         Nessa aba será possível estimar a roteirização de pontos por meio da API Google Directions, utilizando waypoints (pontos de parada) entre a origem e o destino.
                         Para gerar a roteirização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_roteirizacao.xlsx). Caso você deseje fazer roterizações que não são circulares, você deverá 
-                        encontrar a distância de cada ponto de parada até o ponto fixo. A API KEY é requerida nessa aba. A roteirização pode ser feita em três métodos:
+                        encontrar a distância de cada ponto de parada até o ponto fixo.\n
+                        A roteirização considerará no máximo **25 paradas** por cluster.\n
+                        A API KEY é requerida nessa aba. A roteirização pode ser feita em três métodos:
                             """)
                 
                 # Roteirização circular
