@@ -558,7 +558,7 @@ with tab1:
                         
                         with tab1_col2_col2:
                         
-                            if st.button('Processar pontos', icon=':material/grain:'):
+                            if st.button('Processar pontos', icon=':material/grain:', use_container_width=True):
                             
                                 # Guardando espaço na memória
                                 st.session_state.buffer_cluster = io.BytesIO()
