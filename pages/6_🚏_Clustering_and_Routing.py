@@ -402,7 +402,7 @@ with st.sidebar:
                 dia_col1, dia_col2, dia_col3 = st.columns([.5,2,.5])
                 
                 with dia_col2:
-                    st.image('123.gif', caption='[Fonte](https://pt.wikipedia.org/wiki/K-medoides)')
+                    st.image('https://i.imgur.com/1qN6a7h.gifv', caption='[Fonte](https://pt.wikipedia.org/wiki/K-medoides)')
            
             # Texto explicativo sobre clusterização
             with st.expander('Roteirização', icon=':material/tactic:'):           
