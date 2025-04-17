@@ -288,8 +288,11 @@ if 'buffer_cluster' not in st.session_state:
 if 'buffer_rotas' not in st.session_state:
     st.session_state.buffer_rotas = None
 
-if 'reload' not in st.session_state:
-    st.session_state.reload = None
+if 'reload_tab1' not in st.session_state:
+    st.session_state.reload_tab1 = None
+    
+if 'reload_tab2' not in st.session_state:
+    st.session_state.reload_tab2 = None
 
 # Configurando página
 st.set_page_config(page_title="Easy Clustering and Routing", page_icon=':material/tactic:', layout='wide')
@@ -460,7 +463,7 @@ tab1, tab2 = st.tabs(['Clusterização', 'Roteirização'])
 with tab1:
 
     # Definindo reload
-    st.session_state.reload = False
+    st.session_state.reload_tab1 = False
     
     tab1_col1, tab1_col2, tab1_col3 = st.columns([2,2,.1])
     
@@ -557,13 +560,14 @@ with tab1:
                     arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
 
                     # Rerun só pra carregar os resultados
-                    if st.session_state.reload == False:
-                        st.session_state.reload = True
+                    if st.session_state.reload_tab1 == False:
+                        st.session_state.reload_tab1 = True
                         st.rerun()
                
 # Expander roterização
 with tab2:
-    
+
+    # Definindo colunas pros inputs
     tab2_col1, tab2_col2 = st.columns([2,2])
     
     with tab2_col1:
