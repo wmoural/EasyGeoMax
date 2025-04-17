@@ -384,7 +384,7 @@ with st.sidebar:
        
     
     # Botão de tira-dúvidas
-    if st.button('**Informações importantes**', icon=':material/help:', use_container_width=True, type='tertiary'):
+    if st.button('**Informações importantes**', icon=':material/help:', use_container_width=True, type='tertiary', on_click='ignore'):
         
         @st.dialog("Informações")
         def duvidas():
