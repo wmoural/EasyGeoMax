@@ -294,16 +294,16 @@ st.set_page_config(page_title="Easy Clustering and Routing", page_icon=':materia
 # Ajustando CSSs
 st.markdown("""
             <style>
-            .st-emotion-cache-ptkz9a {
+            .st-emotion-cache-y2gf1w {
                 position: relative;
                 top: 500px;
             }
             
-            .st-emotion-cache-v40j46 p {
+            .st-emotion-cache-lsgwmo p {
                 position: relative;
                 top: 500px;
                 left: 30px;
-                
+            }
             </style>      
             """, unsafe_allow_html=True)
 
