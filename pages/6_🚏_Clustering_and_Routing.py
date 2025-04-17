@@ -497,9 +497,9 @@ with tab1:
                                                                         columns=coluna_pivot, 
                                                                         values=valores_pivot),
                                                            qtde_clusters)
-                    
-                    st.toast('Clusterização concluída', icon=':material/done_all:')
-                     
+
+                    st.rerun()
+                    st.toast('Clusterização concluída', icon=':material/done_all:')                   
             
     with tab1_col2:
         
