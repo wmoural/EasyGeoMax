@@ -310,6 +310,145 @@ st.markdown("""
 # Título
 st.title("**Easy** :gray[Clustering and Routing] :busstop:")   
 
+# Sidebar com as infos e os resultados
+with st.sidebar:
+    
+    chave = st.text_input('Insira aqui sua chave API:', type='password')
+    st.subheader('Acesse os resultados:', divider=True)        
+    
+    # Download clusters
+    if st.session_state.cluster is not None:
+        
+        with st.expander('Apenas clusterização', icon=':material/hive:'):
+            
+            # Download clusters csv
+            st.download_button(
+                'Baixe em *.csv*',
+                st.session_state.cluster.to_csv(),
+                'Clusterização.csv',
+                "text/csv",
+                key='download-csv',
+                use_container_width=True,
+                icon=':material/download:',
+                type='primary'
+            )
+ 
+    # Download pontos clusters gpgk
+    if st.session_state.buffer_cluster is not None:
+        
+        with st.expander('Pontos clusterizados', icon=':material/grain:'):
+            
+            st.download_button(
+                "Baixe em *.gpkg*",
+                st.session_state.buffer_cluster,
+                'Pontos_Clusterizados.gpkg',
+                key='download-gpkg',
+                use_container_width=True,
+                icon=':material/download:',
+                type='primary'
+            )
+            
+    # Download rotas csv
+    if st.session_state.rotas_geradas is not None:    
+        
+        with st.expander('Apenas roteamento', icon=':material/call_split:'):
+            
+            st.download_button(
+                "Baixe em *.csv*",
+                st.session_state.rotas_geradas.to_csv(),
+                'Roteamento_gerado.csv',
+                "text/csv",
+                key='download-roteamento-csv',
+                use_container_width=True,
+                icon=':material/download:',
+                type='primary'
+            )
+            
+    # Download rotas gpgk
+    if st.session_state.buffer_rotas is not None:     
+        
+        with st.expander('Linhas de roteamento', icon=':material/tactic:'):
+            
+            st.download_button(
+                "Baixe em *.gpkg*",
+                st.session_state.buffer_rotas,
+                'Roteamento_gerado.gpkg',
+                key='download-roteamento-gpkg',
+                use_container_width=True,
+                icon=':material/download:',
+                type='primary'
+            )   
+       
+    
+    # Botão de tira-dúvidas
+    if st.button('**Informações importantes**', icon=':material/help:', use_container_width=True, type='tertiary'):
+        
+        @st.dialog("Informações")
+        def duvidas():
+            
+            # Texto explicativo sobre clusterização
+            with st.expander('Clusterização', icon=':material/grain:'):
+                
+                st.info("""
+                        Nessa aba será possível gerar clusters de pontos por meio da metodologia K-Medoids, se utilizando do método PAM, a partir de
+                        uma matriz de distância entre os pontos, que deverá ser previamente calculada.\n
+                        Para gerar a clusterização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_clusterizacao.xlsx), na área de upload destinada (localizada à esquerda).
+                        Você pode gerar até 100 clusters.\n
+                        Após gerar os clusters, você pode baixá-los no formato *.csv* ou, caso deseje visualizar a espacialização da clusterização e já atribuir os clusters aos pontos, carregue um arquivo no formato *.gpkg* na área de upload destinada (localizada à direita).
+                        Dessa forma, você poderá visualizar e baixar os pontos já com os clusters atribuídos no formato *.gpkg*.
+                        """)
+                
+                # Colunas criadas só para posicionar a imagem no centro
+                dia_col1, dia_col2, dia_col3 = st.columns([.5,2,.5])
+                
+                with dia_col2:
+                    st.image('123.gif', caption='[Fonte](https://pt.wikipedia.org/wiki/K-medoides)')
+           
+            # Texto explicativo sobre clusterização
+            with st.expander('Roteirização', icon=':material/tactic:'):           
+                
+                st.info("""
+                        Nessa aba será possível estimar a roteirização de pontos por meio da API Google Directions, utilizando waypoints (pontos de parada) entre a origem e o destino.
+                        Para gerar a roteirização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_roteirizacao.xlsx). Caso você deseje fazer roterizações que não são circulares, você deverá 
+                        encontrar a distância de cada ponto de parada até o ponto fixo. A roteirização pode ser feita em três métodos:
+                            """)
+                
+                # Roteirização circular
+                with st.container(border=False):
+                    div_col1, div_col2 = st.columns([3,1])
+                    with div_col1:
+                        st.info("""
+                                **Roteirização circular**: é realizada quando se deseja estimar uma rota circular em que o ponto de origem e de destino são iguais, 
+                                realizando as devidas paradas entre os dois pontos.
+                                    """)
+                    with div_col2:
+                        st.image('https://i.imgur.com/Ap8E0tM.png', use_container_width=True)
+
+                # Roteirização com destino fixo                
+                with st.container(border=False):
+                    div_col1, div_col2 = st.columns([3,1])
+                    with div_col1:
+                        st.info("""
+                                **Roteirização com destino fixo**: é realizada quando se deseja estimar uma rota linear com origem no ponto fixo, 
+                                com destino ao ponto mais distante dentro do cluster designado, realizando as devidas paradas entre os dois pontos.
+                                """)
+                    with div_col2:
+                        st.image('https://i.imgur.com/5nhsPha.png', use_container_width=True)
+                    
+                with st.container(border=False):
+                    div_col1, div_col2 = st.columns([3,1])
+                    with div_col1:
+                        st.info("""
+                                **Roteirização com origem fixa**: é realizada quando se deseja estimar uma rota linear partindo do ponto mais distante dentro de um cluster em relação ao ponto fixo, 
+                                realizando as devidas paradas entre os dois pontos.
+                                """)
+                    with div_col2:
+                        st.image('https://i.imgur.com/LxcGHIk.png', use_container_width=True)
+                        
+        duvidas()
+        
+    st.caption('Projeto desenvolvido por [Wellington Moura](www.linkedin.com/in/wmoural)')
+
 # Criando tabs
 tab1, tab2 = st.tabs(['Clusterização', 'Roteirização'])
 
@@ -547,141 +686,3 @@ with tab2:
             
             # Renderizando mapas
             m_tab2.to_streamlit(responsive=True, scrolling=True, height=500)
-
-with st.sidebar:
-    
-    chave = st.text_input('Insira aqui sua chave API:', type='password')
-    st.subheader('Acesse os resultados:', divider=True)        
-    
-    # Download clusters
-    if st.session_state.cluster is not None:
-        
-        with st.expander('Apenas clusterização', icon=':material/hive:'):
-            
-            # Download clusters csv
-            st.download_button(
-                'Baixe em *.csv*',
-                st.session_state.cluster.to_csv(),
-                'Clusterização.csv',
-                "text/csv",
-                key='download-csv',
-                use_container_width=True,
-                icon=':material/download:',
-                type='primary'
-            )
- 
-    # Download pontos clusters gpgk
-    if st.session_state.buffer_cluster is not None:
-        
-        with st.expander('Pontos clusterizados', icon=':material/grain:'):
-            
-            st.download_button(
-                "Baixe em *.gpkg*",
-                st.session_state.buffer_cluster,
-                'Pontos_Clusterizados.gpkg',
-                key='download-gpkg',
-                use_container_width=True,
-                icon=':material/download:',
-                type='primary'
-            )
-            
-    # Download rotas csv
-    if st.session_state.rotas_geradas is not None:    
-        
-        with st.expander('Apenas roteamento', icon=':material/call_split:'):
-            
-            st.download_button(
-                "Baixe em *.csv*",
-                st.session_state.rotas_geradas.to_csv(),
-                'Roteamento_gerado.csv',
-                "text/csv",
-                key='download-roteamento-csv',
-                use_container_width=True,
-                icon=':material/download:',
-                type='primary'
-            )
-            
-    # Download rotas gpgk
-    if st.session_state.buffer_rotas is not None:     
-        
-        with st.expander('Linhas de roteamento', icon=':material/tactic:'):
-            
-            st.download_button(
-                "Baixe em *.gpkg*",
-                st.session_state.buffer_rotas,
-                'Roteamento_gerado.gpkg',
-                key='download-roteamento-gpkg',
-                use_container_width=True,
-                icon=':material/download:',
-                type='primary'
-            )   
-       
-    
-    # Botão de tira-dúvidas
-    if st.button('**Informações importantes**', icon=':material/help:', use_container_width=True, type='tertiary'):
-        
-        @st.dialog("Informações")
-        def duvidas():
-            
-            # Texto explicativo sobre clusterização
-            with st.expander('Clusterização', icon=':material/grain:'):
-                
-                st.info("""
-                        Nessa aba será possível gerar clusters de pontos por meio da metodologia K-Medoids, se utilizando do método PAM, a partir de
-                        uma matriz de distância entre os pontos, que deverá ser previamente calculada.\n
-                        Para gerar a clusterização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_clusterizacao.xlsx), na área de upload destinada (localizada à esquerda).
-                        Você pode gerar até 100 clusters.\n
-                        Após gerar os clusters, você pode baixá-los no formato *.csv* ou, caso deseje visualizar a espacialização da clusterização e já atribuir os clusters aos pontos, carregue um arquivo no formato *.gpkg* na área de upload destinada (localizada à direita).
-                        Dessa forma, você poderá visualizar e baixar os pontos já com os clusters atribuídos no formato *.gpkg*.
-                        """)
-                
-                # Colunas criadas só para posicionar a imagem no centro
-                dia_col1, dia_col2, dia_col3 = st.columns([.5,2,.5])
-                
-                with dia_col2:
-                    st.image('123.gif', caption='[Fonte](https://pt.wikipedia.org/wiki/K-medoides)')
-           
-            # Texto explicativo sobre clusterização
-            with st.expander('Roteirização', icon=':material/tactic:'):           
-                
-                st.info("""
-                        Nessa aba será possível estimar a roteirização de pontos por meio da API Google Directions, utilizando waypoints (pontos de parada) entre a origem e o destino.
-                        Para gerar a roteirização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_roteirizacao.xlsx). Caso você deseje fazer roterizações que não são circulares, você deverá 
-                        encontrar a distância de cada ponto de parada até o ponto fixo. A roteirização pode ser feita em três métodos:
-                            """)
-                
-                # Roteirização circular
-                with st.container(border=False):
-                    div_col1, div_col2 = st.columns([3,1])
-                    with div_col1:
-                        st.info("""
-                                **Roteirização circular**: é realizada quando se deseja estimar uma rota circular em que o ponto de origem e de destino são iguais, 
-                                realizando as devidas paradas entre os dois pontos.
-                                    """)
-                    with div_col2:
-                        st.image('https://i.imgur.com/Ap8E0tM.png', use_container_width=True)
-
-                # Roteirização com destino fixo                
-                with st.container(border=False):
-                    div_col1, div_col2 = st.columns([3,1])
-                    with div_col1:
-                        st.info("""
-                                **Roteirização com destino fixo**: é realizada quando se deseja estimar uma rota linear com origem no ponto fixo, 
-                                com destino ao ponto mais distante dentro do cluster designado, realizando as devidas paradas entre os dois pontos.
-                                """)
-                    with div_col2:
-                        st.image('https://i.imgur.com/5nhsPha.png', use_container_width=True)
-                    
-                with st.container(border=False):
-                    div_col1, div_col2 = st.columns([3,1])
-                    with div_col1:
-                        st.info("""
-                                **Roteirização com origem fixa**: é realizada quando se deseja estimar uma rota linear partindo do ponto mais distante dentro de um cluster em relação ao ponto fixo, 
-                                realizando as devidas paradas entre os dois pontos.
-                                """)
-                    with div_col2:
-                        st.image('https://i.imgur.com/LxcGHIk.png', use_container_width=True)
-                        
-        duvidas()
-        
-    st.caption('Projeto desenvolvido por [Wellington Moura](www.linkedin.com/in/wmoural)')
