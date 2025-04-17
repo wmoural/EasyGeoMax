@@ -551,7 +551,7 @@ with tab1:
                     arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
 
                     # Rerun só pra carregar os resultados
-                    if st.session_state.buffer_cluster is not None and reload is True:
+                    if reload == True:
                         st.rerun()
                         reload = False
                
