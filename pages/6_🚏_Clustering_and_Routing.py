@@ -504,9 +504,7 @@ with tab1:
                                                                         columns=coluna_pivot, 
                                                                         values=valores_pivot),
                                                            qtde_clusters)
-                    if st.session_state.reload == False:
-                        st.session_state.reload = True
-                        st.rerun()
+                    
                     st.toast('Clusterização concluída', icon=':material/done_all:')                   
             
     with tab1_col2:
@@ -559,9 +557,9 @@ with tab1:
                     arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
 
                     # Rerun só pra carregar os resultados
-                    if st.session_state.reload is True:
+                    if st.session_state.reload == False:
+                        st.session_state.reload = True
                         st.rerun()
-                        st.session_state.reload = False
                
 # Expander roterização
 with tab2:
