@@ -308,7 +308,7 @@ st.markdown("""
             """, unsafe_allow_html=True)
 
 # Título
-st.title("**Easy** :orange[Routing] :busstop:")   
+st.title("**Easy** :gray[Routing] :busstop:")   
 
 # Criando tabs
 tab1, tab2 = st.tabs(['Clusterização', 'Roteirização'])
