@@ -296,12 +296,12 @@ st.markdown("""
             <style>
             .st-emotion-cache-y2gf1w {
                 position: relative;
-                top: 200;
+                top: 300;
             }
             
             .st-emotion-cache-lsgwmo p {
                 position: relative;
-                top: 200;
+                top: 300;
                 left: 15px;
             }
             </style>      
