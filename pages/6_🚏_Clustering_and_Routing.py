@@ -459,6 +459,9 @@ tab1, tab2 = st.tabs(['Clusterização', 'Roteirização'])
 # Tab para clusterização
 with tab1:
 
+    # Definindo reload
+    st.session_state.reload = False
+    
     tab1_col1, tab1_col2, tab1_col3 = st.columns([2,2,.1])
     
     with tab1_col1:
@@ -471,7 +474,7 @@ with tab1:
             # Transformando o arquivo em dataframe
             matriz = pd.read_excel(matriz, engine='openpyxl')
             
-            # Botãpo
+            # Botão de inputs
             with st.form('Campos de input', border=False):
                 
                 tab1_col1_col1, tab1_col1_col2 = st.columns([2,2])
@@ -501,8 +504,9 @@ with tab1:
                                                                         columns=coluna_pivot, 
                                                                         values=valores_pivot),
                                                            qtde_clusters)
-                    st.session_state.reload = True
-                    st.rerun()
+                    if st.session_state.reload == False:
+                        st.session_state.reload = True
+                        st.rerun()
                     st.toast('Clusterização concluída', icon=':material/done_all:')                   
             
     with tab1_col2:
