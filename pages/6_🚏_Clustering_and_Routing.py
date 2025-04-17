@@ -549,6 +549,11 @@ with tab1:
                     
                     # Colocando geopackage no buffer
                     arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
+
+                    # Rerun só pra carregar os resultados
+                    if st.session_state.buffer_cluster is not None:
+                        rerun = True
+                        st.rerun()
                
 # Expander roterização
 with tab2:
