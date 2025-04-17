@@ -314,7 +314,7 @@ st.title("**Easy** :gray[Clustering and Routing] :busstop:")
 with st.sidebar:
     
     chave = st.text_input('Insira aqui sua chave API:', type='password')
-    st.subheader('Acesse os resultados:', divider=True)        
+    st.subheader('Acesse os resultados:', divider='gray')        
     
     # Download clusters
     if st.session_state.cluster is not None:
