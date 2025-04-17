@@ -399,6 +399,7 @@ with st.sidebar:
                         Você pode gerar até 100 clusters.\n
                         Após gerar os clusters, você pode baixá-los no formato *.csv* ou, caso deseje visualizar a espacialização da clusterização e já atribuir os clusters aos pontos, carregue um arquivo no formato *.gpkg* na área de upload destinada (localizada à direita).
                         Dessa forma, você poderá visualizar e baixar os pontos já com os clusters atribuídos no formato *.gpkg*.
+                        API KEY não requerida nessa aba.
                         """)
                 
                 # Colunas criadas só para posicionar a imagem no centro
@@ -413,7 +414,7 @@ with st.sidebar:
                 st.info("""
                         Nessa aba será possível estimar a roteirização de pontos por meio da API Google Directions, utilizando waypoints (pontos de parada) entre a origem e o destino.
                         Para gerar a roteirização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_roteirizacao.xlsx). Caso você deseje fazer roterizações que não são circulares, você deverá 
-                        encontrar a distância de cada ponto de parada até o ponto fixo. A roteirização pode ser feita em três métodos:
+                        encontrar a distância de cada ponto de parada até o ponto fixo. A API KEY é requerida nessa aba. A roteirização pode ser feita em três métodos:
                             """)
                 
                 # Roteirização circular
