@@ -10,7 +10,7 @@ with st.sidebar:
             sidebarcol1, sidebarcol2 = st.columns([2, 1])
             with sidebarcol1:
                 imagem = 'https://i.imgur.com/Xe9O2MX.png'
-                st.image(imagem, use_column_width=True, caption='Wellington Moura')
+                st.image(imagem, use_container_width=True, caption='Wellington Moura')
     
             with sidebarcol2:
                 st.header('')
@@ -19,7 +19,7 @@ with st.sidebar:
     
     with st.expander('**Pague-me um café:**', icon='☕', expanded=False):
         pix = 'https://i.imgur.com/LLr5WY8.jpg'
-        st.image(pix, use_column_width='True', caption='PIX')
+        st.image(pix, use_container_width='True', caption='PIX')
      
 
 st.title('***Boas vindas*** 👋')
