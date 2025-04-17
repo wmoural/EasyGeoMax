@@ -611,7 +611,8 @@ with tab2:
                         else:
                             
                             st.session_state.rotas_geradas = rotear_vindo(otimizar)
-                            
+
+                        st.rerun()
                         if st.session_state.rotas_geradas is not None:
                             
                             # Corrigindo um zig com formatação 64int
