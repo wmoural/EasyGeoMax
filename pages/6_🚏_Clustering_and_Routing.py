@@ -620,7 +620,6 @@ with tab2:
                             
                             st.session_state.rotas_geradas = rotear_vindo(otimizar)
 
-                        st.rerun()
                         if st.session_state.rotas_geradas is not None:
                             
                             # Corrigindo um zig com formatação 64int
@@ -631,7 +630,8 @@ with tab2:
                             
                             # Colocando geopackage no buffer
                             st.session_state.rotas_geradas.to_file(st.session_state.buffer_rotas, driver="GPKG")
-                                                
+
+                            st.rerun()
             
     with tab2_col2:
           
@@ -640,8 +640,7 @@ with tab2:
             # Pegando limites do geodataframe
             limites_geodataframe = st.session_state.rotas_geradas.total_bounds 
             x_limites = (limites_geodataframe[0]+limites_geodataframe[2])/2
-            y_limites = (limites_geodataframe[1]+limites_geodataframe[3])/2
-                                   
+            y_limites = (limites_geodataframe[1]+limites_geodataframe[3])/2           
             
             # Gerando mapinha
             m_tab2 = leafmap.Map(center=[y_limites, x_limites], zoom=11)
