@@ -558,16 +558,16 @@ with tab1:
                         
                         with tab1_col2_col2:
                         
-                        if st.button('Processar pontos', icon=':material/grain:'):
-                        
-                            # Guardando espaço na memória
-                            st.session_state.buffer_cluster = io.BytesIO()
+                            if st.button('Processar pontos', icon=':material/grain:'):
                             
-                            # Colocando geopackage no buffer
-                            arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
-    
-                            # Rerun só pra aparecer pontos nos resultados
-                            st.rerun()
+                                # Guardando espaço na memória
+                                st.session_state.buffer_cluster = io.BytesIO()
+                                
+                                # Colocando geopackage no buffer
+                                arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
+        
+                                # Rerun só pra aparecer pontos nos resultados
+                                st.rerun()
                
 # Expander roterização
 with tab2:
