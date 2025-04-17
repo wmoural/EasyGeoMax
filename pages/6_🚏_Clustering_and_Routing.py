@@ -537,9 +537,6 @@ with tab1:
                 # Inserindo o cluster
                 arquivo_gpd = pd.merge(arquivo_gpd, st.session_state.cluster)
                 st.session_state.reload_tab1 = False
-                if st.session_state.reload_tab1 == False:
-                    st.session_state.reload_tab1 = True
-                    st.rerun()
 
                 # Mostrando clusters gerados
                 m = leafmap.Map(center=[arquivo_gpd.geometry.y.mean(), arquivo_gpd.geometry.x.mean()], zoom=11)
@@ -556,12 +553,17 @@ with tab1:
                 
                 # Salvando resultado num buffer
                 if arquivo_gpd is not None:
+
+                    if st.button('Processar pontos', icon=':material/grain:'):
                     
-                    # Guardando espaço na memória
-                    st.session_state.buffer_cluster = io.BytesIO()
-                    
-                    # Colocando geopackage no buffer
-                    arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
+                        # Guardando espaço na memória
+                        st.session_state.buffer_cluster = io.BytesIO()
+                        
+                        # Colocando geopackage no buffer
+                        arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
+
+                        # Rerun só pra aparecer pontos nos resultados
+                        st.rerun()
                
 # Expander roterização
 with tab2:
