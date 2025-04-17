@@ -288,6 +288,9 @@ if 'buffer_cluster' not in st.session_state:
 if 'buffer_rotas' not in st.session_state:
     st.session_state.buffer_rotas = None
 
+if 'reload' not in st.session_state:
+    st.session_state.reload = None
+
 # Configurando página
 st.set_page_config(page_title="Easy Clustering and Routing", page_icon=':material/tactic:', layout='wide')
 
@@ -497,7 +500,7 @@ with tab1:
                                                                         columns=coluna_pivot, 
                                                                         values=valores_pivot),
                                                            qtde_clusters)
-                    reload = True
+                    st.session_state.reload = True
                     st.rerun()
                     st.toast('Clusterização concluída', icon=':material/done_all:')                   
             
@@ -551,9 +554,9 @@ with tab1:
                     arquivo_gpd.to_file(st.session_state.buffer_cluster, driver="GPKG")
 
                     # Rerun só pra carregar os resultados
-                    if reload == True:
+                    if st.session_state.reload is True:
                         st.rerun()
-                        reload = False
+                        st.session_state.reload = False
                
 # Expander roterização
 with tab2:
