@@ -453,7 +453,7 @@ with st.sidebar:
                         
         duvidas()
         
-    st.caption('Projeto desenvolvido por [Wellington Moura](www.linkedin.com/in/wmoural)')
+    st.caption('Projeto desenvolvido por [Wellington Moura](www.linkedin.com/in/wmoural/)')
 
 # Criando tabs
 tab1, tab2 = st.tabs(['Clusterização', 'Roteirização'])
