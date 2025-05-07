@@ -395,7 +395,7 @@ with st.sidebar:
                 st.info("""
                         Nessa aba será possível gerar clusters de pontos por meio da metodologia K-Medoids, se utilizando do método PAM, a partir de
                         uma matriz de distância entre os pontos, que deverá ser previamente calculada.\n
-                        Para gerar a clusterização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_clusterizacao.xlsx), na área de upload destinada (localizada à esquerda).
+                        Para gerar a clusterização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_clusterizacao.xlsx?raw=true), na área de upload destinada (localizada à esquerda).
                         Você pode gerar até 100 clusters.\n
                         Após gerar os clusters, você pode baixá-los no formato *.csv* ou, caso deseje visualizar a espacialização da clusterização e já atribuir os clusters aos pontos, carregue um arquivo no formato *.gpkg* na área de upload destinada (localizada à direita).
                         Dessa forma, você poderá visualizar e baixar os pontos já com os clusters atribuídos no formato *.gpkg*.
@@ -413,7 +413,7 @@ with st.sidebar:
                 
                 st.info("""
                         Nessa aba será possível estimar a roteirização de pontos por meio da API Google Directions, utilizando waypoints (pontos de parada) entre a origem e o destino.
-                        Para gerar a roteirização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_roteirizacao.xlsx). Caso você deseje fazer roterizações que não são circulares, você deverá 
+                        Para gerar a roteirização, você deverá fazer o upload de um arquivo excel [neste formato](https://github.com/wmoural/EasyGeoMax/raw/refs/heads/main/src/easy_routing/padrao_roteirizacao.xlsx?raw=true). Caso você deseje fazer roterizações que não são circulares, você deverá 
                         encontrar a distância de cada ponto de parada até o ponto fixo.\n
                         A roteirização considerará no máximo **25 paradas** por cluster.\n
                         A API KEY é requerida nessa aba. A roteirização pode ser feita em três métodos:
