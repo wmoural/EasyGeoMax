@@ -1,66 +1,154 @@
 import googlemaps
 import pandas as pd
 import streamlit as st
-import xlsxwriter
-from io import BytesIO
 import io
 import geocoder
 from datetime import datetime
+import time
 
 # Limpando cache
 st.cache_data.clear()
 
 # Configurando página
-st.set_page_config(page_title='Easy Geocoding', layout='wide', page_icon='🗺️')
+st.set_page_config(page_title='Easy Geocoding', layout='wide', page_icon=':material/globe_location_pin:')
 
-# Título
-st.title("**Easy** :green[Geocoding] :world_map:")   
+# Funções
+@st.cache_data
+def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não importa)
+    if arquivo is None:
+        with st.container(horizontal_alignment='center'):
+            
+            st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
+            st.caption('Aplicação web para realização de geocoding de endereços', width=370)
+            for i in range(3):st.text('')
+            st.subheader(':gray[:material/help: Uso]', width='content')    
+            col1,col2,col3 = st.columns([0.2,.6,0.2])
+        
+            with col2:
+                with st.container(horizontal_alignment='left'):
+                    st.markdown(':gray[:material/counter_1:] Faça o upload do seu arquivo', width='content')
+                    st.markdown(':gray[:material/counter_2:] Forneça uma chave API caso queira geocodificar com Google (opção paga) ou deixe em branco para geocodificar com ArcGIS (opção gratuita)', width='content')
+                    st.markdown(':gray[:material/counter_3:] Defina a coluna em que estão os endereços e geocodifique', width='content')
+                    st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
+            
+            # Ajustes de CSS
+            st.markdown("""
+                        <style>
+    
+                        .st-emotion-cache-1fc0ges p {
+                            margin-top: -19px;
+                            }
+                        
+                        .st-emotion-cache-10p9htt {
+                            height: 1rem;
+                            margin-bottom: 10px;                            
+                            }
+                        
+                        .st-emotion-cache-1s2v671 {
+                            min-height: 0rem;
+                        }
+                        
+                        </style>
+                    """,
+                    unsafe_allow_html=True)
+     
+    else:
+        with st.container(horizontal_alignment='center'):
+            st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
+            st.caption('Aplicação web para realização de geocoding de endereços', width=370)
+            st.divider()
+            
+            # Ajustes de CSS
+            st.markdown("""
+                        <style>
+                        .st-emotion-cache-zy6yx3 {
+                            padding: 2rem;                        
+                            }
+    
+                        .st-emotion-cache-1fc0ges p {
+                            margin-top: -2px;
+                            }
+                        
+                        .st-emotion-cache-rv01uy { 
+                            margin-top: -1rem;
+                            margin-bottom: -1rem;
+                            }
+                        
+                        .st-em {
+                            background-color: #62D292;
+                            }
+                        
+                        .st-emotion-cache-14xp4b3 {
+                            margin-top: -2rem;
+                            }
+                        
+                        .st-emotion-cache-1s2v671 {
+                            min-height: 0rem;
+                        }
+                        
+                        </style>
+                    """,
+                    unsafe_allow_html=True)
 
-# Declarando session state
-if 'DemandaGerada' not in st.session_state:
-    st.session_state.DemandaGerada = None
-
-with st.sidebar:
+def Geocodificar(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
     
-    chave = st.text_input('Insira aqui sua chave API:', type='password')
- 
-    with st.expander('**Dados do autor:** ', expanded=True):
+    # Reduzindo tamando do dataframe
+    df_reduzido = df[[ColunaEndereco]].drop_duplicates().reset_index(drop=True)
     
-        with st.container():
-            sidebarcol1, sidebarcol2 = st.columns([2, 1])
-            with sidebarcol1:
-                imagem = 'https://i.imgur.com/Xe9O2MX.png'
-                st.image(imagem, use_container_width=True, caption='Wellington Moura')
-    
-            with sidebarcol2:
-                st.header('')
-                st.subheader('[Linkedin](https://www.linkedin.com/in/wellington-moura-27497a1b3/)')
-                st.subheader('[Github](https://github.com/wmoural)')
-    
-    with st.expander('**Pague-me um café:**', icon='☕', expanded=False):
-        pix = 'https://i.imgur.com/LLr5WY8.jpg'
-        st.image(pix, use_container_width='True', caption='PIX')
-    
-# Funções para colunas
-def GeocodeDemanda(df, Chave):
-
-    # Inserindo API KEY
-    gmaps = googlemaps.Client(key=Chave)
-
     # Gerando listas
-    lat = []
-    lon = []
-    endereço_formatado = []
-    provedor = []
+    lat, lon, endereço_formatado, provedor = [],[],[],[]
+    i = 1
     
-    # Geocodificando endereços
-    for i in range(len(df)):
+    progress_bar = st.progress(0)
+    
+    # Checagem de chave para definir qual método de geocode
+    # Se Chave estiver preenchida, então geocodifica com gmaps
+    if Chave != '':
         
-        geocode = gmaps.geocode(df[ColunaEndereço].loc[i], region="br", language="PT-BR")
-        
-        if len(geocode) == 0:
-        
-            geocode = geocoder.arcgis(df[ColunaEndereço].loc[i]).json
+        gmaps = googlemaps.Client(key=Chave)
+    
+        for endereco in df_reduzido[ColunaEndereco]:
+            
+            # Realizando geocoding através da biblioteca do google
+            geocode = gmaps.geocode(endereco, region="br", language="PT-BR")
+            
+            # Checa se o resultado é maior que zero, caso seja, salva os dados, caso não seja, 
+            # tenta novamente usando o provedor arcgis com a bibilioteca geocoder
+            if len(geocode) == 0:
+            
+                geocode = geocoder.arcgis(endereco).json
+                
+                if geocode is not None:
+                
+                    endereço_formatado.append(geocode['address'])
+                    lat.append(geocode['lat'])
+                    lon.append(geocode['lng'])
+                    provedor.append('ArcGIS')
+                    
+                else:
+                    
+                    lat.append('0')
+                    lon.append('0')
+                    endereço_formatado.append('0')
+                    provedor.append('0')
+                    
+            else:
+                
+                resultado = geocode[0]
+                lat.append(resultado['geometry']['location']['lat'])
+                lon.append(resultado['geometry']['location']['lng'])
+                endereço_formatado.append(resultado['formatted_address'])
+                provedor.append('Google')
+                    
+            progress_bar.progress(i/len(df_reduzido), text=f":material/hourglass_empty: Geocodificando: {i*10}% realizados...")  
+            i += 1
+
+    # Se Chave estiver vazia, então geocodifica tudo com ArcGis
+    else:
+    
+        for endereco in df_reduzido[ColunaEndereco]:
+
+            geocode = geocoder.arcgis(endereco).json
             
             if geocode is not None:
             
@@ -75,147 +163,115 @@ def GeocodeDemanda(df, Chave):
                 lon.append('0')
                 endereço_formatado.append('0')
                 provedor.append('0')
-                
-        else:
+
+            progress_bar.progress(i/len(df_reduzido), text=f":material/hourglass_empty: Geocodificando: {i*10}% realizados...")                    
+            i += 1
             
-            resultado = geocode[0]
-            lat.append(resultado['geometry']['location']['lat'])
-            lon.append(resultado['geometry']['location']['lng'])
-            endereço_formatado.append(resultado['formatted_address'])
-            provedor.append('Google')
-        
-        status.update(label=f'{i+1} de {tamanho}')
-        
-    # Criando novas colunas e colando resultados
-    df['Lat'] = lat
-    df['Long'] = lon
-    df['Endereço'] = endereço_formatado
-    df['Provedor'] = provedor
+    # Atualizando progress bar
+    progress_bar.progress(100, text=":green[:material/done_all: **100% dos endereços geocodificados**]")
+    time.sleep(1)
     
+    # Salvando resultados obtidos
+    df_reduzido['Latitude'] = lat
+    df_reduzido['Longitude'] = lon
+    df_reduzido['Endereço Geocodificado'] = endereço_formatado
+    df_reduzido['Provedor'] = provedor
+    
+    df = pd.merge(df, df_reduzido, on=ColunaEndereco)
+        
     return df
 
-def GeocodeDemandaFree(df):
+# Variváveis no cache
+if 'Resultado' not in st.session_state:
+    st.session_state.Resultado = None
 
-    # Gerando listas
-    lat = []
-    lon = []
-    endereço_formatado = []
-    provedor = []
-    
-    # Geocodificando endereços
-    for i in range(len(df)):
-
-        geocode = geocoder.osm(df[ColunaEndereço].loc[i]).json
+# Sidebar
+with st.sidebar: 
+           
+    # Botão para subir planilha excel
+    arquivo = st.file_uploader(':blue[:material/upload_file: Faça o upload da planilha excel]', type=['xlsx'])
+    st.text('')
+    if arquivo is not None:
+        chave = st.text_input(':blue[:material/key_vertical: Insira aqui sua chave API:]', type='password')
+        for i in range(2):st.text('')
         
-        if geocode is not None:
+    # Inserindo botão de download dos resultados
+    if st.session_state.Resultado is not None and arquivo is not None:
+           
+        buffer = io.BytesIO()
+        st.session_state.Resultado.to_excel(buffer, index=False)
+        buffer.seek(0)
+        
+        with st.container(horizontal_alignment='center'):
             
-            endereço_formatado.append(geocode['address'])
-            lat.append(geocode['lat'])
-            lon.append(geocode['lng'])
-            provedor.append('OSM')
+            st.subheader(':green[**Resultados**]', width='content')
+                        
+            st.download_button(
+                "Baixe em Excel",
+                buffer,
+                f"Dados geocodificados - {datetime.now()}.xlsx",
+                "application/vnd.ms-excel",
+                key='download-xlsx',
+                on_click='rerun',
+                type='primary',
+                width='stretch',
+                icon=':material/download_for_offline:'
+                )
 
-        else:
-            
-            geocode = geocoder.arcgis(df[ColunaEndereço].loc[i]).json
-            
-            if geocode is not None:
-            
-                endereço_formatado.append(geocode['address'])
-                lat.append(geocode['lat'])
-                lon.append(geocode['lng'])
-                provedor.append('ArcGIS')
-                
-            else:
-                
-                lat.append('0')
-                lon.append('0')
-                endereço_formatado.append('0')
-                provedor.append('0')
-            
-        status.update(label=f'{i+1} de {tamanho}')
-            
-    # Criando novas colunas e colando resultados
-    df['Lat'] = lat
-    df['Long'] = lon
-    df['Endereço'] = endereço_formatado
-    df['Provedor'] = provedor
+# Carregando layout
+carregar_layout()
 
-    return df
-
-# Botão para subir planilha excel
-ArquivoCarregado = st.file_uploader('**Faça o upload da planilha aqui** :call_me_hand:', type=['xlsx'])
-
-if ArquivoCarregado is not None:
+# Botões para a execução dos processos
+if arquivo is not None:
 
     # Transformando o arquivo carregado em DataFrame
-    df = pd.read_excel(ArquivoCarregado, engine='openpyxl')
+    df = pd.read_excel(arquivo, engine='openpyxl')
+        
+    # Parametrizando o container de inputs
+    container_inputs = st.container(border=False, 
+                                    horizontal=False,
+                                    vertical_alignment='center',
+                                    horizontal_alignment='center'
+                                    )
+    
+    # Chamando container de inputs
+    with container_inputs:
+        
+        # Dentro do container de inputs, chamando formulários
+        with st.form("Inputs", border=False, width=400):
+            
+            # Dentro do formulário, definindo parâmetros da caixa de seleção de coluna para geocode
+            ColunaEndereco = st.selectbox("",
+                                          list(df.columns.values),
+                                          width='stretch',
+                                          index=None,
+                                          placeholder='Defina a coluna com os endereços')
 
-    tamanho = len(df)
-   
-    # Colunas
-    col1, col2 = st.columns([4, 5])
-
-    # Criando botões de input
-    with col1:
-
-        with st.form("Inputs"):
-
-            ColunaEndereço = st.selectbox("Selecione a coluna com o endereço", list(df.columns.values))
-
-            # Botão pra rodar o geocode
-            rodar = st.form_submit_button("Geocodificar", use_container_width=True, icon='✌')
-                       
+            # Definindo parâmetros do botão
+            rodar = st.form_submit_button("Geocodificar",
+                                          width='stretch',
+                                          type='primary',
+                                          icon=':material/explore_nearby:'
+                                          )
+            # Uso do botão para geocodificar
             if rodar:
                 
-                with st.status('Geocodificando...', expanded=True) as status:
-                    
-                    if chave != '':
-                        
-                        st.session_state.DemandaGerada = GeocodeDemanda(df, chave)
-                        
-                        if st.session_state.DemandaGerada is not None:
-                            
-                            buffer = io.BytesIO()
-                            with pd.ExcelWriter(buffer, engine='xlsxwriter') as writer:
-                                st.session_state.DemandaGerada.to_excel(writer, sheet_name='Sheet1')
-                                writer.close()
-                    
-                    else:
-                        
-                        st.session_state.DemandaGerada = GeocodeDemandaFree(df)
-                
+                # Chamando barra de progresso
+                with st.progress(0, "Geocodificando seus endereços...") as progress_bar:
+                    st.session_state.Resultado = Geocodificar(df, chave)
                 st.balloons()
-                status.update(label='Geocode concluído', state='complete')
-                st.toast('Se o easygeomax foi útil, valorize-me: pague-me um café!', icon='🥳')
-        
-        cl1,cl2,cl3 = st.columns([1,3,1])
-        
-        with cl2:
-            
-            if st.session_state.DemandaGerada is not None and ArquivoCarregado is not None:
-            
-                with st.status('Gerando CSV...') as status2:
+                time.sleep(2)
+                st.rerun()
                     
-                    st.download_button(
-                        "Baixe em CSV",
-                        st.session_state.DemandaGerada.to_csv(),
-                        f"Geocoding-{datetime.now()}.csv",
-                        "text/csv",
-                        key='download-csv',
-                        use_container_width=True,
-                        icon='✅')
-                    
-                    status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
+    # Parametrizando o container de outputs
+    container_outputs = st.container(border=False,
+                                     horizontal=False,
+                                     horizontal_alignment='center',
+                                     vertical_alignment='bottom')
     
-    with col2:
+    # Plotando mapa de resultados
+    with container_outputs:
         
-        if st.session_state.DemandaGerada is not None:
-
-            st.map(st.session_state.DemandaGerada.rename(columns={'Lat':'lat', 'Long':'lon'}),color='#006480')
-            
-    
-with st.expander('Resultado: '):
-    
-    if st.session_state.DemandaGerada is not None:
+        if st.session_state.Resultado is not None:
         
-        st.dataframe(st.session_state.DemandaGerada, use_container_width=True)
+            st.map(st.session_state.Resultado.rename(columns={'Latitude':'lat', 'Longitude':'lon'}),color='#006480')
