@@ -52,14 +52,3 @@ with st.expander('**Notas**', expanded=True):
                 aprimoramento do código com ideias, por favor entre em contato!
                  
                  """)
-  
-st.markdown("""
-            <style>
-                .st-emotion-cache-10trblm {
-                
-                    margin-left: calc(17rem)
-                    
-                }
-            </style>
-            
-            """, unsafe_allow_html=True)
