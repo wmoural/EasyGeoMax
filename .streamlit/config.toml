@@ -1,5 +1,7 @@
 [theme]
-base="dark"
+base="ligth"
+primaryColor = "#62D292"
+
 
 [server]
 maxUploadSize = 500
