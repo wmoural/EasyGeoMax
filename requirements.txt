@@ -3,7 +3,7 @@ scikit-learn==1.6.1
 scikit-learn-extra==0.3.0
 googlemaps==4.10.0
 pandas==2.2.3
-streamlit==1.44.1
+streamlit==1.48.1
 openpyxl==3.1.5
 requires.io==0.2.6
 xlsxwriter==3.2.3
