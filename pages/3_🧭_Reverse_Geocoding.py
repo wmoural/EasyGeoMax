@@ -185,29 +185,6 @@ with st.sidebar:
         chave = st.text_input(':blue[:material/key_vertical: Insira aqui sua chave API:]', type='password')
         for i in range(2):st.text('')
         
-    # Inserindo botão de download dos resultados
-    if st.session_state.Resultado is not None and arquivo is not None:
-           
-        buffer = io.BytesIO()
-        st.session_state.Resultado.to_excel(buffer, index=False)
-        buffer.seek(0)
-        
-        with st.container(horizontal_alignment='center'):
-            
-            st.subheader(':green[**Resultados**]', width='content')
-                        
-            st.download_button(
-                "Baixe em Excel",
-                buffer,
-                f"Dados geocodificados - {datetime.now()}.xlsx",
-                "application/vnd.ms-excel",
-                key='download-xlsx',
-                on_click='rerun',
-                type='primary',
-                width='stretch',
-                icon=':material/download_for_offline:'
-                )
-
 # Carregando layout
 carregar_layout()
 
@@ -265,3 +242,27 @@ if arquivo is not None:
         if st.session_state.Resultado is not None:
             coords = st.session_state.Resultado[ColunaCoordenadas].str.split(',', expand=True).astype(float)
             st.map(coords.rename(columns={0:'lat', 1:'lon'}),color='#006480')
+
+        # Inserindo botão de download dos resultados
+    if st.session_state.Resultado is not None and arquivo is not None:
+           
+        buffer = io.BytesIO()
+        st.session_state.Resultado.to_excel(buffer, index=False)
+        buffer.seek(0)
+        
+        coluna1,coluna2,coluna3 = st.columns([.2,.6,.2])
+        
+        with coluna2:
+            with st.container(horizontal_alignment='center'):
+                                        
+                st.download_button(
+                    "Baixe em Excel",
+                    buffer,
+                    f"Dados geocodificados - {datetime.now()}.xlsx",
+                    "application/vnd.ms-excel",
+                    key='download-xlsx',
+                    on_click='rerun',
+                    type='primary',
+                    width='stretch',
+                    icon=':material/download_for_offline:'
+                    )
