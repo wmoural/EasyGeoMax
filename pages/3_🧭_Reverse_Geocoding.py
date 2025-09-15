@@ -258,7 +258,7 @@ if arquivo is not None:
                 st.download_button(
                     "Baixe em Excel",
                     buffer,
-                    f"Dados geocodificados - {datetime.now()}.xlsx",
+                    f"Dados reversamente geocodificados - {datetime.now()}.xlsx",
                     "application/vnd.ms-excel",
                     key='download-xlsx',
                     on_click='rerun',
