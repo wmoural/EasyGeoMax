@@ -22,7 +22,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
         with st.container(horizontal_alignment='center'):
             
             st.title('Easy :red[Routes :material/route:]', width='content')
-            st.caption('Aplicação web para geração de rotas otimizadas', width=305)
+            st.caption('Aplicação web para geração de rotas otimizadas', width=302)
             for i in range(3):st.text('')
             st.subheader(':gray[:material/help: Uso]', width='content')    
             col1,col2,col3 = st.columns([0.2,.6,0.2])
@@ -318,6 +318,7 @@ if arquivo is not None:
                 width=400,
                 icon=':material/download_for_offline:'
                 )
+
 
 
 
