@@ -144,11 +144,11 @@ def Rotear(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
             lista_dist.append('Não encontrado')
         
         # Atualizando progress bar
-        progress_bar.progress(i/len(df_rota), text=f":material/hourglass_empty: Geocodificando: {i*10}% realizados...")  
+        progress_bar.progress(i/len(df_rota), text=f":material/hourglass_empty: Gerando rotas...: {i*10}% realizados...")  
         i += 1
     
     # Atualizando progress bar
-    progress_bar.progress(100, text=":green[:material/done_all: **100% dos endereços geocodificados**]")
+    progress_bar.progress(100, text=":green[:material/done_all: **100% das rotas geradas**]")
     time.sleep(1)
     
     # Criando novas colunas a serem preenchidas
@@ -317,5 +317,6 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
 
