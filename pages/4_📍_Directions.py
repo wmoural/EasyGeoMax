@@ -287,7 +287,7 @@ if arquivo is not None:
             m.add_gdf(st.session_state.Rotas, layer_name='Roteamento')
             
             # Plotando mapa de resultados
-            m.to_streamlit(responsive=True, scrolling=True, height=400)
+            m.to_streamlit(responsive=True, scrolling=True, height=500)
 
     
 # Inserindo botões de download dos resultados
@@ -298,8 +298,7 @@ if arquivo is not None:
             st.session_state.Resultado.to_excel(writer, sheet_name='Resultado', index=False)
             st.session_state.Rotas.to_excel(writer, sheet_name='Rotas', index=False)
         buffer.seek(0)
-        
-        
+                
         container_downloads = st.container(border=False,
                                            horizontal=False,
                                            horizontal_alignment='center',
@@ -315,12 +314,6 @@ if arquivo is not None:
                 key='download-xlsx',
                 on_click='rerun',
                 type='primary',
-                width=400,
+                width=500,
                 icon=':material/download_for_offline:'
                 )
-
-
-
-
-
-
