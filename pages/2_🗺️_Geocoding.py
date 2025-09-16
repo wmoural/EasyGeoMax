@@ -253,7 +253,7 @@ if arquivo is not None:
         
             st.map(st.session_state.Resultado.rename(columns={'Latitude':'lat', 'Longitude':'lon'}),color='#006480')
 
-        # Inserindo botão de download dos resultados
+    # Inserindo botão de download dos resultados
     if st.session_state.Resultado is not None and arquivo is not None:
            
         buffer = io.BytesIO()
