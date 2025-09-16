@@ -77,7 +77,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
                             margin-bottom: -1rem;
                             }
                         
-                        .st-em {
+                        .st-emotion-cache-12yl5kl {
                             background-color: #62D292;
                             }
                         
@@ -317,4 +317,5 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
