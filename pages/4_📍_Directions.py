@@ -287,7 +287,7 @@ if arquivo is not None:
             m.add_gdf(st.session_state.Rotas, layer_name='Roteamento')
             
             # Plotando mapa de resultados
-            m.to_streamlit(responsive=True, scrolling=True, height=500)
+            m.to_streamlit(responsive=True, scrolling=True, height=450)
 
     
 # Inserindo botões de download dos resultados
@@ -317,3 +317,4 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
