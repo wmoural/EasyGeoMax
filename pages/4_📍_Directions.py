@@ -6,114 +6,163 @@ from shapely.geometry import LineString
 import polyline
 import geopandas as gpd
 import leafmap.foliumap as leafmap
+import time
+import io
 
 # Limpando cache
 st.cache_data.clear()
 
 # Configurando página
-st.set_page_config(page_title='Easy Directions', layout='wide')
+st.set_page_config(page_title='Easy Directions', layout='wide', page_icon=':material/route:')
 
-# Título
-st.title("**Easy** :red[Directions] 📍")    
-
-with st.sidebar:
-    
-    with st.expander('**Informações importantes**', icon='ℹ️', expanded=False):
-        st.info("""
-                Use os seguintes valores para indicar o modo de transporte:
-                - driving (para carros e motos)
-                - bicycling (para bicicleta)
-                - walking (para a pé)
-                - bus (para ônibus)
-                """)
+# Funções
+@st.cache_data
+def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não importa)
+    if arquivo is None:
+        with st.container(horizontal_alignment='center'):
             
-    chave = st.text_input('Insira aqui sua chave API:', type='password')
-
-    with st.expander('**Dados do autor:** ', expanded=True):
+            st.title('Easy :red[Routes :material/route:]', width='content')
+            st.caption('Aplicação web para geração de rotas otimizadas', width=370)
+            for i in range(3):st.text('')
+            st.subheader(':gray[:material/help: Uso]', width='content')    
+            col1,col2,col3 = st.columns([0.2,.6,0.2])
+        
+            with col2:
+                with st.container(horizontal_alignment='left'):
+                    st.markdown(':gray[:material/counter_1:] Faça o upload do seu arquivo', width='content')
+                    st.markdown(':gray[:material/counter_2:] Forneça uma chave API caso queira geocodificar com Google (opção paga) ou deixe em branco para geocodificar com ArcGIS (opção gratuita)', width='content')
+                    st.markdown(':gray[:material/counter_3:] Defina a coluna em que estão os endereços e geocodifique', width='content')
+                    st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
+            
+            # Ajustes de CSS
+            st.markdown("""
+                        <style>
     
-        with st.container():
-            sidebarcol1, sidebarcol2 = st.columns([2, 1])
-            with sidebarcol1:
-                imagem = 'https://i.imgur.com/Xe9O2MX.png'
-                st.image(imagem, use_container_width=True, caption='Wellington Moura')
+                        .st-emotion-cache-1fc0ges p {
+                            margin-top: -19px;
+                            }
+                        
+                        .st-emotion-cache-10p9htt {
+                            height: 1rem;
+                            margin-bottom: 10px;                            
+                            }
+                        
+                        .st-emotion-cache-1s2v671 {
+                            min-height: 0rem;
+                        }
+                        
+                        </style>
+                    """,
+                    unsafe_allow_html=True)
+     
+    else:
+        with st.container(horizontal_alignment='center'):
+            st.title('Easy :red[Routes :material/route:]', width='content')
+            st.caption('Aplicação web para geração de rotas otimizadas', width=305)
+            st.divider()
+            
+            # Ajustes de CSS
+            st.markdown("""
+                        <style>
+                        .st-emotion-cache-zy6yx3 {
+                            padding: 2rem;                        
+                            }
     
-            with sidebarcol2:
-                st.header('')
-                st.subheader('[Linkedin](https://www.linkedin.com/in/wellington-moura-27497a1b3/)')
-                st.subheader('[Github](https://github.com/wmoural)')
-    
-    with st.expander('**Pague-me um café:**', icon='☕', expanded=False):
-        pix = 'https://i.imgur.com/LLr5WY8.jpg'
-        st.image(pix, use_container_width='True', caption='PIX')  
+                        .st-emotion-cache-1fc0ges p {
+                            margin-top: -2px;
+                            }
+                        
+                        .st-emotion-cache-rv01uy { 
+                            margin-top: -1rem;
+                            margin-bottom: -1rem;
+                            }
+                        
+                        .st-em {
+                            background-color: #62D292;
+                            }
+                        
+                        .st-emotion-cache-14xp4b3 {
+                            margin-top: 0rem;
+                            }
+                        
+                        .st-emotion-cache-1s2v671 {
+                            min-height: 0rem;
+                        }
+                        
+                        </style>
+                    """,
+                    unsafe_allow_html=True)
 
 # Função para calculo de matriz
-def Matriz_uma_por_uma(chave, dataframe):
+def Rotear(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
     
     # Inputs
-    df = dataframe
+    df_rota = df
     
     # Conectando ao client googlemaps
     gmaps = googlemaps.Client(key=chave)
     
     # Criando novas colunas a serem preenchidas
-    df['Origem_Formatada'] = ''
-    df['LatLong_Origem'] = ''
-    df['Destino_Formatado'] = ''
-    df['LatLong_Destino'] = ''
-    df['Tempo [s]'] = ''
-    df['Distância [m]'] = ''
-    rotas = []
+    lista_origem, lista_latlong_origem, lista_destino, lista_latlong_destino, lista_tempo, lista_dist, lista_rotas = [],[],[],[],[],[],[]
+    i = 1
+    progress_bar = st.progress(0)
     
     # Loops
-    for i in range(len(df)):
+    for origem,destino,modo in zip(df_rota[ColunaOrigem], df_rota[ColunaDestino], df_rota[ColunaModo]):
         
-        try:
-            
-            if df[Modo].loc[i] == 'bus':
-                geocode = gmaps.directions(df[Origem].loc[i], df[Destino].loc[i], mode='transit', transit_mode='bus')
-                
-            if df[Modo].loc[i] != 'bus':
-                geocode = gmaps.directions(df[Origem].loc[i], df[Destino].loc[i], mode=df[Modo].loc[i])
-                
-            if len(geocode)>0:
-                
-                geocode = geocode[0]['legs'][0]
-                
-                df['Origem_Formatada'].loc[i] = geocode['start_address']
-                df['LatLong_Origem'].loc[i] = geocode['start_location']
-                df['Destino_Formatado'].loc[i] = geocode['end_address']
-                df['LatLong_Destino'].loc[i] = geocode['end_location']
-                df['Tempo [s]'].loc[i] = geocode['duration']['value']
-                df['Distância [m]'].loc[i] = geocode['distance']['value']
-                
-                for rota in geocode['steps']:
-                    
-                    rota.update({'Origem':df[Origem].loc[i], 'Destino':df[Destino].loc[i], 'Indice':i})
 
-                rotas.append(geocode['steps'])
-                
-            else:
-                
-                df['Origem_Formatada'].loc[i] = 'Não encontrado'
-                df['LatLong_Origem'].loc[i] = 'Não encontrado'
-                df['Destino_Formatado'].loc[i] = 'Não encontrado'
-                df['LatLong_Destino'].loc[i] = 'Não encontrado'
-                df['Tempo [s]'].loc[i] = 'Não encontrado'
-                df['Distância [m]'].loc[i] = 'Não encontrado'
-                            
-        except:
+        if modo == 'bus':
+            geocode = gmaps.directions(origem, destino, mode='transit', transit_mode='bus')
             
-                df['Origem_Formatada'].loc[i] = 'Não encontrado'
-                df['LatLong_Origem'].loc[i] = 'Não encontrado'
-                df['Destino_Formatado'].loc[i] = 'Não encontrado'
-                df['LatLong_Destino'].loc[i] = 'Não encontrado'
-                df['Tempo [s]'].loc[i] = 'Não encontrado'
-                df['Distância [m]'].loc[i] = 'Não encontrado'
+        else:
+            geocode = gmaps.directions(origem, destino, mode=modo)
+            
+        if len(geocode)>0:
+            
+            geocode = geocode[0]['legs'][0]
+
+            lista_origem.append(geocode['start_address'])
+            lista_latlong_origem.append(geocode['start_location'])
+            lista_destino.append(geocode['end_address'])
+            lista_latlong_destino.append(geocode['end_location'])
+            lista_tempo.append(geocode['duration']['value'])
+            lista_dist.append(geocode['distance']['value'])
+            
+            for rota in geocode['steps']:
+                
+                rota.update({'Origem':origem, 'Destino':destino})
+
+            lista_rotas.append(geocode['steps'])
+        
+        else:
+            
+            lista_origem.append('Não encontrado')
+            lista_latlong_origem.append('Não encontrado')
+            lista_destino.append('Não encontrado')
+            lista_latlong_destino.append('Não encontrado')
+            lista_tempo.append('Não encontrado')
+            lista_dist.append('Não encontrado')
+        
+        # Atualizando progress bar
+        progress_bar.progress(i/len(df_rota), text=f":material/hourglass_empty: Geocodificando: {i*10}% realizados...")  
+        i += 1
     
-    return (df, rotas)
+    # Atualizando progress bar
+    progress_bar.progress(100, text=":green[:material/done_all: **100% dos endereços geocodificados**]")
+    time.sleep(1)
+    
+    # Criando novas colunas a serem preenchidas
+    df_rota['Origem_Formatada'] = lista_origem
+    df_rota['LatLong_Origem'] = lista_latlong_origem
+    df_rota['Destino_Formatado'] = lista_destino
+    df_rota['LatLong_Destino'] = lista_latlong_destino
+    df_rota['Tempo [s]'] = lista_tempo
+    df_rota['Distância [m]'] = lista_dist
+    
+    return (df_rota, lista_rotas)
 
 # Função para criar as rotas
-def roteamento(rotas):
+def DesenharRotas(rotas):
 
     rotas_totais = []
     
@@ -134,7 +183,6 @@ def roteamento(rotas):
                 'modo': caminho['travel_mode'],
                 'origem': caminho['Origem'],
                 'destino': caminho['Destino'],
-                'índice': caminho['Indice'],
                 'geometry': line_geometry
             })
     
@@ -143,92 +191,133 @@ def roteamento(rotas):
     
     return gdf
 
-arquivo_matriz = st.file_uploader('**Faça o upload da planilha aqui!:call_me_hand:**', type=['xlsx'])
-
-if 'MatrizResultado' not in st.session_state:
-    
-    st.session_state.MatrizResultado = None
+# Variáveis no cache
+if 'Resultado' not in st.session_state:
+    st.session_state.Resultado = None
     
 if 'Rotas' not in st.session_state:
-    
     st.session_state.Rotas = None
 
-# Iniciando aplicação
-if arquivo_matriz is not None:
+# Sidebar
+with st.sidebar:
     
-    df = pd.read_excel(arquivo_matriz)
-    
-    col1,col2 = st.columns([5,5])
-    
-    with col1:
-    
-        with st.form('Form rodar matriz'):
+    with st.expander('**Informações importantes**', expanded=False):
+        st.info("""
+                Use os seguintes valores para indicar o modo de transporte:
+                - driving (para carros e motos)
+                - bicycling (para bicicleta)
+                - walking (para a pé)
+                - bus (para ônibus)
+                """)
             
-            Origem = st.selectbox('**Indique a coluna com a origem:**', df.columns)
-            Destino = st.selectbox('**Indique a coluna com o destino:**', df.columns)
-            Modo = st.selectbox('**Indique a coluna com o modo de deslocamento:**', df.columns)
+    chave = st.text_input('Insira aqui sua chave API:', type='password')
+    
+    # Botão para subir planilha excel
+    arquivo = st.file_uploader(':blue[:material/upload_file: Faça o upload da planilha excel]', type=['xlsx'])
+    st.text('')
+    if arquivo is not None:
+        chave = st.text_input(':blue[:material/key_vertical: Insira aqui sua chave API:]', type='password')
+        for i in range(2):st.text('')
+
+# Carregando layout
+carregar_layout()
+   
+# Botões para a execução dos processos
+if arquivo is not None:
+
+    # Transformando o arquivo carregado em DataFrame
+    df = pd.read_excel(arquivo, engine='openpyxl')
+    
+     # Parametrizando o container de inputs
+    container_inputs = st.container(border=False, 
+                                    horizontal=True,
+                                    vertical_alignment='center',
+                                    horizontal_alignment='center'
+                                    )
+    
+    # Formulário de processamento
+    with st.form('Form rodar matriz', width='stretch', border=False):
+        
+        # Chamando container de inputs
+        with container_inputs:
             
-            rodar = st.form_submit_button('**Calcular**')
+            ColunaOrigem = st.selectbox('', 
+                                        df.columns,
+                                        index=None,
+                                        placeholder='Defina a coluna com as origens')
             
+            ColunaDestino = st.selectbox('', 
+                                        df.columns,
+                                        index=None,
+                                        placeholder='Defina a coluna com os destinos')
+            
+            ColunaModo = st.selectbox('',
+                                      df.columns,
+                                      index=None,
+                                      placeholder='Defina a coluna com os modos')
+            
+        # Centralizando botão de executar roteamento
+        c1,c2,c3 = st.columns([.3,.4,.3])
+        
+        with c2:
+            
+            # Botão de submit
+            rodar = st.form_submit_button('Rotear', width='stretch', icon=':material/route:', type='primary')
+            
+            # Uso do botão
             if rodar:
                 
-                with st.status('Calculando matriz...', expanded=True) as status:
-                    
-                    st.session_state.MatrizResultado, rotas = Matriz_uma_por_uma(chave, df)
-                    st.session_state.Rotas = roteamento(rotas)
-        
+                with st.progress(0, "Gerando rotas...") as progress_bar:
+                    st.session_state.Resultado, rotas = Rotear(df, chave)
+                    st.session_state.Rotas = DesenharRotas(rotas)
                 st.balloons()
-                status.update(label='Cálculo concluído', state='complete')
-                st.toast('Se o easygeomax foi útil, valorize-me: pague-me um café!', icon='🥳')
+                time.sleep(2)
+                st.rerun()
 
-
-        cl1,cl2,cl3 = st.columns([1,5,1])
+    # Parametrizando o container de outputs
+    container_outputs = st.container(border=False,
+                                     horizontal=False,
+                                     horizontal_alignment='center',
+                                     vertical_alignment='bottom')
+    
+    # Plotando mapa de resultados
+    if st.session_state.Resultado is not None and arquivo is not None:
         
-        with cl2:
+        with container_outputs:
             
-            if st.session_state.MatrizResultado is not None and arquivo_matriz is not None:
-                
-                with st.status('Gerando CSV...') as status2:
-                    
-                    st.download_button(
-                        label="Baixe em CSV - Matriz geral",
-                        data=st.session_state.MatrizResultado.to_csv(),
-                        file_name=f"Directions-{datetime.now()}.csv",
-                        mime="text/csv",
-                        key='download-csv',
-                        use_container_width=True,
-                        icon='✅'
-                    )
-                    
-                    st.download_button(
-                        label="Baixe em CSV - Matriz de percursos",
-                        data=st.session_state.Rotas.to_csv(),
-                        file_name=f"Directions-{datetime.now()}.csv",
-                        mime="text/csv",
-                        key='download-csv2',
-                        use_container_width=True,
-                        icon='✅'
-                    ) 
-                    
-                status2.update(label='**CSVs Gerados!**', state='complete', expanded=True)
-             
-# Mostrando mapa na coluna 2    
-    with col2:
-        
-        if st.session_state.MatrizResultado is not None and arquivo_matriz is not None:
-
             # Criando instância de mapa
             m = leafmap.Map()
             m.add_gdf(st.session_state.Rotas, layer_name='Roteamento')
-            m.to_streamlit(responsive=True, scrolling=True)
+            
+            # Plotando mapa de resultados
+            m.to_streamlit(responsive=True, scrolling=True, height=400)
 
-# Carregando resultados finais
-if st.session_state.MatrizResultado is not None and arquivo_matriz is not None:
-     
-    with st.expander('**Matriz geral:**'):
+    
+# Inserindo botões de download dos resultados
+    if st.session_state.Resultado is not None and arquivo is not None:
+               
+        buffer = io.BytesIO()
+        with pd.ExcelWriter(buffer, engine='openpyxl') as writer:
+            st.session_state.Resultado.to_excel(writer, sheet_name='Resultado', index=False)
+            st.session_state.Rotas.to_excel(writer, sheet_name='Rotas', index=False)
+        buffer.seek(0)
         
-        st.dataframe(st.session_state.MatrizResultado)
         
-    with st.expander('**Percursos:**'):
+        container_downloads = st.container(border=False,
+                                           horizontal=False,
+                                           horizontal_alignment='center',
+                                           vertical_alignment='center')
         
-        st.dataframe(st.session_state.Rotas)
+        with container_downloads:
+    
+            st.download_button(
+                "Baixe em Excel",
+                buffer,
+                f"Dados de roterização - {datetime.now()}.xlsx",
+                "application/vnd.ms-excel",
+                key='download-xlsx',
+                on_click='rerun',
+                type='primary',
+                width=400,
+                icon=':material/download_for_offline:'
+                )
