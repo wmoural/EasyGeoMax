@@ -58,7 +58,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
     else:
         with st.container(horizontal_alignment='center'):
             st.title('Easy :red[Routes :material/route:]', width='content')
-            st.caption('Aplicação web para geração de rotas otimizadas', width=305)
+            st.caption('Aplicação web para geração de rotas otimizadas', width=310)
             st.divider()
             
             # Ajustes de CSS
@@ -318,6 +318,7 @@ if arquivo is not None:
                 width=400,
                 icon=':material/download_for_offline:'
                 )
+
 
 
 
