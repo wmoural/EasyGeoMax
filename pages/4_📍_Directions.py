@@ -30,8 +30,8 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
             with col2:
                 with st.container(horizontal_alignment='left'):
                     st.markdown(':gray[:material/counter_1:] Faça o upload do seu arquivo', width='content')
-                    st.markdown(':gray[:material/counter_2:] Forneça uma chave API caso queira geocodificar com Google (opção paga) ou deixe em branco para geocodificar com ArcGIS (opção gratuita)', width='content')
-                    st.markdown(':gray[:material/counter_3:] Defina a coluna em que estão os endereços e geocodifique', width='content')
+                    st.markdown(':gray[:material/counter_2:] Forneça uma chave API', width='content')
+                    st.markdown(':gray[:material/counter_3:] Defina a coluna em que estão os endereços/coordenadas de origem, destino e o modo de transporte', width='content')
                     st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
             
             # Ajustes de CSS
@@ -318,4 +318,5 @@ if arquivo is not None:
                 width=400,
                 icon=':material/download_for_offline:'
                 )
+
 
