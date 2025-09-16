@@ -161,11 +161,11 @@ def Rotear(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
     
     return (df_rota, lista_rotas)
 
-# Função para criar as rotas
+# Função para criar as rotas (GPT)
 def DesenharRotas(rotas):
 
     rotas_totais = []
-    
+
     # Loop through the list of routes
     for route in rotas:
         # For each route, loop through its legs
@@ -201,7 +201,7 @@ if 'Rotas' not in st.session_state:
 # Sidebar
 with st.sidebar:
     
-    with st.expander('**Informações importantes**', expanded=False):
+    with st.expander('**Informações importantes**', expanded=False, icon=':material/info:'):
         st.info("""
                 Use os seguintes valores para indicar o modo de transporte:
                 - driving (para carros e motos)
@@ -209,15 +209,12 @@ with st.sidebar:
                 - walking (para a pé)
                 - bus (para ônibus)
                 """)
-            
-    chave = st.text_input('Insira aqui sua chave API:', type='password')
-    
+               
     # Botão para subir planilha excel
     arquivo = st.file_uploader(':blue[:material/upload_file: Faça o upload da planilha excel]', type=['xlsx'])
     st.text('')
     if arquivo is not None:
         chave = st.text_input(':blue[:material/key_vertical: Insira aqui sua chave API:]', type='password')
-        for i in range(2):st.text('')
 
 # Carregando layout
 carregar_layout()
@@ -321,3 +318,4 @@ if arquivo is not None:
                 width=400,
                 icon=':material/download_for_offline:'
                 )
+
