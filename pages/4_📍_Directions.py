@@ -317,6 +317,3 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
-
-
-
