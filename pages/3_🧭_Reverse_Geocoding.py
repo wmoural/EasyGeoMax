@@ -265,6 +265,6 @@ if arquivo is not None:
                 key='download-xlsx',
                 on_click='rerun',
                 type='primary',
-                width='stretch',
+                width=500,
                 icon=':material/download_for_offline:'
                 )
