@@ -259,20 +259,17 @@ if arquivo is not None:
         buffer = io.BytesIO()
         st.session_state.Resultado.to_excel(buffer, index=False)
         buffer.seek(0)
-        
-        coluna1,coluna2,coluna3 = st.columns([.2,.6,.2])
-        
-        with coluna2:
-            with st.container(horizontal_alignment='center'):
-                                        
-                st.download_button(
-                    "Baixe em Excel",
-                    buffer,
-                    f"Dados geocodificados - {datetime.now()}.xlsx",
-                    "application/vnd.ms-excel",
-                    key='download-xlsx',
-                    on_click='rerun',
-                    type='primary',
-                    width='stretch',
-                    icon=':material/download_for_offline:'
-                    )
+    
+        with st.container(horizontal_alignment='center'):
+                                    
+            st.download_button(
+                "Baixe em Excel",
+                buffer,
+                f"Dados geocodificados - {datetime.now()}.xlsx",
+                "application/vnd.ms-excel",
+                key='download-xlsx',
+                on_click='rerun',
+                type='primary',
+                width=500,
+                icon=':material/download_for_offline:'
+                )
