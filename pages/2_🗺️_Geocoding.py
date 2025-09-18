@@ -260,7 +260,12 @@ if arquivo is not None:
         st.session_state.Resultado.to_excel(buffer, index=False)
         buffer.seek(0)
     
-        with st.container(horizontal_alignment='center'):
+        container_downloads = st.container(border=False,
+                                           horizontal=False,
+                                           horizontal_alignment='center',
+                                           vertical_alignment='center')
+        
+        with container_downloads:
                                     
             st.download_button(
                 "Baixe em Excel",
