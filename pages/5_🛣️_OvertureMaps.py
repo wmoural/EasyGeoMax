@@ -2,50 +2,189 @@ import geopandas as gpd
 import streamlit as st
 from overturemaps import core
 import leafmap.foliumap as leafmap
-import pandas as pd
-from shapely import wkt
 import io
-from io import BytesIO
+from datetime import datetime
+import time
 
 # Limpando cache
 st.cache_data.clear()
+   
+# Configurando página
+st.set_page_config(page_title="Easy Overture", page_icon=':south_america:',layout='wide')
 
-# Funções para estilização do mapa
+# Funções
+    # Funções para carregamento do layout
+@st.cache_data
+def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não importa)
+    if arquivo is None:
+        with st.container(horizontal_alignment='center'):
+            
+            st.title('Easy :red[Overture :material/south_america:]', width='content')
+            st.caption('Aplicação web para acesso à base de dados OvertureMaps Foundation', width=410)
+            for i in range(3):st.text('')
+            st.subheader(':gray[:material/help: Uso]', width='content')    
+            col1,col2,col3 = st.columns([0.2,.6,0.2])
+        
+            with col2:
+                with st.container(horizontal_alignment='left'):
+                    st.markdown(':gray[:material/counter_1:] Faça o upload do seu arquivo', width='content')
+                    st.markdown(':gray[:material/counter_2:] Forneça uma chave API', width='content')
+                    st.markdown(':gray[:material/counter_3:] Defina a coluna em que estão os endereços/coordenadas de origem, destino e o modo de transporte', width='content')
+                    st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
+            
+            # Ajustes de CSS
+            st.markdown("""
+                        <style>
+    
+                        .st-emotion-cache-1fc0ges p {
+                            margin-top: -19px;
+                            }
+                        
+                        .st-emotion-cache-10p9htt {
+                            height: 1rem;
+                            margin-bottom: 10px;                            
+                            }
+                        
+                        .st-emotion-cache-1s2v671 {
+                            min-height: 0rem;
+                        }
+                        
+                        </style>
+                    """,
+                    unsafe_allow_html=True)
+     
+    else:
+        with st.container(horizontal_alignment='center'):
+            st.title('Easy :red[Overture :material/south_america:]', width='content')
+            st.caption('Aplicação web para acesso à base de dados OvertureMaps Foundation', width=410 )
+            st.divider()
+            
+            # Ajustes de CSS
+            st.markdown("""
+                        <style>
+                        .st-emotion-cache-zy6yx3 {
+                            padding: 2rem;                        
+                            }
+    
+                        .st-emotion-cache-1fc0ges p {
+                            margin-top: -2px;
+                            }
+                        
+                        .st-emotion-cache-rv01uy { 
+                            margin-top: -1rem;
+                            margin-bottom: -1rem;
+                            }
+                        
+                        .st-emotion-cache-12yl5kl {
+                            background-color: #62D292;
+                            }
+                        
+                        .st-emotion-cache-14xp4b3 {
+                            margin-top: 0rem;
+                            }
+                        
+                        .st-emotion-cache-1s2v671 {
+                            min-height: 0rem;
+                        }
+                        
+                        </style>
+                    """,
+                    unsafe_allow_html=True)
+
+    # Funções para estilização do mapa
+@st.cache_data
 def estilobbox(feature):
     return {
-    "color": "green",
-    "fillOpacity": 0
+    "color": "red",
+    "fillOpacity": 0,
+    "weight": 3,
     }
-
+@st.cache_data
 def estiloarea(feature):
     return {
     
         "stroke": True,
-        "color": "green",
-        "weight": 2,
+        "color": "red",
+        "weight": 3,
         "opacity": 1,
         "fill": True,
-        "fillColor": "green",
-        "fillOpacity": 0.4,
+        "fillColor": "red",
+        "fillOpacity": 0.1,
+        "dashArray": "5, 10",
     }
+
+    # Carregando mapa
+def mapa(area):
+    # Criando instância de mapa
+    m = leafmap.Map()
     
-# Criando instância de mapa
-m = leafmap.Map()
+    # Carregando basemap de satélites
+    #m.add_basemap("SATELLITE")
+
+    # Alimentando com a área de interesse + bbox
+    m.add_gdf(area, layer_name='Area de interesse', style_callback=estiloarea)
+    m.add_gdf(gpd.GeoDataFrame(geometry=area.geometry.envelope,crs=area.crs), layer_name='BoundingBox', style_callback=estilobbox) 
+    m.to_streamlit(responsive=True, scrolling=True, height=450)
+    
+    return m
+
+    # Definindo as categorias
+if 'categorias' not in st.session_state:
+    st.session_state.categorias = {'Edificações':'building',
+                                   'PGVs':'place',
+                                   'Vias':'segment',
+                                   'Nós viários':'connector',
+                                   'Infraestrutura':'infrastructure',
+                                   'Solo':'land',
+                                   'Uso do solo':'land_use',
+                                   'Massas de água':'water'
+                                   }
+        
+    # Filtragem
+def BaixarOverture(area, categoria):
+    
+    # Pegando os bbox
+    limites = area.total_bounds
+    limites = (limites[0],limites[1],limites[2],limites[3])
+    
+    # Fazendo progress bar
+    progress_bar = st.progress(0)
+    
+    # Carregando os dados
+    progress_bar.progress(50, text=f":material/hourglass_empty: Acessando dados...") 
+    dados = core.geodataframe(categoria, bbox=limites)
+    dados = dados.astype(str)
+ 
+    # Ajuste de colunas
+    progress_bar.progress(90, text=f":material/hourglass_empty: Ajustando colunas...") 
+    
+    if str(categoria) == 'place':
+        nome = dados['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
+        dados['names'] = nome[1]
+
+        categoria = dados['categories'].str.split(': ', expand=True).replace([", 'alternate'", "'"], ['', ''], regex=True)
+        dados['categories'] = categoria[1]
+
+    if str(categoria) == 'segment':
+        nome = dados['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
+        dados['names'] = nome[1]
+
+    if str(categoria) == 'infrastructure':
+        nome = dados['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
+        dados['names'] = nome[1]
+    
+    progress_bar.progress(100, text=":green[:material/done_all: **Dados disponibilizados!**]")
+    
+    return dados
 
 # Definindo variáveis importantes
-if 'resultado' not in st.session_state:
-    st.session_state.resultado = None
-
-# Configurando página
-st.set_page_config(page_title="Easy OvertureData", page_icon=':motorway:',layout='wide')
-
-# Título
-st.title("**Easy** :violet[OvertureData] :motorway:")    
+if 'Resultado' not in st.session_state:
+    st.session_state.Resultado = None
 
 # Configurando sidebar
 with st.sidebar:
     
-    with st.expander('**Informações importantes**', icon='ℹ️', expanded=False):
+    with st.expander('**Informações importantes**', icon=':material/info:', expanded=False):
         st.info("""
                 - A área de interesse deve ser um POLÍGONO;
                 - A área de interesse deve estar no SRC WGS84 (EPSG:4326);
@@ -53,147 +192,85 @@ with st.sidebar:
                 - Mantenha a tela do computador ligada nesta aba após iniciar o processo;
                 - A ferramenta é indicada para projetos de pequeno e médio porte.
                 """)
-
-    with st.expander('**Dados do autor:** ', expanded=True):
-    
-        with st.container():
-            sidebarcol1, sidebarcol2 = st.columns([2, 1])
-            with sidebarcol1:
-                imagem = 'https://i.imgur.com/Xe9O2MX.png'
-                st.image(imagem, use_container_width=True, caption='Wellington Moura')
-    
-            with sidebarcol2:
-                st.header('')
-                st.subheader('[Linkedin](https://www.linkedin.com/in/wellington-moura-27497a1b3/)')
-                st.subheader('[Github](https://github.com/wmoural)')
-    
-    with st.expander('**Pague-me um café:**', icon='☕', expanded=False):
-        pix = 'https://i.imgur.com/LLr5WY8.jpg'
-        st.image(pix, use_container_width='True', caption='PIX')
-    
-# Definindo uploader de arquivo    
-arquivo = st.file_uploader('**Faça o upload da área de interesse aqui** :call_me_hand:', type=['.gpkg'])
-
-col1,col2 = st.columns([3,2])
-
-with col2:
-    
-    # Iniciado aplicação caso haja caixa delimitadora
-    if arquivo is not None:
-
-        # Criando buffer
-        gpkg_buffer = io.BytesIO(arquivo.getvalue())
         
-        # Lendo área de interesse
-        arquivo_gpd = gpd.read_file(gpkg_buffer)
-        
-        # Corrigindo erro comum de coluna com datetime errado/ausente
-        if 'arquivo_gpd' in locals():
-            datetime_cols = arquivo_gpd.select_dtypes(include=['datetime64', 'timedelta64']).columns
-            if len(datetime_cols) > 0:
-                arquivo_gpd[datetime_cols] = arquivo_gpd[datetime_cols].astype(str)
-        
-        # Pegando os bbox
-        limites = arquivo_gpd.total_bounds
-        limites = (limites[0],limites[1],limites[2],limites[3])
 
-        # Definindo filtros para executar
-        with st.form('Definições de filtragem'):        
+    # Definindo uploader de arquivo    
+    arquivo = st.file_uploader('**Faça o upload da área de interesse aqui** :call_me_hand:', type=['.gpkg','.geojson'])
+    
+# Carregando layout
+carregar_layout()
+
+# Iniciado aplicação caso haja caixa delimitadora
+if arquivo is not None:
+       
+    # Criando buffer
+    buffer = io.BytesIO(arquivo.getvalue())
+    
+    # Lendo área de interesse
+    area_entrada = gpd.read_file(buffer)
+    area_entrada = area_entrada[['geometry']]
+    
+    # Definindo container de inputs
+    container_inputs = st.container(border=False,
+                                    horizontal=False,
+                                    horizontal_alignment='center',
+                                    vertical_alignment='center'
+                                    )
+    
+    # Trabalhando com o container
+    with container_inputs:
+        
+            # Definindo filtros para executar
+            with st.form('Definições de filtragem', border=False, width=400):        
+                        
             
-            categorias = {'Edificações':'building', 
-             'Pontos de interesse (PGVs)':'place', 
-             'Segmentos viários (links)':'segment',
-             'Nós viários (nodes)':'connector', 
-             'Infraestrutura':'infrastructure', 
-             'Solo':'land', 
-             'Uso do solo':'land_use', 
-             'Massas de água':'water'}
-             
-            # Organizando botões e rodando filtragem
-            c1,c2,c3 = st.columns([2,2,1.5])          
-            
-            busca = st.selectbox('**🛠️ Escolha o tema:**', list(categorias.keys()))
+                # Organizando botões e rodando filtragem       
+                busca = st.selectbox('',
+                                     list(st.session_state.categorias.keys()),
+                                     placeholder='Selecione o tipo de dado a ser consultado',
+                                     width=400,
+                                     index=None)
+      
+                rodar = st.form_submit_button("Acessar dados",
+                                              width='stretch',
+                                              type='primary',
+                                              icon=':material/south_america:'
+                                              )
 
-            nomapa = st.toggle('Carregar resultado para mapa?')
-            
-            st.warning("""          
-                       Caso a área de interessa seja grande, o funcionamento da
-                       aplicação pode ser severamente afetado e seu progresso poderá
-                       ser perdido caso deseje carregar os resultados no mapa. Pondere.
-                       """, icon='⚠️')
-            
-            rodar = st.form_submit_button('**Filtrar!**', use_container_width=True, icon='🔎')
-            
-            if rodar:
-                
-                with st.status('Iniciando...', expanded=True) as status:
-                    
-                    st.write('Filtrando feições...')
-                    st.session_state.resultado = core.geodataframe(categorias[busca], bbox=limites)
-                    st.write('Feições filtradas.')
-                    
-                    # Caso existam resultados da busca, inserí-los no mapa
-                    if st.session_state.resultado is not None and nomapa is True:
-                        
-                        st.write('Carregando feições para o mapa...')
-                        
-                        df = st.session_state.resultado
-                        
-                        # Por algum motivo, carregar todo o gdf ou df dá errado
-                        df = st.session_state.resultado[['geometry']].astype(str) 
+                # Execução do botão rodar
+                if rodar:
+                           
+                    with st.progress(0, "Iniciando...") as progress_bar:
+                        st.session_state.Resultado = BaixarOverture(area_entrada, st.session_state.categorias[busca])
+                    st.balloons()
+                    time.sleep(2)
+                    st.rerun()
 
-                        df['geometry'] = df['geometry'].apply(wkt.loads)
-                        
-                        gdf = gpd.GeoDataFrame(df, geometry='geometry')
-                        
-                        gdf.set_crs(epsg=4326, inplace=True)
-                        
-                        m.add_gdf(gdf, layer_name=busca,fill_colors=["red"])
-                        
-                        st.write('Feições carregadas para o mapa.')
-                    
-                    status.update(label=f'**Filtragem completa: {len(st.session_state.resultado)} resultados encontrados!** :partying_face:\
-                    Aguarde o csv ficar pronto!', state='complete', expanded=False)
-                    
+    # Renderizando o mapa no streamlit
+    m = mapa(area_entrada)
 
-    cl1,cl2,cl3 = st.columns([1,3,1])
-
-    with cl2:
-
-        if st.session_state.resultado is not None and arquivo is not None:
-
-            with st.status('Gerando CSV...') as status2:
-
-                st.download_button(
-                    "Baixe em CSV (formato wkt)",
-                    st.session_state.resultado.to_csv(),
-                    f"Overture-{busca}.csv",
-                    "text/csv",
-                    key='download-csv',
-                    use_container_width=True,
-                    icon='✅'
-                    )
-
-                status2.update(label='**CSV Gerado!**', state='complete', expanded=True)
-                st.toast('Se o easygeomax foi útil, valorize-me: pague-me um café!', icon='🥳')
-               
-with col1:
+# Inserindo botões de download dos resultados
+if st.session_state.Resultado is not None and arquivo is not None:
+       
+    buffer = io.BytesIO()
+    st.session_state.Resultado.to_excel(buffer, index=False)
+    buffer.seek(0)
     
-    if arquivo is not None:  
-        
-        # Carregando basemap de satélites
-        m.add_basemap("SATELLITE")
-        
-        # Alimentando com a área de interesse + bbox
-        m.add_gdf(arquivo_gpd, layer_name='Area de interesse', style_callback=estiloarea)
-        m.add_gdf(gpd.GeoDataFrame(geometry=arquivo_gpd.geometry.envelope,crs=arquivo_gpd.crs), layer_name='BoundingBox', style_callback=estilobbox) 
-        
-        # Renderizando o mapa no streamlit
-        m.to_streamlit(responsive=True, scrolling=True)
-
-# Mostrando tabela com resultados finais
-if st.session_state.resultado is not None and arquivo is not None:
+    container_downloads = st.container(border=False,
+                                       horizontal=False,
+                                       horizontal_alignment='center',
+                                       vertical_alignment='center')
     
-    with st.expander('**Prévia dos resultados:** ✔️'):
-        
-        st.dataframe(st.session_state.resultado[:101])
+    with container_downloads:
+                           
+        st.download_button(
+            "Baixe em Excel",
+            buffer,
+            f"Dados geocodificados - {datetime.now()}.xlsx",
+            "application/vnd.ms-excel",
+            key='download-xlsx',
+            on_click='rerun',
+            type='primary',
+            width=500,
+            icon=':material/download_for_offline:'
+            )
