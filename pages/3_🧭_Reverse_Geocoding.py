@@ -18,7 +18,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
     if arquivo is None:
         with st.container(horizontal_alignment='center'):
             
-            st.title('Easy :blue[Reverse] :green[Geocoding :material/travel_explore:]', width='content')
+            st.title('Easy :blue[Reverse Geocoding :material/travel_explore:]', width='content')
             st.caption('Aplicação web para realização de geocoding de coordenadas', width=370)
             for i in range(3):st.text('')
             st.subheader(':gray[:material/help: Uso]', width='content')    
@@ -54,7 +54,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
      
     else:
         with st.container(horizontal_alignment='center'):
-            st.title('Easy :blue[Reverse] :green[Geocoding :material/travel_explore:]', width='content')
+            st.title('Easy :blue[Reverse Geocoding :material/travel_explore:]', width='content')
             st.caption('Aplicação web para realização de geocoding de coordenadas', width=370)
             st.divider()
             
