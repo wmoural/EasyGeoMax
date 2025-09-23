@@ -153,7 +153,7 @@ def BaixarOverture(area, categoria):
     # Carregando os dados
     progress_bar.progress(50, text=f":material/hourglass_empty: Acessando dados...") 
     dados = core.geodataframe(categoria, bbox=limites)
-    df_temp = pd.DataFrame(dados.astype(str))
+    df_temp = pd.DataFrame(dados.drop(columns='geometry').astype(str))
  
     # Ajuste de colunas
     progress_bar.progress(90, text=f":material/hourglass_empty: Ajustando colunas...") 
@@ -273,7 +273,4 @@ if st.session_state.Resultado is not None and arquivo is not None:
             type='primary',
             width=500,
             icon=':material/download_for_offline:'
-            )
-
-
-
+        )
