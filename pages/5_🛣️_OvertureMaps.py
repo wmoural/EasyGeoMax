@@ -162,8 +162,8 @@ def BaixarOverture(area, categoria):
       #nome = dados['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
       #dados['names'] = nome[1]
 
-      categoria = dados['categories'].str.split(': ', expand=True).replace([", 'alternate'", "'"], ['', ''], regex=True)
-      dados['categories'] = categoria[1]
+      #categoria = dados['categories'].str.split(': ', expand=True).replace([", 'alternate'", "'"], ['', ''], regex=True)
+      #dados['categories'] = categoria[1]
 
    if str(categoria) == 'segment':
       nome = dados['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
@@ -274,6 +274,7 @@ if st.session_state.Resultado is not None and arquivo is not None:
             width=500,
             icon=':material/download_for_offline:'
         )
+
 
 
 
