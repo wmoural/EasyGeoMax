@@ -160,7 +160,7 @@ def BaixarOverture(area, categoria):
     
     if str(categoria) == 'place':
         nome = df_temp['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
-        dados['names'] = nome[1]
+        dados['names'] = nome[0]
 
         categoria = df_temp['categories'].str.split(': ', expand=True).replace([", 'alternate'", "'"], ['', ''], regex=True)
         dados['categories'] = categoria[1]
@@ -274,4 +274,5 @@ if st.session_state.Resultado is not None and arquivo is not None:
             width=500,
             icon=':material/download_for_offline:'
             )
+
 
