@@ -159,7 +159,7 @@ def BaixarOverture(area, categoria):
    progress_bar.progress(90, text=f":material/hourglass_empty: Ajustando colunas...") 
    
    if str(categoria) == 'place':
-      nome = gdf['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
+      nome = dados['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
       dados['names'] = nome[1]
 
       categoria = dados['categories'].str.split(': ', expand=True).replace([", 'alternate'", "'"], ['', ''], regex=True)
@@ -274,6 +274,7 @@ if st.session_state.Resultado is not None and arquivo is not None:
             width=500,
             icon=':material/download_for_offline:'
         )
+
 
 
 
