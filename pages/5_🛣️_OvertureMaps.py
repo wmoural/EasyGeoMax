@@ -152,22 +152,21 @@ def BaixarOverture(area, categoria):
    
    # Carregando os dados
    progress_bar.progress(50, text=f":material/hourglass_empty: Acessando dados...") 
-   dados = core.geodataframe(categoria, bbox=limites)
+   dados = gpd.GeoDataFrame(core.geodataframe(categoria, bbox=limites))
    dados = dados.astype(str)
-   df_temp = dados[['names', 'categories']]
    
    # Ajuste de colunas
    progress_bar.progress(90, text=f":material/hourglass_empty: Ajustando colunas...") 
    
    if str(categoria) == 'place':
-     nome = df_temp['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
+     nome = dados['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
      dados['names'] = nome[0]
    
-     categoria = df_temp['categories'].str.split(': ', expand=True).replace([", 'alternate'", "'"], ['', ''], regex=True)
+     categoria = dados['categories'].str.split(': ', expand=True).replace([", 'alternate'", "'"], ['', ''], regex=True)
      dados['categories'] = categoria[1]
    
    if str(categoria) == 'segment':
-     nome = df_temp['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
+     nome = dados['names'].str.split(': ', expand=True).replace([", 'common'", "'"],['',''], regex=True)
      dados['names'] = nome[1]
    
    if str(categoria) == 'infrastructure':
@@ -275,4 +274,5 @@ if st.session_state.Resultado is not None and arquivo is not None:
             width=500,
             icon=':material/download_for_offline:'
         )
+
 
