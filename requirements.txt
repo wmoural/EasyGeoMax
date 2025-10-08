@@ -8,7 +8,7 @@ requires.io==0.2.6
 xlsxwriter==3.2.3
 geocoder==1.38.1
 geopandas==1.1.1
-overturemaps==0.14.0
+overturemaps==0.17.0
 leafmap==0.43.5
 shapely==2.0.7
 polyline==2.0.2
