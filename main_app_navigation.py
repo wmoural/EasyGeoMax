@@ -32,9 +32,10 @@ pag_overturemaps = st.Page(
     )
 
 
-pg = st.navigation(paginas=[pag_inicial, pag_geocoding, pag_reverse_geocoding, pag_directions, pag_overturemaps])
+pg = st.navigation(pages=[pag_inicial, pag_geocoding, pag_reverse_geocoding, pag_directions, pag_overturemaps])
 
 pg.run()
+
 
 
 
