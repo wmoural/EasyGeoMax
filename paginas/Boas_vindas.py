@@ -36,4 +36,5 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
                     """,
                     unsafe_allow_html=True)
 
-carregar_layout
+carregar_layout()
+
