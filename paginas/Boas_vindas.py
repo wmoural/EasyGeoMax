@@ -8,6 +8,8 @@ with st.container(horizontal_alignment='center'):
     st.title('Easy :green[GeoMax!]', width='content')
     st.caption('Aplicação web multifuncionalidade', width='content') 
 
+with st.container(horizontal=True, horizontal_aligment='center'):
 for pagina in range(3):
-    with st.container(horizontal=True, horizontal_aligment='center'):
-        st.columns()
+    with st.columns(pagina):
+        ''
+
