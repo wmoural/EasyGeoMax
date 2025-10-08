@@ -31,14 +31,10 @@ pag_overturemaps = st.Page(
     icon=':material/south_america:',
     )
 
-pag_clustering = st.Page(
-    page='paginas/Clustering_and_Routing.py',
-    title='Clustering and Routing',
-    icon=':material/globe_location_pin:',
-    )
 
-pg = st.navigation(paginas=[pag_inicial, pag_geocoding, pag_reverse_geocoding, pag_directions, pag_overturemaps, pag_clustering])
+pg = st.navigation(paginas=[pag_inicial, pag_geocoding, pag_reverse_geocoding, pag_directions, pag_overturemaps])
 
 pg.run()
+
 
 
