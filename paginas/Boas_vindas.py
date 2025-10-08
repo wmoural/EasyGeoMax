@@ -16,13 +16,14 @@ with col1:
     st.header('teste')
     
 with col2:
-    col1.container(height=500)
+    col2.container(height=500)
     st.header('teste')
 
 with col3:
-    col1.container(height=500)
+    col3.container(height=500)
     st.header('teste')
 
 with col4:
-    col1.container(height=500)
+    col4.container(height=500)
     st.header('teste')
+
