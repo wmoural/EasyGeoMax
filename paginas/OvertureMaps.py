@@ -152,7 +152,7 @@ def BaixarOverture(area, categoria):
 
    # Carregando os dados
    progress_bar.progress(50, text=f":material/hourglass_empty: Acessando dados...") 
-   dados = gpd.GeoDataFrame(core.geodataframe(categoria, bbox=limites, release="2025-09-20.0"))
+   dados = gpd.GeoDataFrame(core.geodataframe(categoria, bbox=limites))
    dados = dados.astype(str)
    
    # Ajuste de colunas
@@ -274,6 +274,7 @@ if st.session_state.Resultado is not None and arquivo is not None:
             width=500,
             icon=':material/download_for_offline:'
         )
+
 
 
 
