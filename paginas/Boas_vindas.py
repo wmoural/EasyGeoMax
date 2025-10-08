@@ -11,20 +11,21 @@ with st.container(horizontal_alignment='center'):
 col1,col2,col3,col4 = st.columns(4, border=True)
 
 with col1:
-    col1.container(height=500)
+    col1.container(height=500, border=False)
     st.header('teste')
     
 with col2:
-    col2.container(height=500)
+    col2.container(height=500, border=False)
     st.header('teste')
 
 with col3:
-    col3.container(height=500)
+    col3.container(height=500, border=False)
     st.header('teste')
 
 with col4:
-    col4.container(height=500)
+    col4.container(height=500, border=False)
     st.header('teste')
+
 
 
 
