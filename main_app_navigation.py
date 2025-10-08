@@ -1,15 +1,9 @@
 import streamlit as st
 
-# Configurando página
-st.set_page_config(page_title='Easy GeoMax!', layout='wide', page_icon=':material/manufacturing:')
-
-st.title('Easy :green[GeoMax! :material/distance:]', width='content')
-st.caption('Site em manutenção...')
-
 pag_inicial = st.Page(
     page='pages/Boas_vindas.py',
     title='Boas Vindas!',
-    icon=':material/globe_location_pin:',
+    icon=':material/home:',
     default=True
     )
 
@@ -46,3 +40,4 @@ pag_clustering = st.Page(
 pg = st.navigation(pages=[pag_inicial, pag_geocoding, pag_reverse_geocoding, pag_directions, pag_overturemaps, pag_clustering])
 
 pg.run()
+
