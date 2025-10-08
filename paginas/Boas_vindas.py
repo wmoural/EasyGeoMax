@@ -9,7 +9,8 @@ with st.container(horizontal_alignment='center'):
     st.caption('Aplicação web multifuncionalidade', width='content') 
 
 with st.container(horizontal=True, horizontal_aligment='center'):
-for pagina in range(3):
-    with st.columns(pagina):
-        ''
+    col1,col2,col3,col4 = st.columns([0.25, 0.25, 0.25, 0.25])
+    with col1:
+        'TESTE'
+
 
