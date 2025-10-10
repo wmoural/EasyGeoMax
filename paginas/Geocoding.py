@@ -30,66 +30,13 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
                     st.markdown(':gray[:material/counter_2:] Forneça uma chave API caso queira geocodificar com Google (opção paga) ou deixe em branco para geocodificar com ArcGIS (opção gratuita)', width='content')
                     st.markdown(':gray[:material/counter_3:] Defina a coluna em que estão os endereços e geocodifique', width='content')
                     st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
-            """
-            # Ajustes de CSS
-            st.markdown("""
-                        <style>
-    
-                        .st-emotion-cache-1fc0ges p {
-                            margin-top: -19px;
-                            }
-                        
-                        .st-emotion-cache-10p9htt {
-                            height: 1rem;
-                            margin-bottom: 10px;                            
-                            }
-                        
-                        .st-emotion-cache-1s2v671 {
-                            min-height: 0rem;
-                        }
-                        
-                        </style>
-                    """,
-                    unsafe_allow_html=True)
-             """
+
     else:
         with st.container(horizontal_alignment='center'):
             st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
             st.caption('Aplicação web para realização de geocoding de endereços', width=370)
             st.divider()
-            """
-            # Ajustes de CSS
-            st.markdown("""
-                        <style>
-                        .st-emotion-cache-zy6yx3 {
-                            padding: 2rem;                        
-                            }
-    
-                        .st-emotion-cache-1fc0ges p {
-                            margin-top: -2px;
-                            }
-                        
-                        .st-emotion-cache-rv01uy { 
-                            margin-top: -1rem;
-                            margin-bottom: -1rem;
-                            }
-                        
-                        .st-em {
-                            background-color: #62D292;
-                            }
-                        
-                        .st-emotion-cache-14xp4b3 {
-                            margin-top: -2rem;
-                            }
-                        
-                        .st-emotion-cache-1s2v671 {
-                            min-height: 0rem;
-                        }
-                        
-                        </style>
-                    """,
-                    unsafe_allow_html=True)
-            """
+
 def Geocodificar(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
     
     # Reduzindo tamando do dataframe
