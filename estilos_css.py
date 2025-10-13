@@ -65,7 +65,7 @@ def uploader():
     
 def uploader_depois(filename):
     if not filename:
-        return None
+        return ''
     
     return f"""
     <style>
@@ -130,4 +130,5 @@ def uploader_depois(filename):
     }}
     </style>
     """
+
 
