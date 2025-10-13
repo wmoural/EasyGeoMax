@@ -12,19 +12,20 @@ col1,col2,col3,col4 = st.columns(4, border=True, vertical_alignment ='top')
 
 with col1:
     col1.container(height=500, border=False, vertical_alignment ='top')
-    st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
+    st.header('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
     
 with col2:
     col2.container(height=500, border=False, vertical_alignment ='top')
-    st.title('Easy :blue[Reverse Geocoding :material/travel_explore:]', width='content')
+    st.header('Easy :blue[Reverse Geocoding :material/travel_explore:]', width='content')
 
 with col3:
     col3.container(height=500, border=False, vertical_alignment ='top')
-    st.title('Easy :violet[Routes :material/route:]', width='content')
+    st.header('Easy :violet[Routes :material/route:]', width='content')
 
 with col4:
     col4.container(height=500, border=False, vertical_alignment ='top')
-    st.title('Easy :red[Overture :material/south_america:]', width='content')
+    st.header('Easy :red[Overture :material/south_america:]', width='content')
+
 
 
 
