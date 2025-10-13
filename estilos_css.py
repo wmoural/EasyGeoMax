@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 def uploader():
     st.markdown("""
     <style>
