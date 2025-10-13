@@ -91,12 +91,12 @@ def uploader_depois(filename):
             cursor: pointer !important;
         }}
         div[data-testid="stFileUploader"]::before {{
-            content: "✅ Arquivo carregado";
+            content: "Arquivo carregado";
             color: #388E3C;
             font-weight: 600;
             font-size: 1rem;
             display: block;
-            margin-bottom: -4rem;
+            margin-bottom: -5rem;
             z-index: 1;
             position: relative;
             animation: fadeZoom 0.6s ease-in-out;
@@ -130,4 +130,5 @@ def uploader_depois(filename):
         }}
         </style>
         """
+
 
