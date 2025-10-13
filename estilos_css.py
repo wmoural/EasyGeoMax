@@ -1,7 +1,7 @@
 import streamlit as st
 
 def uploader():
-    st.markdown("""
+    return """
     <style>
     div[data-testid="stFileUploader"] {
         position: relative;
@@ -61,7 +61,7 @@ def uploader():
         color: transparent !important;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """
     
 def uploader_depois(filename):
     if not filename:
@@ -130,3 +130,4 @@ def uploader_depois(filename):
         }}
         </style>
         """
+
