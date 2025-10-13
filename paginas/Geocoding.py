@@ -30,13 +30,19 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
                     st.markdown(':gray[:material/counter_2:] Forneça uma chave API caso queira geocodificar com Google (opção paga) ou deixe em branco para geocodificar com ArcGIS (opção gratuita)', width='content')
                     st.markdown(':gray[:material/counter_3:] Defina a coluna em que estão os endereços e geocodifique', width='content')
                     st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
+                    
+        # Ajustes de CSS
+        st.markdown(uploader(), unsafe_allow_html=True)            
 
     else:
         with st.container(horizontal_alignment='center'):
             st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
             st.caption('Aplicação web para realização de geocoding de endereços', width=370)
             st.divider()
-
+            
+        # Ajustes de CSS
+        st.markdown(uploader_depois(arquivo.name), unsafe_allow_html=True)
+            
 def Geocodificar(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
     
     # Reduzindo tamando do dataframe
