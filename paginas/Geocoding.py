@@ -5,6 +5,7 @@ import io
 import geocoder
 from datetime import datetime
 import time
+from estilos_css import uploader, uploader_depois
 
 # Limpando cache
 st.cache_data.clear()
