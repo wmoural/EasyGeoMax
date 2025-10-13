@@ -66,69 +66,67 @@ def uploader():
 def uploader_depois(filename):
     if not filename:
         return ''
-    
-    return f"""
-    <style>
-    @keyframes fadeZoom {{
-        0% {{ opacity: 0; transform: scale(0.95); }}
-        100% {{ opacity: 1; transform: scale(1); }}
-    }}
-    div[data-testid="stFileUploader"] {{
-        position: relative;
-        border: 2px dashed #43A047;
-        border-radius: 20px;
-        background-color: #E8F5E9;
-        padding: 1rem 1rem;
-        text-align: center;
-        overflow: hidden;
-        animation: fadeZoom 0.5s ease-in-out;
-    }}
-    section[data-testid="stFileUploaderDropzone"] {{
-        opacity: 0 !important;
-        position: absolute !important;
-        inset: 0 !important;
-        z-index: 10 !important;
-        cursor: pointer !important;
-    }}
-    div[data-testid="stFileUploader"]::before {{
-        content: "✅ Arquivo carregado";
-        color: #388E3C;
-        font-weight: 600;
-        font-size: 1rem;
-        display: block;
-        margin-bottom: -4rem;
-        z-index: 1;
-        position: relative;
-        animation: fadeZoom 0.6s ease-in-out;
-    }}
-    div[data-testid="stFileUploader"]::after {{
-        content: "{filename}";
-        display: inline-block;
-        background-color: #43A047;
-        color: #FFFFFF;
-        padding: 0.6rem 1.5rem;
-        border-radius: 6px;
-        font-size: 0.95rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
-        z-index: 1;
-        position: relative;
-        animation: fadeZoom 0.8s ease-in-out;
-    }}
-    div[data-testid="stFileUploader"]:hover::after {{
-        background-color: #2E7D32;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    }}
-    div[data-testid="stFileUploader"] div[role="listitem"] {{
-        display: none !important;
-    }}
-    div[data-testid="stFileUploader"] *:not([role="listitem"]) {{
-        background: transparent !important;
-        border: none !important;
-        color: transparent !important;
-    }}
-    </style>
-    """
-
-
+    else:
+        return f"""
+        <style>
+        @keyframes fadeZoom {{
+            0% {{ opacity: 0; transform: scale(0.95); }}
+            100% {{ opacity: 1; transform: scale(1); }}
+        }}
+        div[data-testid="stFileUploader"] {{
+            position: relative;
+            border: 2px dashed #43A047;
+            border-radius: 20px;
+            background-color: #E8F5E9;
+            padding: 1rem 1rem;
+            text-align: center;
+            overflow: hidden;
+            animation: fadeZoom 0.5s ease-in-out;
+        }}
+        section[data-testid="stFileUploaderDropzone"] {{
+            opacity: 0 !important;
+            position: absolute !important;
+            inset: 0 !important;
+            z-index: 10 !important;
+            cursor: pointer !important;
+        }}
+        div[data-testid="stFileUploader"]::before {{
+            content: "✅ Arquivo carregado";
+            color: #388E3C;
+            font-weight: 600;
+            font-size: 1rem;
+            display: block;
+            margin-bottom: -4rem;
+            z-index: 1;
+            position: relative;
+            animation: fadeZoom 0.6s ease-in-out;
+        }}
+        div[data-testid="stFileUploader"]::after {{
+            content: "{filename}";
+            display: inline-block;
+            background-color: #43A047;
+            color: #FFFFFF;
+            padding: 0.6rem 1.5rem;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+            z-index: 1;
+            position: relative;
+            animation: fadeZoom 0.8s ease-in-out;
+        }}
+        div[data-testid="stFileUploader"]:hover::after {{
+            background-color: #2E7D32;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }}
+        div[data-testid="stFileUploader"] div[role="listitem"] {{
+            display: none !important;
+        }}
+        div[data-testid="stFileUploader"] *:not([role="listitem"]) {{
+            background: transparent !important;
+            border: none !important;
+            color: transparent !important;
+        }}
+        </style>
+        """
