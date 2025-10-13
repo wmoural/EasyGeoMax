@@ -64,6 +64,9 @@ def uploader():
     """, unsafe_allow_html=True)
     
 def uploader_depois(filename):
+    if not filename:
+        return None
+    
     return f"""
     <style>
     @keyframes fadeZoom {{
@@ -127,3 +130,4 @@ def uploader_depois(filename):
     }}
     </style>
     """
+
