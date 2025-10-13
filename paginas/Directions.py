@@ -45,9 +45,9 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
             st.divider()
             
             # Ajustes de CSS
-            css = uploader_depois(arquivo.name)
-            if css:
-                st.markdown(css, unsafe_allow_html=True)
+            #css = uploader_depois(arquivo.name)
+            #if css:
+            #    st.markdown(css, unsafe_allow_html=True)
 
 # Função para calculo de matriz
 def Rotear(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
@@ -273,6 +273,7 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
 
 
