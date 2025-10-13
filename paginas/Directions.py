@@ -8,6 +8,7 @@ import geopandas as gpd
 import leafmap.foliumap as leafmap
 import time
 import io
+from estilos_css import uploader, uploader_depois
 
 # Limpando cache
 st.cache_data.clear()
@@ -35,25 +36,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
                     st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
             
             # Ajustes de CSS
-            st.markdown("""
-                        <style>
-    
-                        .st-emotion-cache-1fc0ges p {
-                            margin-top: -19px;
-                            }
-                        
-                        .st-emotion-cache-10p9htt {
-                            height: 1rem;
-                            margin-bottom: 10px;                            
-                            }
-                        
-                        .st-emotion-cache-1s2v671 {
-                            min-height: 0rem;
-                        }
-                        
-                        </style>
-                    """,
-                    unsafe_allow_html=True)
+            uploader()
      
     else:
         with st.container(horizontal_alignment='center'):
@@ -62,36 +45,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
             st.divider()
             
             # Ajustes de CSS
-            st.markdown("""
-                        <style>
-                        .st-emotion-cache-zy6yx3 {
-                            padding: 2rem;                        
-                            }
-    
-                        .st-emotion-cache-1fc0ges p {
-                            margin-top: -2px;
-                            }
-                        
-                        .st-emotion-cache-rv01uy { 
-                            margin-top: -1rem;
-                            margin-bottom: -1rem;
-                            }
-                        
-                        .st-emotion-cache-12yl5kl {
-                            background-color: #62D292;
-                            }
-                        
-                        .st-emotion-cache-14xp4b3 {
-                            margin-top: 0rem;
-                            }
-                        
-                        .st-emotion-cache-1s2v671 {
-                            min-height: 0rem;
-                        }
-                        
-                        </style>
-                    """,
-                    unsafe_allow_html=True)
+            uploader_depois(arquivo)
 
 # Função para calculo de matriz
 def Rotear(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
@@ -317,4 +271,5 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
