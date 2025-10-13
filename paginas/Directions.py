@@ -34,18 +34,18 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
                     st.markdown(':gray[:material/counter_2:] Forneça uma chave API', width='content')
                     st.markdown(':gray[:material/counter_3:] Defina a coluna em que estão os endereços/coordenadas de origem, destino e o modo de transporte', width='content')
                     st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
-            
-            # Ajustes de CSS
-            st.markdown(uploader(), unsafe_allow_html=True)
+        
+        # Ajustes de CSS
+        st.markdown(uploader(), unsafe_allow_html=True)
      
     else:
         with st.container(horizontal_alignment='center'):
             st.title('Easy :violet[Routes :material/route:]', width='content')
             st.caption('Aplicação web para geração de rotas otimizadas', width=310)
             st.divider()
-            
-            # Ajustes de CSS
-            st.markdown(uploader_depois(arquivo.name), unsafe_allow_html=True)
+        
+        # Ajustes de CSS
+        st.markdown(uploader_depois(arquivo.name), unsafe_allow_html=True)
 
 # Função para calculo de matriz
 def Rotear(df = pd.DataFrame, Chave = str) -> pd.DataFrame():
@@ -271,6 +271,7 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
 
 
