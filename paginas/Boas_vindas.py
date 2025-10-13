@@ -8,7 +8,7 @@ with st.container(horizontal_alignment='center'):
     st.title('Easy :green[GeoMax!]', width='content')
     st.caption('Aplicação web multifuncionalidade', width='content') 
 
-col1,col2,col3,col4 = st.columns(4, border=True, vertical_alignment ='top')
+col1,col2,col3,col4 = st.columns(4, border=True, vertical_alignment ='center')
 
 with col1:
     col1.container(height=500, border=False, vertical_alignment ='top')
@@ -25,6 +25,7 @@ with col3:
 with col4:
     col4.container(height=500, border=False, vertical_alignment ='top')
     st.header('Easy :red[Overture :material/south_america:]', width='content')
+
 
 
 
