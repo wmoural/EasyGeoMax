@@ -36,7 +36,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
                     st.markdown(':gray[:material/counter_4:] Visualize e baixe os resultados', width='content')
             
             # Ajustes de CSS
-            #st.markdown(uploader(), unsafe_allow_html=True)
+            st.markdown(uploader(), unsafe_allow_html=True)
      
     else:
         with st.container(horizontal_alignment='center'):
@@ -273,6 +273,7 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
 
 
