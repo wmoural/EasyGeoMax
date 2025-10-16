@@ -39,7 +39,12 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
         with st.container(horizontal_alignment='center'):
             st.title('Easy :blue[Reverse Geocoding :material/travel_explore:]', width='content')
             st.caption('Aplicação web para realização de geocoding de coordenadas', width=370)
-            st.divider()
+            st.markdown(
+                """
+                <hr style="margin:5px 0 0px 0;">
+                """,
+                unsafe_allow_html=True
+            )
             
         # Ajustes de CSS
         st.markdown(uploader_depois(arquivo.name), unsafe_allow_html=True)
