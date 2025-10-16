@@ -13,6 +13,17 @@ st.cache_data.clear()
 # Configurando página
 st.set_page_config(page_title='Easy Geocoding', layout='wide', page_icon=':material/globe_location_pin:')
 
+st.markdown(
+    """
+    <div style="display: flex; align-items: center;">
+        <img src="https://streamlit.io/images/brand/streamlit-logo-primary-colormark-darktext.png" 
+             width="50" style="margin-right:10px;">
+        <h2 style="margin: 0;">My App Header</h2>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
+
 # Funções
 @st.cache_data
 def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não importa)
