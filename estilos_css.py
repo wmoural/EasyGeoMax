@@ -128,10 +128,11 @@ def uploader_depois(filename):
             border: none !important;
             color: transparent !important;
         .st-emotion-cache-zy6yx3 {{
-            padding: 2.5rem 1rem 10rem;
+            padding: 3rem 0rem 0rem;
         }}  
         </style>
         """
+
 
 
 
