@@ -177,7 +177,7 @@ if arquivo is not None:
         with st.form("Inputs", border=False, width=400):
             
             # Dentro do formulário, definindo parâmetros da caixa de seleção de coluna para geocode
-            ColunaEndereco = st.selectbox("**Coluna de geocode**",
+            ColunaEndereco = st.selectbox("",
                                           list(df.columns.values),
                                           width='stretch',
                                           index=None,
