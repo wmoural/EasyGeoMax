@@ -143,7 +143,7 @@ if 'Resultado' not in st.session_state:
 with st.sidebar:
     # Logo
     with st.container(horizontal_alignment='center'):   
-    st.header(':green[EasyGeoMax]', width='content')
+        st.header(':green[EasyGeoMax]', width='content')
            
     # Botão para subir planilha excel
     arquivo = st.file_uploader(':blue[:material/upload_file: Faça o upload da planilha excel]', type=['xlsx'])
