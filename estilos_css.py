@@ -128,7 +128,12 @@ def uploader_depois(filename):
             border: none !important;
             color: transparent !important;
         }}
+        .st-emotion-cache-1s2v671 {
+            justify-content: center;
+            color: rgb(98, 210, 146);
+        }
         </style>
         """
+
 
 
