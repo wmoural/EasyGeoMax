@@ -21,7 +21,8 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
             
             st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
             st.caption('Aplicação web para realização de geocoding de endereços', width=370)
-            for i in range(3):st.text('')
+            st.divider()
+            #for i in range(3):st.text('')
             st.subheader(':gray[:material/help: Uso]', width='content')    
             col1,col2,col3 = st.columns([0.2,.6,0.2])
         
