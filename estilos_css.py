@@ -132,10 +132,8 @@ def uploader_depois(filename):
             justify-content: center;
             color: rgb(98, 210, 146);
         }}
-     
-        .st-emotion-cache-1vo6xi6 {{
-            margin-top: -1rem;
-        }}
+        .st-emotion-cache-zy6yx3 {{
+            padding: 4rem 1rem 10rem;
+        }}  
         </style>
         """
-
