@@ -41,7 +41,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
             st.caption('Aplicação web para realização de geocoding de endereços', width=370)
             st.markdown(
                 """
-                <hr style="margin:5px 0 5px 0;">
+                <hr style="margin-top:4px !important; margin-bottom:0px !important; border: none; border-top: 1px solid #bbb;">
                 """,
                 unsafe_allow_html=True
             )
