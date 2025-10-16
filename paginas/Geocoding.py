@@ -141,17 +141,6 @@ if 'Resultado' not in st.session_state:
 
 # Sidebar
 with st.sidebar:    
-    st.markdown(
-        """
-        <div style="display: flex; align-items: center;">
-            <img src="https://streamlit.io/images/brand/streamlit-logo-primary-colormark-darktext.png" 
-                 width="50" style="margin-right:10px;">
-            <h2 style="margin: 0;">My App Header</h2>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
     # Botão para subir planilha excel
     arquivo = st.file_uploader(':blue[:material/upload_file: Faça o upload da planilha excel]', type=['xlsx'])
     st.text('')
