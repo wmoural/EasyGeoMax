@@ -21,8 +21,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
             
             st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
             st.caption('Aplicação web para realização de geocoding de endereços', width=370)
-            st.divider()
-            #for i in range(3):st.text('')
+            for i in range(3):st.text('')
             st.subheader(':gray[:material/help: Uso]', width='content')    
             col1,col2,col3 = st.columns([0.2,.6,0.2])
         
@@ -40,6 +39,7 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
         with st.container(horizontal_alignment='center'):
             st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
             st.caption('Aplicação web para realização de geocoding de endereços', width=370)
+            st.markdown("""---""", usafe_allow_html=True)
             
         # Ajustes de CSS
         st.markdown(uploader_depois(arquivo.name), unsafe_allow_html=True)
