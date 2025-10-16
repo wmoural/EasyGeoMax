@@ -39,12 +39,17 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
         with st.container(horizontal_alignment='center'):
             st.title('Easy :green[Geocoding :material/globe_location_pin:]', width='content')
             st.caption('Aplicação web para realização de geocoding de endereços', width=370)
-            st.markdown(
-                """
-                <hr style="margin-top:4px !important; margin-bottom:0px !important; border: none; border-top: 1px solid #bbb;">
-                """,
-                unsafe_allow_html=True
-            )
+        st.markdown(
+            """
+            <div style="margin:0; padding:0;">
+              <hr style="margin:4px 0 0 0; padding:0; border: none; border-top:1px solid #bbb;">
+              <p style="margin:2px 0 0 0; padding:0;">
+                Conteúdo logo abaixo do divider (sem espaço extra do Streamlit).
+              </p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
             
         # Ajustes de CSS
