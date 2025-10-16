@@ -42,6 +42,12 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
         with st.container(horizontal_alignment='center'):
             st.title('Easy :violet[Routes :material/route:]', width='content')
             st.caption('Aplicação web para geração de rotas otimizadas', width=310)
+        st.markdown(
+            """
+            <hr style="margin:5px 0 0px 0;">
+            """,
+            unsafe_allow_html=True
+        )
         
         # Ajustes de CSS
         st.markdown(uploader_depois(arquivo.name), unsafe_allow_html=True)
@@ -270,6 +276,7 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
 
 
