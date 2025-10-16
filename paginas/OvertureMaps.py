@@ -7,7 +7,6 @@ from datetime import datetime
 import time
 from estilos_css import uploader, uploader_depois
 
-
 # Limpando cache
 st.cache_data.clear()
    
@@ -41,7 +40,12 @@ def carregar_layout(): # Função para ajustar o layout (coisa de frontend, não
         with st.container(horizontal_alignment='center'):
             st.title('Easy :red[Overture :material/south_america:]', width='content')
             st.caption('Aplicação web para acesso à base de dados OvertureMaps Foundation', width=410 )
-            st.divider()
+            st.markdown(
+                """
+                <hr style="margin:5px 0 0px 0;">
+                """,
+                unsafe_allow_html=True
+            )
             
             # Ajustes de CSS
         st.markdown(uploader_depois(arquivo.name), unsafe_allow_html=True)
@@ -229,6 +233,7 @@ if st.session_state.Resultado is not None and arquivo is not None:
             width=500,
             icon=':material/download_for_offline:'
         )
+
 
 
 
