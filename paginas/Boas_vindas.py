@@ -3,15 +3,15 @@ import streamlit as st
 # Configurando página
 st.set_page_config(page_title='Easy Geo!', layout='wide', page_icon=':material/home:')
 
-# Carregando layout
+# Carregando layout e CENTRALIZANDO o título e a caption
 with st.container(horizontal_alignment='center'):
-    pass
+    st.title('Easy :green[GeoMax!]', anchor=False)
+    st.caption('Aplicação web multifuncionalidade', anchor=False)
 
 CSS = """
 <style>
 :root{
-    /* Cor de destaque mudada para verde (ex: #008000) */
-    --accent: #008000;
+    --accent: #1e293b; 
     --muted: #6b7280;
     --shadow: 0 6px 18px rgba(13, 27, 62, 0.08);
 }
@@ -23,7 +23,7 @@ body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     padding:24px;
     box-shadow: var(--shadow);
     border: 1px solid rgba(11,99,214,0.06);
-    min-height: 280px; /* Garante altura mínima para estrutura */
+    min-height: 280px; 
     display:flex;flex-direction:column;justify-content:flex-start;
     transition: transform .16s ease, box-shadow .16s ease;
     overflow: hidden; 
@@ -33,21 +33,17 @@ body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 .card .subtitle{font-size:14px; color:var(--muted); margin-bottom:14px}
 .card p{margin:0; font-size:15px; color:#13324a; line-height:1.5; overflow-wrap: break-word;}
 
-/* Cor do Badge alterada para verde */
 .card .badge{
     display:inline-block;
     padding:6px 10px;
     border-radius:999px;
     font-weight:600;
     font-size:13px;
-    /* Fundo verde claro */
-    background: rgba(0, 128, 0, 0.09); 
-    /* Texto verde escuro, usando a variável --accent */
+    background: #e2e8f0; 
     color: var(--accent);
     margin-bottom:12px
 }
 
-/* Gradiente da direita (270deg) para a esquerda (0%) */
 .card-1{background: linear-gradient(270deg, #d0f0c0 0%, #a8e6a3 100%);}
 .card-2{background: linear-gradient(270deg, #c0e8b0 0%, #88d78c 100%);}
 .card-3{background: linear-gradient(270deg, #b0e0a0 0%, #70c870 100%);}
@@ -88,14 +84,6 @@ descriptions = [
 ]
 
 st.markdown(CSS, unsafe_allow_html=True)
-
-# Títulos Streamlit
-st.title('Easy :green[GeoMax!]')
-st.caption('Aplicação web multifuncionalidade')
-
-st.markdown("""
-Painéis resumidos das principais funcionalidades. Projetado para usuários técnicos (analistas, pesquisadores e planejadores).
-""")
 
 cols = st.columns(4, gap="medium")
 for col, desc in zip(cols, descriptions):
