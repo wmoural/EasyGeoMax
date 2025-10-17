@@ -5,10 +5,10 @@ st.set_page_config(page_title='Easy Geo!', layout='wide', page_icon=':material/h
 
 # Carregando layout
 with st.container(horizontal_alignment='center'):
-    # Removendo st.title e st.caption aqui pois a parte de markdown logo abaixo já os define de forma mais clara
-    # st.title('Easy :green[GeoMax!]', width='content')
-    # st.caption('Aplicação web multifuncionalidade', width='content')
-    pass
+     Removendo st.title e st.caption aqui pois a parte de markdown logo abaixo já os define de forma mais clara
+     st.title('Easy :green[GeoMax!]', width='content')
+     st.caption('Aplicação web multifuncionalidade', width='content')
+
 
 CSS = """
 <style>
@@ -67,13 +67,13 @@ descriptions = [
     },
     {
         "title": "Easy Routes",
-        "badge": "Rotas Otimizadas",
+        "badge": "Otimização de rotas",
         "class": "card-3",
         "text": "Gere rotas otimizadas de maneira simples e eficiente. O Easy Routes calcula trajetos entre múltiplos pontos usando a API Directions do Google, permitindo análises de mobilidade, planejamento logístico e comparação de alternativas de deslocamento."
     },
     {
         "title": "Easy Overture",
-        "badge": "Dados Overtures",
+        "badge": "Dados do OvertureMaps F.",
         "class": "card-4",
         "text": "Acesse e baixe dados abertos da Overture Maps Foundation diretamente a partir de uma área definida por você. O Easy Overture facilita a obtenção de camadas geoespaciais atualizadas, ideais para uso em estudos urbanos, ambientais e de infraestrutura."
     }
@@ -81,9 +81,6 @@ descriptions = [
 
 st.markdown(CSS, unsafe_allow_html=True)
 
-# Reajustando o cabeçalho para ter o título principal e subtítulo de forma nativa Streamlit
-st.title('Easy :green[GeoMax!]')
-st.caption('Aplicação web multifuncionalidade')
 
 st.markdown("""
 Painéis resumidos das principais funcionalidades. Projetado para usuários técnicos (analistas, pesquisadores e planejadores).
@@ -95,8 +92,8 @@ for col, desc in zip(cols, descriptions):
     <div class='card {desc['class']}'>
       <div class="badge">{desc['badge']}</div>
       <h3>{desc['title']}</h3>
-      <div class="subtitle">Solução integrada para análise espacial</div>
       <p>{desc['text']}</p>
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
+
