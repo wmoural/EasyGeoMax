@@ -25,7 +25,7 @@ body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 .card{
   background: var(--card-bg);
   border-radius:12px;
-  padding:20px;
+  padding:10px;
   box-shadow: var(--shadow);
   border: 1px solid rgba(11,99,214,0.06);
   min-height:160px;
@@ -82,5 +82,6 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
+
 
 
