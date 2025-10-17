@@ -128,11 +128,7 @@ def uploader_depois(filename):
             border: none !important;
             color: transparent !important;
         }}
-        .st-emotion-cache-zy6yx3 {{
-            padding: 3rem 1rem 5rem;
-        }}
-        .st-emotion-cache-1s2v671 {{
-            min-height: 0rem;
-        }}
+
         </style>
         """
+
