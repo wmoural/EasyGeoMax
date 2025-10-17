@@ -170,16 +170,22 @@ with st.sidebar:
                 """)
                
     # Botão para subir planilha excel
+    st.markdown(
+        """
+        <hr style="margin:5px 0 3px 0;">
+        """,
+        unsafe_allow_html=True
+    )    
     arquivo = st.file_uploader(':blue[:material/upload_file: Faça o upload da planilha excel]', type=['xlsx'])
-    st.text('')
-    if arquivo is not None:
-        chave = st.text_input(':blue[:material/key_vertical: Insira aqui sua chave API:]', type='password')
     st.markdown(
         """
         <hr style="margin:5px 0 3px 0;">
         """,
         unsafe_allow_html=True
     )
+    if arquivo is not None:
+        chave = st.text_input(':blue[:material/key_vertical: Insira aqui sua chave API:]', type='password')
+
 # Carregando layout
 carregar_layout()
    
@@ -281,6 +287,7 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
 
 
