@@ -149,7 +149,12 @@ if 'Resultado' not in st.session_state:
 with st.sidebar:    
     # Botão para subir planilha excel
     arquivo = st.file_uploader(':blue[:material/upload_file: Faça o upload da planilha excel]', type=['xlsx'])
-    st.divider()
+    st.markdown(
+        """
+        <hr style="margin:5px 0 0px 0;">
+        """,
+        unsafe_allow_html=True
+    )
     if arquivo is not None:
         chave = st.text_input(':blue[:material/key_vertical: Insira aqui sua chave API:]', type='password')
         for i in range(2):st.text('')
