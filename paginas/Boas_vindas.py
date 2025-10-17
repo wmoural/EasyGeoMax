@@ -71,13 +71,13 @@ descriptions = [
     },
     {
         "title": "Easy Routes",
-        "badge": "Rotas Otimizadas",
+        "badge": "Otimização de rotas",
         "class": "card-3",
         "text": "Gere rotas otimizadas de maneira simples e eficiente. O Easy Routes calcula trajetos entre múltiplos pontos usando a API Directions do Google, permitindo análises de mobilidade, planejamento logístico e comparação de alternativas de deslocamento."
     },
     {
         "title": "Easy Overture",
-        "badge": "Dados Overtures",
+        "badge": "OvertureMaps Foundation",
         "class": "card-4",
         "text": "Acesse e baixe dados abertos da Overture Maps Foundation diretamente a partir de uma área definida por você. O Easy Overture facilita a obtenção de camadas geoespaciais atualizadas, ideais para uso em estudos urbanos, ambientais e de infraestrutura."
     }
@@ -95,4 +95,5 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
+
 
