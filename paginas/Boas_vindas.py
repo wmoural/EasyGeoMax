@@ -75,12 +75,6 @@ descriptions = [
 
 st.markdown(CSS, unsafe_allow_html=True)
 
-st.markdown("""
-# EasyGeo
-**Aplicação web multifuncionalidade**
-Painéis resumidos das principais funcionalidades. Projetado para usuários técnicos (analistas, pesquisadores e planejadores).
-""")
-
 cols = st.columns(4, gap="medium")
 for col, desc in zip(cols, descriptions):
     html = f"""
@@ -92,3 +86,4 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
+
