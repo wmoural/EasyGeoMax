@@ -3,10 +3,10 @@ import streamlit as st
 # Configurando página
 st.set_page_config(page_title='Easy Geo!', layout='wide', page_icon=':material/home:')
 
-# Carregando layout e CENTRALIZANDO o título e a caption
+# Carregando layout
 with st.container(horizontal_alignment='center'):
-    st.title('Easy :green[GeoMax!]', anchor=False)
-    st.caption('Aplicação web multifuncionalidade', anchor=False)
+    st.title('Easy :green[GeoMax!]', width='content')
+    st.caption('Aplicação web multifuncionalidade', width='content')
 
 CSS = """
 <style>
@@ -95,3 +95,4 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
+
