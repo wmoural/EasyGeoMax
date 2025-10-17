@@ -155,7 +155,12 @@ with st.sidebar:
 
     # Definindo uploader de arquivo    
     arquivo = st.file_uploader('**Faça o upload da área de interesse aqui** :call_me_hand:', type=['.gpkg','.geojson'])
-    
+    st.markdown(
+        """
+        <hr style="margin:5px 0 3px 0;">
+        """,
+        unsafe_allow_html=True
+    )    
 # Carregando layout
 carregar_layout()
 
@@ -233,6 +238,7 @@ if st.session_state.Resultado is not None and arquivo is not None:
             width=500,
             icon=':material/download_for_offline:'
         )
+
 
 
 
