@@ -3,6 +3,11 @@ import streamlit as st
 # Configurando página
 st.set_page_config(page_title='Easy Geo!', layout='wide', page_icon=':material/home:')
 
+# Carregando layout
+with st.container(horizontal_alignment='center'):
+    st.title('Easy :green[GeoMax!]', width='content')
+    st.caption('Aplicação web multifuncionalidade', width='content')
+
 CSS = """
 <style>
 :root{
@@ -65,11 +70,6 @@ descriptions = [
 ]
 
 st.markdown(CSS, unsafe_allow_html=True)
-
-st.markdown("""
-# EasyGeo!
-**Aplicação web multifuncionalidade**
-""")
 
 cols = st.columns(4, gap="large")
 for col, desc in zip(cols, descriptions):
