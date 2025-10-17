@@ -23,7 +23,7 @@ body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
   padding:24px;
   box-shadow: var(--shadow);
   border: 1px solid rgba(11,99,214,0.06);
-  height: 240px;
+  height: 300px;
   display:flex;flex-direction:column;justify-content:flex-start;
   transition: transform .16s ease, box-shadow .16s ease;
   overflow: hidden;
@@ -41,7 +41,7 @@ body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 
 @media (max-width: 900px){
   .stColumns > div {width: 100% !important; margin-bottom:16px}
-  .card {height: auto; min-height:200px}
+  .card {height: 300px; min-height:300px}
 }
 </style>
 """
@@ -75,6 +75,12 @@ descriptions = [
 
 st.markdown(CSS, unsafe_allow_html=True)
 
+st.markdown("""
+# EasyGeo
+**Aplicação web multifuncionalidade**
+Painéis resumidos das principais funcionalidades. Projetado para usuários técnicos (analistas, pesquisadores e planejadores).
+""")
+
 cols = st.columns(4, gap="medium")
 for col, desc in zip(cols, descriptions):
     html = f"""
@@ -86,4 +92,3 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
-
