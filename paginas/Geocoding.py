@@ -151,7 +151,7 @@ with st.sidebar:
     arquivo = st.file_uploader(':blue[:material/upload_file: Faça o upload da planilha excel]', type=['xlsx'])
     st.markdown(
         """
-        <hr style="margin:5px 0 0px 0;">
+        <hr style="margin:5px 0 1px 0;">
         """,
         unsafe_allow_html=True
     )
