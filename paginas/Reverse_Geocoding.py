@@ -187,7 +187,7 @@ if arquivo is not None:
             if rodar:
                 
                 # Chamando barra de progresso
-                with st.progress(0, "Geocodificando suass coordenadas...") as progress_bar:
+                with st.progress(0, "Geocodificando suas coordenadas...") as progress_bar:
                     st.session_state.Resultado = Geocodificar(df, chave)
                 st.balloons()
                 time.sleep(2)
