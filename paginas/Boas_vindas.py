@@ -7,9 +7,8 @@ st.set_page_config(page_title='Easy GeoMax!', layout='wide', page_icon=':materia
 with st.container(horizontal_alignment='center'):
     st.title('Easy :green[GeoMax!]', width='content')
     st.caption('Aplicação web multifuncionalidade', width='content') 
-import streamlit as st
 
-st.set_page_config(page_title="EasyGeo", layout="wide")
+st.set_page_config(page_title="EasyGeo!", layout="wide")
 
 CSS = """
 <style>
@@ -91,3 +90,4 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
+
