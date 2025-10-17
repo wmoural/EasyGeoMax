@@ -5,15 +5,13 @@ st.set_page_config(page_title='Easy Geo!', layout='wide', page_icon=':material/h
 
 # Carregando layout
 with st.container(horizontal_alignment='center'):
-     Removendo st.title e st.caption aqui pois a parte de markdown logo abaixo já os define de forma mais clara
-     st.title('Easy :green[GeoMax!]', width='content')
-     st.caption('Aplicação web multifuncionalidade', width='content')
-
+    pass
 
 CSS = """
 <style>
 :root{
-    --accent: #0b63d6;
+    /* Cor de destaque mudada para verde (ex: #008000) */
+    --accent: #008000;
     --muted: #6b7280;
     --shadow: 0 6px 18px rgba(13, 27, 62, 0.08);
 }
@@ -25,18 +23,29 @@ body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     padding:24px;
     box-shadow: var(--shadow);
     border: 1px solid rgba(11,99,214,0.06);
-    /* Removido: height: 300px; - Deixa a altura ser definida pelo conteúdo */
-    min-height: 280px; /* Adicionado: Garante uma altura mínima para manter a estrutura inicial */
+    min-height: 280px; /* Garante altura mínima para estrutura */
     display:flex;flex-direction:column;justify-content:flex-start;
     transition: transform .16s ease, box-shadow .16s ease;
-    overflow: hidden; /* Mantido, mas sem altura fixa o texto não será cortado */
+    overflow: hidden; 
 }
 .card:hover{transform: translateY(-6px); box-shadow: 0 18px 40px rgba(11,99,214,0.08);}
 .card h3{margin:0 0 10px 0; font-size:20px; color:#062a48;}
 .card .subtitle{font-size:14px; color:var(--muted); margin-bottom:14px}
-/* Removido flex-shrink:0 da tag p. Isso garante que o parágrafo ocupe todo o espaço. */
 .card p{margin:0; font-size:15px; color:#13324a; line-height:1.5; overflow-wrap: break-word;}
-.card .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px;background:rgba(11,99,214,0.09);color:var(--accent);margin-bottom:12px}
+
+/* Cor do Badge alterada para verde */
+.card .badge{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:13px;
+    /* Fundo verde claro */
+    background: rgba(0, 128, 0, 0.09); 
+    /* Texto verde escuro, usando a variável --accent */
+    color: var(--accent);
+    margin-bottom:12px
+}
 
 /* Gradiente da direita (270deg) para a esquerda (0%) */
 .card-1{background: linear-gradient(270deg, #d0f0c0 0%, #a8e6a3 100%);}
@@ -46,7 +55,6 @@ body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 
 @media (max-width: 900px){
     .stColumns > div {width: 100% !important; margin-bottom:16px}
-    /* Removido height e ajustado min-height no media query */
     .card {min-height: 250px;} 
 }
 </style>
@@ -67,13 +75,13 @@ descriptions = [
     },
     {
         "title": "Easy Routes",
-        "badge": "Otimização de rotas",
+        "badge": "Rotas Otimizadas",
         "class": "card-3",
         "text": "Gere rotas otimizadas de maneira simples e eficiente. O Easy Routes calcula trajetos entre múltiplos pontos usando a API Directions do Google, permitindo análises de mobilidade, planejamento logístico e comparação de alternativas de deslocamento."
     },
     {
         "title": "Easy Overture",
-        "badge": "Dados do OvertureMaps F.",
+        "badge": "Dados Overtures",
         "class": "card-4",
         "text": "Acesse e baixe dados abertos da Overture Maps Foundation diretamente a partir de uma área definida por você. O Easy Overture facilita a obtenção de camadas geoespaciais atualizadas, ideais para uso em estudos urbanos, ambientais e de infraestrutura."
     }
@@ -81,6 +89,9 @@ descriptions = [
 
 st.markdown(CSS, unsafe_allow_html=True)
 
+# Títulos Streamlit
+st.title('Easy :green[GeoMax!]')
+st.caption('Aplicação web multifuncionalidade')
 
 st.markdown("""
 Painéis resumidos das principais funcionalidades. Projetado para usuários técnicos (analistas, pesquisadores e planejadores).
@@ -96,4 +107,3 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
-
