@@ -7,6 +7,9 @@ st.set_page_config(page_title='Easy GeoMax!', layout='wide', page_icon=':materia
 with st.container(horizontal_alignment='center'):
     st.title('Easy :green[GeoMax!]', width='content')
     st.caption('Aplicação web multifuncionalidade', width='content') 
+import streamlit as st
+
+st.set_page_config(page_title="EasyGeo", layout="wide")
 
 CSS = """
 <style>
@@ -46,7 +49,6 @@ body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
 </style>
 """
 
-# Descrições (para usuários técnicos não programadores)
 descriptions = [
     {
         "title": "Easy Geocoding",
@@ -73,7 +75,8 @@ descriptions = [
 st.markdown(CSS, unsafe_allow_html=True)
 
 st.markdown("""
-# Easy Geo Suite
+# EasyGeo
+**Aplicação web multifuncionalidade**
 Painéis resumidos das principais funcionalidades. Projetado para usuários técnicos (analistas, pesquisadores e planejadores).
 """)
 
@@ -88,8 +91,3 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
-
-
-
-
-
