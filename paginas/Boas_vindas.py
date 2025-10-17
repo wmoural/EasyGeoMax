@@ -8,6 +8,10 @@ with st.container(horizontal_alignment='center'):
     st.title('Easy :green[GeoMax!]', width='content')
     st.caption('Aplicação web multifuncionalidade', width='content')
 
+import streamlit as st
+
+st.set_page_config(page_title="EasyGeo", layout="wide")
+
 CSS = """
 <style>
 :root{
@@ -20,27 +24,27 @@ CSS = """
 body {font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
 
 .panel-row{
-  display:flex;gap:10px;align-items:stretch;
+  display:flex;gap:16px;align-items:stretch;
 }
 .card{
   background: var(--card-bg);
   border-radius:12px;
-  padding:20px;
+  padding:24px;
   box-shadow: var(--shadow);
   border: 1px solid rgba(11,99,214,0.06);
-  min-height:160px;
+  min-height:200px;
   display:flex;flex-direction:column;justify-content:center;
   transition: transform .16s ease, box-shadow .16s ease;
 }
 .card:hover{transform: translateY(-6px); box-shadow: 0 18px 40px rgba(11,99,214,0.08);} 
-.card h3{margin:0 0 8px 0; font-size:18px; color:#062a48;}
-.card .subtitle{font-size:13px; color:var(--muted); margin-bottom:12px}
-.card p{margin:0; font-size:14px; color:#13324a; line-height:1.45}
-.card .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600;font-size:12px;background:rgba(11,99,214,0.09);color:var(--accent);margin-bottom:10px}
+.card h3{margin:0 0 10px 0; font-size:20px; color:#062a48;}
+.card .subtitle{font-size:14px; color:var(--muted); margin-bottom:14px}
+.card p{margin:0; font-size:15px; color:#13324a; line-height:1.5}
+.card .badge{display:inline-block;padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px;background:rgba(11,99,214,0.09);color:var(--accent);margin-bottom:12px}
 
 @media (max-width: 900px){
   .stColumns > div {width: 100% !important}
-  .card {min-height:140px}
+  .card {min-height:180px}
 }
 
 </style>
@@ -71,7 +75,7 @@ descriptions = [
 
 st.markdown(CSS, unsafe_allow_html=True)
 
-cols = st.columns(4, gap="large")
+cols = st.columns(4, gap="medium")
 for col, desc in zip(cols, descriptions):
     html = f"""
     <div class="card">
@@ -82,7 +86,3 @@ for col, desc in zip(cols, descriptions):
     </div>
     """
     col.markdown(html, unsafe_allow_html=True)
-
-
-
-
