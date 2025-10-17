@@ -151,16 +151,17 @@ with st.sidebar:
                 - Mantenha a tela do computador ligada nesta aba após iniciar o processo;
                 - A ferramenta é indicada para projetos de pequeno e médio porte.
                 """)
-        
 
-    # Definindo uploader de arquivo    
-    arquivo = st.file_uploader('**Faça o upload da área de interesse aqui** :call_me_hand:', type=['.gpkg','.geojson'])
+   
+    # Definindo uploader de arquivo
     st.markdown(
         """
         <hr style="margin:5px 0 3px 0;">
         """,
         unsafe_allow_html=True
-    )    
+    )       
+    arquivo = st.file_uploader('**Faça o upload da área de interesse aqui** :call_me_hand:', type=['.gpkg','.geojson'])
+
 # Carregando layout
 carregar_layout()
 
@@ -238,6 +239,7 @@ if st.session_state.Resultado is not None and arquivo is not None:
             width=500,
             icon=':material/download_for_offline:'
         )
+
 
 
 
