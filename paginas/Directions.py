@@ -174,7 +174,12 @@ with st.sidebar:
     st.text('')
     if arquivo is not None:
         chave = st.text_input(':blue[:material/key_vertical: Insira aqui sua chave API:]', type='password')
-
+    st.markdown(
+        """
+        <hr style="margin:5px 0 3px 0;">
+        """,
+        unsafe_allow_html=True
+    )
 # Carregando layout
 carregar_layout()
    
@@ -276,6 +281,7 @@ if arquivo is not None:
                 width=500,
                 icon=':material/download_for_offline:'
                 )
+
 
 
 
